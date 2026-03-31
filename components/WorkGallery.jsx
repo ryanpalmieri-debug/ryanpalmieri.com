@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { works, categories } from '../data/works'
+import { categories } from '../data/works'
 
 const WorkCard = ({ work, size = 'default' }) => {
   const [hovered, setHovered] = useState(false)
@@ -86,7 +86,7 @@ const WorkCard = ({ work, size = 'default' }) => {
   )
 }
 
-export default function WorkGallery() {
+export default function WorkGallery({ works = [] }) {
   const [activeCategory, setActiveCategory] = useState('All')
 
   const filtered = activeCategory === 'All'
