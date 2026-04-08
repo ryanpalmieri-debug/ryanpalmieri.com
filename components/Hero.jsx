@@ -17,7 +17,6 @@ export default function Hero() {
       },
       { threshold: 0.1 }
     )
-
     const els = sectionRef.current?.querySelectorAll('.reveal')
     els?.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
@@ -26,49 +25,54 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen flex flex-col justify-end px-6 md:px-12 pt-32 pb-16 w-full"
+      className="relative w-full h-screen overflow-hidden bg-black text-white flex flex-col"
     >
-      <div className="max-w-[1600px] mx-auto w-full">
-        {/* Main statement */}
-        <h1 className="text-[clamp(2.2rem,5.5vw,5.5rem)] leading-[1.1] tracking-[-0.03em] font-light text-black mb-16 reveal">
-          A{' '}
-          <span className="inline-flex items-center gap-2">
-            <span className="text-gray-400">[</span>
-            <span className="font-normal">Creative Director</span>
-            <span className="text-gray-400">]</span>
-          </span>{' '}
-          building brands
-          <br className="hidden md:block" />
-          for{' '}
-          <span className="inline-flex items-center gap-2">
-            <span className="text-gray-400">[</span>
-            <span className="font-normal">Culture</span>
-            <span className="text-gray-400">]</span>
-          </span>{' '}
-          and{' '}
-          <span className="inline-flex items-center gap-2">
-            <span className="text-gray-400">[</span>
-            <span className="font-normal">Technology</span>
-            <span className="text-gray-400">]</span>
-          </span>{' '}
-          <br className="hidden md:block" />
-          in the machine age.
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2940&auto=format&fit=crop)',
+          filter: 'brightness(0.5)',
+        }}
+      />
+
+      {/* Giant overlay text */}
+      <div className="relative z-10 flex-1 flex items-center justify-center px-6">
+        <h1
+          className="font-bold uppercase text-white text-center leading-[0.9] tracking-[-0.04em] reveal"
+          style={{ fontSize: 'clamp(4rem, 14vw, 16rem)' }}
+        >
+          BUILDING<br />BRANDS
         </h1>
+      </div>
 
-        {/* Bottom row: location + descriptor */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 reveal delay-100">
-          <div className="flex flex-col gap-1">
-            <p className="text-[13px] text-gray-400 font-medium tracking-wide">
-              Los Angeles
-            </p>
+      {/* Bottom content */}
+      <div className="relative z-10 px-6 md:px-10 pb-8">
+        {/* Bracket description */}
+        <p className="text-[14px] leading-relaxed max-w-[280px] mb-10 reveal delay-1" style={{ textAlign: 'justify' }}>
+          A {'  '}
+          <span className="text-white/70">[ Creative Director ]</span>{'  '}for{'  '}
+          <span className="text-white/70">[ Culture ]</span>{'  '}and{'  '}
+          <span className="text-white/70">[ Technology ]</span>{'  '}
+          who builds brands{'  '}
+          <span className="text-white/70">[ In The Machine Age ]</span>
+        </p>
+
+        {/* Bottom row descriptors */}
+        <div className="flex flex-col md:flex-row justify-between gap-4 text-[13px] font-normal reveal delay-2">
+          <div>
+            <p>Based in Los Angeles</p>
+            <p className="text-white/60">available worldwide</p>
           </div>
-          <p className="text-[13px] text-gray-400 font-medium tracking-wide max-w-sm text-right hidden md:block">
-            Brand strategy, marketing, and creative direction at the intersection of culture and code.
-          </p>
+          <div>
+            <p>Brand-led</p>
+            <p className="text-white/60">creative studio</p>
+          </div>
+          <div>
+            <p>Strategy, film,</p>
+            <p className="text-white/60">and production</p>
+          </div>
         </div>
-
-        {/* Divider */}
-        <div className="w-full h-px bg-black/10 mt-8"></div>
       </div>
     </section>
   )
