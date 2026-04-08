@@ -52,7 +52,7 @@ export default function About() {
             {/* Left: large statement */}
             <div className="reveal">
               <h2 className="text-[clamp(2rem,4.5vw,4.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-black">
-                I cut through the hype to build brand narratives and marketing strategies that resonate with people — sharpened by my passion for storytelling.
+                I cut through the noise to build brand narratives that actually resonate.
               </h2>
             </div>
 
@@ -62,7 +62,7 @@ export default function About() {
               <div
                 className="w-full aspect-[3/4] bg-gray-100 bg-cover bg-center mb-8"
                 style={{
-                  backgroundImage: 'url(/headshot.jpg)',
+                  backgroundImage: 'url(/headshot.png)',
                 }}
               />
 
@@ -74,7 +74,7 @@ export default function About() {
                   </p>
                   <div className="max-w-[380px]">
                     <p className="text-[14px] text-black/70 leading-relaxed mb-8">
-                      Ryan Palmieri is a creative director, producer, and strategist building at the intersection of culture, technology, and brand. His work spans global campaigns, documentary film, and emerging-tech platforms — always grounded in authentic storytelling.
+                      Ryan Palmieri is a brand strategist and creative director who builds at the intersection of culture, technology, and emerging media. His work spans global campaigns, documentary film, frontier-tech platforms, and AI agent systems — always grounded in the story beneath the product.
                     </p>
                     <a
                       href="/ryan-palmieri-resume.pdf"

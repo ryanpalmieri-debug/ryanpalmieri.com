@@ -28,6 +28,11 @@ const services = [
     title: 'Content Systems',
     desc: 'Building editorial frameworks for modern brands.\nScalable content strategy and production pipelines.',
   },
+  {
+    num: '00-6',
+    title: 'AI & Automation',
+    desc: 'Building intelligent systems that extend what brands can do.\nAgents, pipelines, and tools designed for scale.',
+  },
 ]
 
 export default function Services() {
@@ -91,13 +96,16 @@ export default function Services() {
             </div>
           </div>
 
-          {/* Row 3: Service 4 left, Service 5 right */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-32">
+          {/* Row 3: Service 4, Service 5, Service 6 */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
             <div className="reveal">
               <ServiceBlock service={services[3]} />
             </div>
             <div className="reveal delay-1">
               <ServiceBlock service={services[4]} />
+            </div>
+            <div className="reveal delay-2">
+              <ServiceBlock service={services[5]} />
             </div>
           </div>
         </div>

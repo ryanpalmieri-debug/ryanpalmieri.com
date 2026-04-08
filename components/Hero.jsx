@@ -51,7 +51,7 @@ export default function Hero() {
       <div className="relative z-10 px-6 md:px-10 pb-8">
         {/* Description */}
         <p className="text-[14px] leading-relaxed max-w-[340px] mb-10 reveal delay-1">
-          A <span className="text-white/70">[Senior Marketer, Brand Strategist, Creative Director]</span> building brands at the intersection of culture and code.
+          A brand strategist, creative director, and AI builder working at the intersection of culture and emerging tech.
         </p>
 
         {/* Bottom row descriptors */}

@@ -40,9 +40,7 @@ export default function Footer() {
         {/* Content */}
         <div className="relative z-10 text-center px-6 reveal">
           <h2 className="text-[clamp(2rem,4vw,4rem)] font-bold leading-[1.2] tracking-[-0.02em] mb-8">
-            If you have an idea in mind,
-            <br />
-            we&apos;d like to hear about it.
+            Let&apos;s build together.
           </h2>
           <a
             href="mailto:ryanpalmieri@gmail.com"
