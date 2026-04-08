@@ -4,17 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/fetch-cms.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "fetch-cms": "node scripts/fetch-cms.mjs"
+    "lint": "next lint"
   },
   "dependencies": {
     "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18",
-    "framer-api": "latest"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
