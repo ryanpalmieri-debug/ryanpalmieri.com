@@ -27,43 +27,11 @@ export default function About() {
 
   return (
     <section id="about" ref={sectionRef} className="w-full bg-white">
-      {/* Top area: large statement */}
-      <div className="px-6 md:px-10 pt-32 pb-20">
+      {/* Brand logos grid — ABOVE the copy */}
+      <div className="px-6 md:px-10 pt-32 pb-12">
         <div className="max-w-[1400px] mx-auto">
-          {/* Large bold statement */}
-          <h2 className="text-[clamp(2rem,4.5vw,4.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-black max-w-[900px] mb-24 reveal">
-            A quiet framework for brand work, shaped by strategy, pacing, and editorial restraint.
-          </h2>
-
-          {/* Right-aligned info block */}
-          <div className="flex flex-col md:flex-row gap-12 md:gap-24 md:justify-end reveal delay-1">
-            <div className="md:w-auto">
-              <div className="border-t border-black pt-6 mb-6 md:hidden"></div>
-              <p className="text-[14px] text-black font-normal mb-6">
-                [ Visual Framework ]
-              </p>
-            </div>
-            <div className="max-w-[380px]">
-              <div className="border-t border-black pt-6 mb-6 hidden md:block"></div>
-              <p className="text-[14px] text-black/70 leading-relaxed mb-8">
-                Ryan Palmieri is a creative director, producer, and strategist building at the intersection of culture, technology, and brand. His work spans global campaigns, documentary film, and emerging-tech platforms — always grounded in authentic storytelling.
-              </p>
-              <a
-                href="#work"
-                className="text-[14px] text-black font-medium border-b border-black pb-0.5 hover:opacity-60 transition-opacity"
-              >
-                About the studio
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Brand logos grid */}
-      <div className="px-6 md:px-10 pb-24">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="border-t border-black/10 pt-12">
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-8 md:gap-12 items-center reveal delay-2">
+          <div className="border-b border-black/10 pb-12">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-8 md:gap-12 items-center reveal">
               {uniqueClients.map((client) => (
                 <div
                   key={client}
@@ -72,6 +40,53 @@ export default function About() {
                   {client}
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main content area */}
+      <div className="px-6 md:px-10 pt-12 pb-24">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+            {/* Left: large statement */}
+            <div className="reveal">
+              <h2 className="text-[clamp(2rem,4.5vw,4.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-black">
+                I cut through the hype to build brand narratives and marketing strategies that resonate with people — sharpened by my passion for storytelling.
+              </h2>
+            </div>
+
+            {/* Right: photo + info */}
+            <div className="reveal delay-1">
+              {/* Photo */}
+              <div
+                className="w-full aspect-[3/4] bg-gray-100 bg-cover bg-center mb-8"
+                style={{
+                  backgroundImage: 'url(https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop)',
+                }}
+              />
+
+              {/* Info block */}
+              <div className="border-t border-black pt-6">
+                <div className="flex flex-col md:flex-row gap-8 md:gap-16">
+                  <p className="text-[14px] text-black font-normal shrink-0">
+                    [ Experience ]
+                  </p>
+                  <div className="max-w-[380px]">
+                    <p className="text-[14px] text-black/70 leading-relaxed mb-8">
+                      Ryan Palmieri is a creative director, producer, and strategist building at the intersection of culture, technology, and brand. His work spans global campaigns, documentary film, and emerging-tech platforms — always grounded in authentic storytelling.
+                    </p>
+                    <a
+                      href="/ryan-palmieri-resume.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[14px] text-black font-medium border-b border-black pb-0.5 hover:opacity-60 transition-opacity"
+                    >
+                      Experience
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

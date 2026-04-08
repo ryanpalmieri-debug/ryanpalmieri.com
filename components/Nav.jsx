@@ -12,6 +12,8 @@ export default function Nav() {
   ]
   const rightLinks = [
     { label: 'Services', href: '#services' },
+    { label: 'X', href: 'https://twitter.com/ryanpalmieri', external: true },
+    { label: 'LinkedIn', href: 'https://linkedin.com/in/ryanpalmieri', external: true },
   ]
 
   return (
@@ -33,7 +35,12 @@ export default function Nav() {
           </div>
           <div className="flex flex-col gap-1">
             {rightLinks.map((l) => (
-              <a key={l.label} href={l.href} className="hover:opacity-50 transition-opacity">
+              <a
+                key={l.label}
+                href={l.href}
+                className="hover:opacity-50 transition-opacity"
+                {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
                 {l.label}
               </a>
             ))}
@@ -64,6 +71,7 @@ export default function Nav() {
                 href={l.href}
                 onClick={() => setMenuOpen(false)}
                 className="text-5xl font-bold tracking-tight"
+                {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
                 {l.label}
               </a>

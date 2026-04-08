@@ -36,41 +36,32 @@ export default function Hero() {
         }}
       />
 
-      {/* Giant overlay text */}
+      {/* Giant overlay text — 15% smaller */}
       <div className="relative z-10 flex-1 flex items-center justify-center px-6">
         <h1
           className="font-bold uppercase text-white text-center leading-[0.9] tracking-[-0.04em] reveal"
-          style={{ fontSize: 'clamp(4rem, 14vw, 16rem)' }}
+          style={{ fontSize: 'clamp(3.4rem, 12vw, 13.6rem)' }}
         >
-          BUILDING<br />BRANDS
+          RYAN<br />PALMIERI
         </h1>
       </div>
 
       {/* Bottom content */}
       <div className="relative z-10 px-6 md:px-10 pb-8">
-        {/* Bracket description */}
-        <p className="text-[14px] leading-relaxed max-w-[280px] mb-10 reveal delay-1" style={{ textAlign: 'justify' }}>
-          A {'  '}
-          <span className="text-white/70">[ Creative Director ]</span>{'  '}for{'  '}
-          <span className="text-white/70">[ Culture ]</span>{'  '}and{'  '}
-          <span className="text-white/70">[ Technology ]</span>{'  '}
-          who builds brands{'  '}
-          <span className="text-white/70">[ In The Machine Age ]</span>
+        {/* Description — updated copy */}
+        <p className="text-[14px] leading-relaxed max-w-[340px] mb-10 reveal delay-1">
+          A <span className="text-white/70">[Senior Marketer, Brand Strategist, Creative Director]</span> building brands at the intersection of culture and code.
         </p>
 
-        {/* Bottom row descriptors */}
+        {/* Bottom row descriptors — removed middle, updated right */}
         <div className="flex flex-col md:flex-row justify-between gap-4 text-[13px] font-normal reveal delay-2">
           <div>
             <p>Based in Los Angeles</p>
             <p className="text-white/60">available worldwide</p>
           </div>
           <div>
-            <p>Brand-led</p>
-            <p className="text-white/60">creative studio</p>
-          </div>
-          <div>
-            <p>Strategy, film,</p>
-            <p className="text-white/60">and production</p>
+            <p>Strategy, Storytelling,</p>
+            <p className="text-white/60">Creative</p>
           </div>
         </div>
       </div>

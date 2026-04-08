@@ -6,7 +6,7 @@ const services = [
   {
     num: '00-1',
     title: 'Brand Strategy',
-    desc: 'We shape the narrative before execution begins.\nPositioning, identity, and cultural relevance defined with intention.',
+    desc: 'I shape the narrative before execution begins.\nPositioning, identity, and cultural relevance defined with intention.',
   },
   {
     num: '00-2',
@@ -56,7 +56,7 @@ export default function Services() {
         {/* Header row */}
         <div className="flex justify-between items-start mb-20 reveal">
           <h2 className="text-[clamp(2.5rem,5vw,5rem)] font-bold leading-[1] tracking-[-0.03em] text-black">
-            Our<br />Services
+            Disciplines
           </h2>
           <a
             href="#"
@@ -66,7 +66,7 @@ export default function Services() {
           </a>
         </div>
 
-        {/* Services grid — first item centered, then 2-col with image center */}
+        {/* Services grid */}
         <div className="flex flex-col gap-20">
           {/* Row 1: Service 1 centered */}
           <div className="flex justify-center reveal">
