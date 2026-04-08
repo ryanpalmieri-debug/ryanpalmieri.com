@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Nav() {
   const navRef = useRef(null)
   const lastScrollRef = useRef(0)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,24 +22,60 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const links = [
+    { label: 'Work', href: '#work' },
+    { label: 'Services', href: '#services' },
+    { label: 'About', href: '#about' },
+    { label: 'Contact', href: '#contact' },
+  ]
+
   return (
-    <nav
-      ref={navRef}
-      className="fixed top-0 w-full z-50 mix-blend-difference text-white py-6 px-6 md:px-12 transition-transform duration-500"
-    >
-      <div className="flex justify-between items-center max-w-[1600px] mx-auto w-full">
-        <a href="#" className="text-xl font-medium tracking-tight">
-          Ryan Palmieri
-        </a>
-        <div className="hidden md:flex gap-8 text-sm font-medium">
-          <a href="#work" className="hover:opacity-50 transition-opacity">Work</a>
-          <a href="#about" className="hover:opacity-50 transition-opacity">About</a>
-          <a href="#contact" className="hover:opacity-50 transition-opacity">Contact</a>
+    <>
+      <nav
+        ref={navRef}
+        className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-black/5 transition-transform duration-500"
+      >
+        <div className="flex justify-between items-center max-w-[1600px] mx-auto w-full px-6 md:px-12 py-5">
+          <a href="#" className="text-[15px] font-medium tracking-tight text-black">
+            Ryan Palmieri
+          </a>
+          <div className="hidden md:flex items-center gap-10">
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                className="text-[13px] font-medium text-gray-500 hover:text-black transition-colors tracking-wide"
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+          <button
+            className="md:hidden text-black text-[13px] font-medium tracking-wide"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? 'Close' : 'Menu'}
+          </button>
         </div>
-        <button className="md:hidden text-white">
-          <i className="ph ph-list text-2xl"></i>
-        </button>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-40 bg-white pt-24 px-6 md:hidden">
+          <div className="flex flex-col gap-8">
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                className="text-4xl font-light tracking-tight text-black"
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   )
 }

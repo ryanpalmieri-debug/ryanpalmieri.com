@@ -2,7 +2,7 @@ import Nav from '../components/Nav'
 import Hero from '../components/Hero'
 import WorkGrid from '../components/WorkGrid'
 import About from '../components/About'
-import ImageStrip from '../components/ImageStrip'
+import Collaborators from '../components/Collaborators'
 import Footer from '../components/Footer'
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
         <Hero />
         <WorkGrid />
         <About />
-        <ImageStrip />
+        <Collaborators />
       </main>
       <Footer />
     </>
