@@ -62,7 +62,7 @@ export default function About() {
               <div
                 className="w-full aspect-[3/4] bg-gray-100 bg-cover bg-center mb-8"
                 style={{
-                  backgroundImage: 'url(https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop)',
+                  backgroundImage: 'url(/headshot.jpg)',
                 }}
               />
 

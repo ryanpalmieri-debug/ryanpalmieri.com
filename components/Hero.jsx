@@ -36,24 +36,25 @@ export default function Hero() {
         }}
       />
 
-      {/* Giant overlay text — 15% smaller */}
-      <div className="relative z-10 flex-1 flex items-center justify-center px-6">
-        <h1
-          className="font-bold uppercase text-white text-center leading-[0.9] tracking-[-0.04em] reveal"
+      {/* Giant overlay text — staggered layout, light weight */}
+      <div className="relative z-10 flex-1 flex items-center px-6 md:px-10">
+        <div
+          className="w-full uppercase text-white leading-[0.85] tracking-[-0.04em] font-extralight reveal"
           style={{ fontSize: 'clamp(3.4rem, 12vw, 13.6rem)' }}
         >
-          RYAN<br />PALMIERI
-        </h1>
+          <div className="text-left">RYAN</div>
+          <div className="text-right">PALMIERI</div>
+        </div>
       </div>
 
       {/* Bottom content */}
       <div className="relative z-10 px-6 md:px-10 pb-8">
-        {/* Description — updated copy */}
+        {/* Description */}
         <p className="text-[14px] leading-relaxed max-w-[340px] mb-10 reveal delay-1">
           A <span className="text-white/70">[Senior Marketer, Brand Strategist, Creative Director]</span> building brands at the intersection of culture and code.
         </p>
 
-        {/* Bottom row descriptors — removed middle, updated right */}
+        {/* Bottom row descriptors */}
         <div className="flex flex-col md:flex-row justify-between gap-4 text-[13px] font-normal reveal delay-2">
           <div>
             <p>Based in Los Angeles</p>
