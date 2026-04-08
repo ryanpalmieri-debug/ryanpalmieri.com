@@ -1,3 +1,4 @@
+'use client'
 import { clients } from '../data/works'
 
 export default function LogoBar() {
