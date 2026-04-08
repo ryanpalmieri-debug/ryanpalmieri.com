@@ -5,24 +5,9 @@ import WorkGallery from '../components/WorkGallery'
 import About from '../components/About'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
-import { client } from '../lib/sanity/client'
-import { worksQuery } from '../lib/sanity/queries'
-import { works as fallbackWorks } from '../data/works'
+import { works } from '../data/works'
 
-async function getWorks() {
-  try {
-    const works = await client.fetch(worksQuery)
-    if (works && works.length > 0) return works
-  } catch (e) {
-    console.warn('Sanity fetch failed, using static fallback:', e.message)
-  }
-  return fallbackWorks
-}
-
-export const dynamic = 'force-dynamic'
-
-export default async function Home() {
-  const works = await getWorks()
+export default function Home() {
   return (
     <div style={{ position: 'relative', overflow: 'hidden' }}>
       <Nav />
