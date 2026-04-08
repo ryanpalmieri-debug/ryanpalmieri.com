@@ -52,39 +52,34 @@ export default function About() {
             {/* Left: large statement */}
             <div className="reveal">
               <h2 className="text-[clamp(2rem,4.5vw,4.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-black">
-                I cut through the noise to build brand narratives that actually resonate.
+                I cut through the hype to build brand narratives and marketing strategies that resonate with people — sharpened by my passion for storytelling.
               </h2>
             </div>
 
             {/* Right: photo + info */}
             <div className="reveal delay-1">
-              {/* Photo */}
+              {/* Photo — 60% width */}
               <div
-                className="w-full aspect-[3/4] bg-gray-100 bg-cover bg-center mb-8"
+                className="w-[60%] aspect-[3/4] bg-gray-100 bg-cover bg-center mb-8"
                 style={{
                   backgroundImage: 'url(/headshot.png)',
                 }}
               />
 
-              {/* Info block */}
+              {/* Info block — no left label */}
               <div className="border-t border-black pt-6">
-                <div className="flex flex-col md:flex-row gap-8 md:gap-16">
-                  <p className="text-[14px] text-black font-normal shrink-0">
-                    [ Experience ]
+                <div className="max-w-[420px]">
+                  <p className="text-[14px] text-black/70 leading-relaxed mb-8">
+                    Ryan Palmieri is a brand strategist and creative director who builds at the intersection of culture, technology, and emerging media. His work spans global campaigns, documentary film, frontier-tech platforms, and AI agent systems — always grounded in the story beneath the product.
                   </p>
-                  <div className="max-w-[380px]">
-                    <p className="text-[14px] text-black/70 leading-relaxed mb-8">
-                      Ryan Palmieri is a brand strategist and creative director who builds at the intersection of culture, technology, and emerging media. His work spans global campaigns, documentary film, frontier-tech platforms, and AI agent systems — always grounded in the story beneath the product.
-                    </p>
-                    <a
-                      href="/ryan-palmieri-resume.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[14px] text-black font-medium border-b border-black pb-0.5 hover:opacity-60 transition-opacity"
-                    >
-                      Experience
-                    </a>
-                  </div>
+                  <a
+                    href="/ryan-palmieri-resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[14px] text-black font-medium border-b border-black pb-0.5 hover:opacity-60 transition-opacity"
+                  >
+                    Experience
+                  </a>
                 </div>
               </div>
             </div>

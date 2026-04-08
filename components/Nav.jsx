@@ -12,8 +12,8 @@ export default function Nav() {
   ]
   const rightLinks = [
     { label: 'Services', href: '#services' },
-    { label: 'X', href: 'https://twitter.com/ryanpalmieri', external: true },
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/ryanpalmieri', external: true },
+    { label: 'X', href: 'https://x.com/ryanppalmieri', external: true },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ryan-palmieri-715190213/', external: true },
   ]
 
   return (
