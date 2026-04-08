@@ -1,207 +1,82 @@
 'use client'
-import { useEffect, useRef } from 'react'
+
+import { useEffect, useRef, useState } from 'react'
+
+const services = [
+  {
+    title: 'Brand Strategy',
+    description: 'Positioning brands at the intersection of culture and technology, defining narratives that resonate in the machine age.',
+  },
+  {
+    title: 'Creative Direction',
+    description: 'Leading end-to-end creative vision across campaigns, content, and digital experiences.',
+  },
+  {
+    title: 'Film & Production',
+    description: 'Directing branded content, documentaries, and campaign films that tell authentic stories.',
+  },
+  {
+    title: 'Campaigns & Partnerships',
+    description: 'Designing and executing integrated campaigns that connect brands with culture and community.',
+  },
+]
 
 export default function About() {
-  const disciplines = [
-    'Creative Direction',
-    'Brand Strategy',
-    'Film & Production',
-    'Campaign Development',
-    'Content Systems',
-    'Creative Partnerships',
-  ]
-
-  const stats = [
-    { value: '10+', label: 'Years' },
-    { value: '50+', label: 'Projects' },
-    { value: '3', label: 'Continents' },
-  ]
-
-  const refs = {
-    label: useRef(null),
-    headline: useRef(null),
-    bio1: useRef(null),
-    bio2: useRef(null),
-    stats: useRef(null),
-    disciplines: useRef(null),
-  }
+  const sectionRef = useRef(null)
+  const [openIndex, setOpenIndex] = useState(null)
 
   useEffect(() => {
-    const observe = (ref) => {
-      const el = ref.current
-      if (!el) return
-      const io = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); io.unobserve(el) } },
-        { threshold: 0.12 }
-      )
-      io.observe(el)
-      return io
-    }
-    const observers = Object.values(refs).map(observe)
-    return () => observers.forEach(io => io && io.disconnect())
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.15 }
+    )
+
+    const els = sectionRef.current?.querySelectorAll('.reveal')
+    els?.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
   }, [])
 
+  const toggle = (i) => setOpenIndex(openIndex === i ? null : i)
+
   return (
-    <section
-      id="about"
-      style={{
-        backgroundColor: '#ffffff',
-        paddingTop: '100px',
-        paddingBottom: '100px',
-        paddingLeft: 'clamp(24px, 6vw, 56px)',
-        paddingRight: 'clamp(24px, 6vw, 56px)',
-      }}
-    >
-      <div style={{ maxWidth: '900px' }}>
-        {/* Label */}
-        <p
-          ref={refs.label}
-          className="reveal"
-          style={{
-            fontFamily: 'Georgia, serif',
-            fontSize: '13px',
-            color: '#3918A5',
-            letterSpacing: '0.06em',
-            marginBottom: '16px',
-          }}
-        >
-          About
-        </p>
+    <section id="about" ref={sectionRef} className="py-32 px-6 md:px-12 w-full bg-gray-50">
+      <div className="max-w-[1600px] mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8">
+          <div className="lg:col-span-5 reveal">
+            <h2 className="text-3xl md:text-4xl tracking-tight font-medium mb-8">Approach</h2>
+            <p className="text-xl md:text-2xl text-gray-600 leading-relaxed font-light mb-8 max-w-lg">
+              I believe in building brands that are culturally aware, strategically grounded, and visually uncompromising. Every project starts with a clear point of view.
+            </p>
+            <p className="text-lg text-gray-500 leading-relaxed font-light max-w-lg">
+              Working closely with founders, creative teams, and cultural institutions, I help translate complex ideas into clear, engaging experiences that resonate with audiences and drive results.
+            </p>
+          </div>
 
-        {/* Headline */}
-        <h2
-          ref={refs.headline}
-          className="reveal delay-1"
-          style={{
-            fontFamily: "'Playfair Display', Georgia, serif",
-            fontStyle: 'italic',
-            fontWeight: 400,
-            fontSize: 'clamp(2.8rem, 6vw, 5.5rem)',
-            lineHeight: 1.1,
-            letterSpacing: '-0.4px',
-            color: '#000000',
-            marginBottom: '0',
-          }}
-        >
-          The work.<br />The vision.
-        </h2>
-
-        {/* Divider */}
-        <div
-          style={{
-            width: '40px',
-            height: '1px',
-            backgroundColor: '#000000',
-            marginTop: '32px',
-            marginBottom: '32px',
-          }}
-        />
-
-        {/* Bio 1 */}
-        <p
-          ref={refs.bio1}
-          className="reveal"
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '16px',
-            lineHeight: '20px',
-            color: '#000000',
-            marginBottom: '24px',
-          }}
-        >
-          Placeholder — Ryan Palmieri is a creative director, producer, and strategist who builds at the intersection of culture, technology, and brand. His work spans global campaigns, documentary film, and emerging-tech platforms — always grounded in authentic storytelling.
-        </p>
-
-        {/* Bio 2 */}
-        <p
-          ref={refs.bio2}
-          className="reveal delay-2"
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '16px',
-            lineHeight: '20px',
-            color: 'rgba(74,74,74,0.5)',
-            marginBottom: '56px',
-          }}
-        >
-          Placeholder — From directing branded content for Fortune 500 companies to producing independent film, Ryan brings a producer&apos;s instinct and a director&apos;s eye to every project.
-        </p>
-
-        {/* Stats row */}
-        <div
-          ref={refs.stats}
-          className="reveal delay-3"
-          style={{
-            display: 'flex',
-            gap: '56px',
-            marginBottom: '56px',
-            flexWrap: 'wrap',
-          }}
-        >
-          {stats.map((s) => (
-            <div key={s.label}>
-              <p
-                style={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: '3.5rem',
-                  fontWeight: 400,
-                  color: '#000000',
-                  lineHeight: 1,
-                  marginBottom: '6px',
-                }}
-              >
-                {s.value}
-              </p>
-              <p
-                style={{
-                  fontFamily: 'Georgia, serif',
-                  fontSize: '11px',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.12em',
-                  color: 'rgba(74,74,74,0.5)',
-                }}
-              >
-                {s.label}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Disciplines */}
-        <div
-          ref={refs.disciplines}
-          className="reveal delay-4"
-        >
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '10px 40px',
-            }}
-          >
-            {disciplines.map((d) => (
+          <div className="lg:col-span-6 lg:col-start-7 reveal delay-100">
+            {services.map((svc, i) => (
               <div
-                key={d}
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: '14px',
-                  color: 'rgba(74,74,74,0.5)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                }}
+                key={svc.title}
+                className={`border-t border-gray-200 pt-8 mb-8 ${i === services.length - 1 ? 'border-b pb-8' : ''}`}
               >
-                <span
-                  style={{
-                    display: 'inline-block',
-                    width: '4px',
-                    height: '4px',
-                    borderRadius: '50%',
-                    backgroundColor: 'rgba(74,74,74,0.3)',
-                    flexShrink: 0,
-                  }}
-                />
-                {d}
+                <div
+                  className="flex justify-between items-center cursor-pointer group"
+                  onClick={() => toggle(i)}
+                >
+                  <h3 className="text-2xl font-medium tracking-tight group-hover:text-gray-500 transition-colors">
+                    {svc.title}
+                  </h3>
+                  <i className={`ph ${openIndex === i ? 'ph-minus' : 'ph-plus'} text-xl text-gray-400 group-hover:text-black transition-colors`}></i>
+                </div>
+                {openIndex === i && (
+                  <p className="text-gray-500 mt-4 max-w-md">{svc.description}</p>
+                )}
               </div>
             ))}
           </div>

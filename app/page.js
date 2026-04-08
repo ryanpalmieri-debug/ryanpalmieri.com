@@ -1,24 +1,21 @@
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
-import LogoBar from '../components/LogoBar'
-import WorkGallery from '../components/WorkGallery'
+import WorkGrid from '../components/WorkGrid'
 import About from '../components/About'
-import Contact from '../components/Contact'
+import ImageStrip from '../components/ImageStrip'
 import Footer from '../components/Footer'
-import { works } from '../data/works'
 
 export default function Home() {
   return (
-    <div style={{ position: 'relative', overflow: 'hidden' }}>
+    <>
       <Nav />
       <main>
         <Hero />
-        <LogoBar />
-        <WorkGallery works={works} />
+        <WorkGrid />
         <About />
-        <Contact />
+        <ImageStrip />
       </main>
       <Footer />
-    </div>
+    </>
   )
 }

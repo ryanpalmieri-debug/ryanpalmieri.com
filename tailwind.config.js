@@ -8,13 +8,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['DM Sans', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Inter', 'sans-serif'],
       },
       colors: {
-        accent: '#3918A5',
-        'accent-blue': '#0078FF',
-        muted: '#777777',
+        black: '#0a0a0a',
+        white: '#ffffff',
+      },
+      transitionTimingFunction: {
+        'expo-out': 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
     },
   },
