@@ -42,15 +42,17 @@ export default function Hero() {
           className="w-full uppercase text-white leading-[0.85] tracking-[-0.04em] font-extralight reveal"
           style={{ fontSize: 'clamp(3.4rem, 12vw, 13.6rem)' }}
         >
-          <div className="text-left">RYAN</div>
-          <div className="text-right">PALMIERI</div>
+          <div className="flex justify-between">
+            <span>RYAN</span>
+            <span>PALMIERI</span>
+          </div>
         </div>
       </div>
 
       {/* Bottom content */}
       <div className="relative z-10 px-6 md:px-10 pb-8">
         {/* Description */}
-        <p className="text-[14px] leading-relaxed max-w-[340px] mb-10 reveal delay-1">
+        <p className="text-[16px] leading-relaxed max-w-[400px] mb-10 reveal delay-1">
           A brand strategist, creative director, and AI builder working at the intersection of culture and emerging tech.
         </p>
 
