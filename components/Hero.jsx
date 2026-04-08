@@ -67,7 +67,7 @@ export default function Hero() {
             letterSpacing: '0.02em',
           }}
         >
-          Creative Director — Los Angeles
+          Based in Los Angeles, available worldwide
         </p>
 
         {/* Headline */}
@@ -84,7 +84,7 @@ export default function Hero() {
             marginBottom: '28px',
           }}
         >
-          Film, brand &amp; strategy /&nbsp;<em>at the intersection</em>&nbsp;/ of culture.
+          Building brands for the machine age.
         </h1>
 
         {/* Subtext */}
@@ -100,7 +100,7 @@ export default function Hero() {
             maxWidth: '520px',
           }}
         >
-          Creative director, producer, and strategist. I build campaigns, films, and brands that don&apos;t follow the brief — they set it.
+          Brand Strategy, Marketing, &amp; Creative at the intersection of culture and code.
         </p>
 
         {/* CTA links */}

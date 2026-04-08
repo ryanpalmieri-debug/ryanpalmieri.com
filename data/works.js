@@ -142,8 +142,11 @@ export const categories = [
 ]
 
 export const clients = [
-  'Samsung', 'Syngenta', 'DC', 'Ethereum',
-  'Generosity™', 'Kettle Finance', 'Gaia', 'Center for Common Ground',
-  'Samsung', 'Syngenta', 'DC', 'Ethereum',
-  'Generosity™', 'Kettle Finance', 'Gaia', 'Center for Common Ground',
+  'Nike', 'Samsung Galaxy', 'Generosity', 'Base', 'DC', 'Intuition',
+  'Recall', 'Warner Bros.', 'For Pete\'s Sake', '9dcc', 'Sony Music',
+  'Capitol Records', 'Mother', 'Kettle', 'Syngenta', 'Storacha', 'Gaia', 'Linea',
+  // duplicated for seamless marquee loop
+  'Nike', 'Samsung Galaxy', 'Generosity', 'Base', 'DC', 'Intuition',
+  'Recall', 'Warner Bros.', 'For Pete\'s Sake', '9dcc', 'Sony Music',
+  'Capitol Records', 'Mother', 'Kettle', 'Syngenta', 'Storacha', 'Gaia', 'Linea',
 ]

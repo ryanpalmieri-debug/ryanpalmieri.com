@@ -112,7 +112,7 @@ export default function Contact() {
           <div style={{ marginBottom: '40px' }}>
             <p style={{ ...labelStyle, marginBottom: '10px' }}>Email</p>
             <a
-              href="mailto:ryan@ryanpalmieri.com"
+              href="mailto:ryanpalmieri@gmail.com"
               className="link-line"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
@@ -127,7 +127,7 @@ export default function Contact() {
               onMouseEnter={e => (e.currentTarget.style.color = '#606060')}
               onMouseLeave={e => (e.currentTarget.style.color = '#000000')}
             >
-              ryan@ryanpalmieri.com
+              ryanpalmieri@gmail.com
             </a>
           </div>
 
