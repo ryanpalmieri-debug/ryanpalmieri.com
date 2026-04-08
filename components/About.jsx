@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 export default function About() {
   const disciplines = [
     'Creative Direction',
@@ -9,71 +11,200 @@ export default function About() {
   ]
 
   const stats = [
-    { value: '10+', label: 'Years Experience' },
-    { value: '50+', label: 'Projects Completed' },
+    { value: '10+', label: 'Years' },
+    { value: '50+', label: 'Projects' },
     { value: '3', label: 'Continents' },
   ]
 
+  const refs = {
+    label: useRef(null),
+    headline: useRef(null),
+    bio1: useRef(null),
+    bio2: useRef(null),
+    stats: useRef(null),
+    disciplines: useRef(null),
+  }
+
+  useEffect(() => {
+    const observe = (ref) => {
+      const el = ref.current
+      if (!el) return
+      const io = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); io.unobserve(el) } },
+        { threshold: 0.12 }
+      )
+      io.observe(el)
+      return io
+    }
+    const observers = Object.values(refs).map(observe)
+    return () => observers.forEach(io => io && io.disconnect())
+  }, [])
+
   return (
-    <section id="about" className="w-full px-4 md:px-10 py-32 border-t border-zinc-900">
-      <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24">
+    <section
+      id="about"
+      style={{
+        backgroundColor: '#ffffff',
+        paddingTop: '100px',
+        paddingBottom: '100px',
+        paddingLeft: 'clamp(24px, 6vw, 56px)',
+        paddingRight: 'clamp(24px, 6vw, 56px)',
+      }}
+    >
+      <div style={{ maxWidth: '900px' }}>
+        {/* Label */}
+        <p
+          ref={refs.label}
+          className="reveal"
+          style={{
+            fontFamily: 'Georgia, serif',
+            fontSize: '13px',
+            color: '#3918A5',
+            letterSpacing: '0.06em',
+            marginBottom: '16px',
+          }}
+        >
+          About
+        </p>
 
-        {/* Left — label + stats */}
-        <div className="md:col-span-4 flex flex-col justify-between gap-16">
-          <div>
-            <p className="text-zinc-600 text-xs uppercase tracking-widest font-semibold mb-4">About</p>
-            <h2
-              className="text-white font-black uppercase"
-              style={{ fontSize: 'clamp(2rem, 4vw, 4rem)', letterSpacing: '-0.04em', lineHeight: '0.9' }}
-            >
-              The Work.<br />The Vision.
-            </h2>
-            <div className="w-10 h-px bg-white mt-8" />
-          </div>
+        {/* Headline */}
+        <h2
+          ref={refs.headline}
+          className="reveal delay-1"
+          style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontStyle: 'italic',
+            fontWeight: 400,
+            fontSize: 'clamp(2.8rem, 6vw, 5.5rem)',
+            lineHeight: 1.1,
+            letterSpacing: '-0.4px',
+            color: '#000000',
+            marginBottom: '0',
+          }}
+        >
+          The work.<br />The vision.
+        </h2>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 md:grid-cols-1 gap-8">
-            {stats.map((s) => (
-              <div key={s.label}>
-                <p
-                  className="text-white font-black"
-                  style={{ fontSize: 'clamp(2.5rem, 4vw, 4rem)', letterSpacing: '-0.04em', lineHeight: '1' }}
-                >
-                  {s.value}
-                </p>
-                <p className="text-zinc-600 text-xs uppercase tracking-widest font-semibold mt-1">{s.label}</p>
+        {/* Divider */}
+        <div
+          style={{
+            width: '40px',
+            height: '1px',
+            backgroundColor: '#000000',
+            marginTop: '32px',
+            marginBottom: '32px',
+          }}
+        />
+
+        {/* Bio 1 */}
+        <p
+          ref={refs.bio1}
+          className="reveal"
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '16px',
+            lineHeight: '20px',
+            color: '#000000',
+            marginBottom: '24px',
+          }}
+        >
+          Placeholder — Ryan Palmieri is a creative director, producer, and strategist who builds at the intersection of culture, technology, and brand. His work spans global campaigns, documentary film, and emerging-tech platforms — always grounded in authentic storytelling.
+        </p>
+
+        {/* Bio 2 */}
+        <p
+          ref={refs.bio2}
+          className="reveal delay-2"
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '16px',
+            lineHeight: '20px',
+            color: 'rgba(74,74,74,0.5)',
+            marginBottom: '56px',
+          }}
+        >
+          Placeholder — From directing branded content for Fortune 500 companies to producing independent film, Ryan brings a producer&apos;s instinct and a director&apos;s eye to every project.
+        </p>
+
+        {/* Stats row */}
+        <div
+          ref={refs.stats}
+          className="reveal delay-3"
+          style={{
+            display: 'flex',
+            gap: '56px',
+            marginBottom: '56px',
+            flexWrap: 'wrap',
+          }}
+        >
+          {stats.map((s) => (
+            <div key={s.label}>
+              <p
+                style={{
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontSize: '3.5rem',
+                  fontWeight: 400,
+                  color: '#000000',
+                  lineHeight: 1,
+                  marginBottom: '6px',
+                }}
+              >
+                {s.value}
+              </p>
+              <p
+                style={{
+                  fontFamily: 'Georgia, serif',
+                  fontSize: '11px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.12em',
+                  color: 'rgba(74,74,74,0.5)',
+                }}
+              >
+                {s.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Disciplines */}
+        <div
+          ref={refs.disciplines}
+          className="reveal delay-4"
+        >
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '10px 40px',
+            }}
+          >
+            {disciplines.map((d) => (
+              <div
+                key={d}
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: '14px',
+                  color: 'rgba(74,74,74,0.5)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '4px',
+                    height: '4px',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(74,74,74,0.3)',
+                    flexShrink: 0,
+                  }}
+                />
+                {d}
               </div>
             ))}
           </div>
         </div>
-
-        {/* Right — bio + disciplines */}
-        <div className="md:col-span-8 flex flex-col gap-12">
-          <p className="text-zinc-300 text-xl md:text-2xl leading-relaxed font-medium" style={{ letterSpacing: '-0.02em' }}>
-            Placeholder — Ryan Palmieri is a creative director, producer, and strategist who builds at the intersection of culture, technology, and brand. His work spans global campaigns, documentary film, and emerging-tech platforms — always grounded in authentic storytelling and high-contrast creative vision.
-          </p>
-
-          <p className="text-zinc-500 text-base leading-relaxed">
-            Placeholder — From directing branded content for Fortune 500 companies to producing independent film, Ryan brings a producer's instinct and a director's eye to every project. He's collaborated with brands including Samsung, Syngenta, DC, and the Ethereum Foundation — as well as emerging organizations redefining their industries.
-          </p>
-
-          {/* Disciplines */}
-          <div className="border-t border-zinc-900 pt-10">
-            <p className="text-zinc-600 text-xs uppercase tracking-widest font-semibold mb-6">Disciplines</p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {disciplines.map((d) => (
-                <div
-                  key={d}
-                  className="flex items-center gap-3 text-zinc-400 text-sm font-medium"
-                >
-                  <span className="w-1 h-1 rounded-full bg-zinc-600 shrink-0" />
-                  {d}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
   )

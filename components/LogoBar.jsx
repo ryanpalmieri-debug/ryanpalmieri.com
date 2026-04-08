@@ -1,21 +1,68 @@
 import { clients } from '../data/works'
 
 export default function LogoBar() {
+  // Duplicate for seamless marquee loop
+  const items = [...clients, ...clients]
+
   return (
-    <section className="w-full border-t border-b border-zinc-900 py-5 overflow-hidden">
-      <div className="flex items-center gap-0 w-full">
-        {/* Scrolling track — duplicated for seamless loop */}
-        <div className="flex items-center gap-0 animate-marquee whitespace-nowrap" style={{ minWidth: 'max-content' }}>
-          {clients.map((client, i) => (
-            <span key={i} className="flex items-center gap-10 px-10">
-              <span className="text-zinc-600 text-xs font-bold uppercase tracking-[0.2em] hover:text-zinc-300 transition-colors cursor-default">
-                {client}
-              </span>
-              <span className="text-zinc-800 text-lg select-none">×</span>
+    <div
+      style={{
+        borderTop: '1px solid rgba(0,0,0,0.08)',
+        borderBottom: '1px solid rgba(0,0,0,0.08)',
+        paddingTop: '14px',
+        paddingBottom: '14px',
+        overflow: 'hidden',
+        backgroundColor: '#ffffff',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          animation: 'marquee 28s linear infinite',
+          whiteSpace: 'nowrap',
+          minWidth: 'max-content',
+        }}
+      >
+        {items.map((client, i) => (
+          <span
+            key={i}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0' }}
+          >
+            <span
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '11px',
+                fontWeight: 500,
+                textTransform: 'uppercase',
+                letterSpacing: '0.15em',
+                color: 'rgba(74,74,74,0.4)',
+                padding: '0 28px',
+                cursor: 'default',
+              }}
+            >
+              {client}
             </span>
-          ))}
-        </div>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '3px',
+                height: '3px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(74,74,74,0.2)',
+                flexShrink: 0,
+              }}
+            />
+          </span>
+        ))}
       </div>
-    </section>
+
+      <style>{`
+        @keyframes marquee {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
+    </div>
   )
 }

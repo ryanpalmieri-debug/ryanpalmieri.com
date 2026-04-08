@@ -20,11 +20,10 @@ async function getWorks() {
 
 export default async function Home() {
   const works = await getWorks()
-
   return (
-    <>
+    <div style={{ position: 'relative', overflow: 'hidden' }}>
       <Nav />
-      <main className="w-full">
+      <main>
         <Hero />
         <LogoBar />
         <WorkGallery works={works} />
@@ -32,6 +31,6 @@ export default async function Home() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </div>
   )
 }

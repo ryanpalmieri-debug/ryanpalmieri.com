@@ -8,15 +8,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['DM Sans', 'sans-serif'],
+        display: ['Playfair Display', 'Georgia', 'serif'],
       },
       colors: {
-        background: '#0a0a0a',
-        surface: '#111111',
-        border: '#1f1f1f',
-      },
-      letterSpacing: {
-        tightest: '-0.04em',
+        accent: '#3918A5',
+        'accent-blue': '#0078FF',
+        muted: '#777777',
       },
     },
   },
