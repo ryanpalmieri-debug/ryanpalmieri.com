@@ -61,6 +61,13 @@ export const work = {
       description: 'Short project description shown on hover',
     },
     {
+      name: 'body',
+      title: 'Body',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Full project description shown on the detail page',
+    },
+    {
       name: 'thumbnail',
       title: 'Thumbnail',
       type: 'image',

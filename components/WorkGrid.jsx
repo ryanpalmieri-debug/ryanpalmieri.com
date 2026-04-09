@@ -1,9 +1,8 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { works } from '../data/works'
 
-export default function WorkGrid() {
+export default function WorkGrid({ works = [] }) {
   const sectionRef = useRef(null)
 
   useEffect(() => {
@@ -43,8 +42,8 @@ export default function WorkGrid() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {works.map((work, i) => (
             <a
-              key={work.id}
-              href={`#work-${work.slug}`}
+              key={work._id || work.id}
+              href={`/work/${work.slug}`}
               className={`group relative overflow-hidden bg-gray-100 reveal ${i < 3 ? `delay-${i + 1}` : ''}`}
               style={{ aspectRatio: i === 0 || i === 3 ? '4/3' : '3/4' }}
             >
