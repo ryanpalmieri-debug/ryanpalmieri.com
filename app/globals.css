@@ -32,3 +32,16 @@ html {
 .delay-3 { transition-delay: 300ms; }
 .delay-4 { transition-delay: 400ms; }
 .delay-5 { transition-delay: 500ms; }
+
+/* Staging marquee animation */
+@keyframes marquee-staging {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee-staging {
+  animation: marquee-staging 50s linear infinite;
+  will-change: transform;
+}
+.animate-marquee-staging:hover {
+  animation-play-state: paused;
+}
