@@ -3,7 +3,7 @@ import { workBySlugQuery } from '../../../lib/sanity/queries'
 import { works as staticWorks } from '../../../data/works'
 import WorkDetail from '../../../components/WorkDetail'
 
-export const revalidate = 60
+export const revalidate = 10
 
 async function getWork(slug) {
   try {

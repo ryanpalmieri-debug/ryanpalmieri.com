@@ -8,7 +8,7 @@ import { client } from '../lib/sanity/client'
 import { worksQuery } from '../lib/sanity/queries'
 import { works as staticWorks } from '../data/works'
 
-export const revalidate = 60
+export const revalidate = 10
 
 async function getWorks() {
   try {
