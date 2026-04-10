@@ -57,7 +57,7 @@ export default function WorkGrid({ works = [] }) {
               {/* Title centered on hover */}
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <span className="text-white text-lg md:text-xl font-medium tracking-tight">
-                  {work.client || work.title.split(':')[0].split('—')[0].trim()}
+                  {work.title}
                 </span>
               </div>
             </a>
