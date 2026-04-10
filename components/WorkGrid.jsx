@@ -45,7 +45,7 @@ export default function WorkGrid({ works = [] }) {
               key={work._id || work.id}
               href={`/work/${work.slug}`}
               className={`group relative overflow-hidden bg-gray-100 reveal ${i < 3 ? `delay-${i + 1}` : ''}`}
-              style={{ aspectRatio: i === 0 || i === 3 ? '4/3' : '3/4' }}
+              style={{ aspectRatio: '4/3' }}
             >
               {/* Image */}
               <div
