@@ -52,7 +52,7 @@ export default function About() {
             {/* Left: large statement */}
             <div className="reveal">
               <h2 className="text-[clamp(2rem,4.5vw,4.5rem)] font-bold leading-[1.15] tracking-[-0.03em] text-black">
-                I cut through the hype to build brand narratives and marketing strategies that resonate with people — sharpened by my passion for storytelling.
+                I build brands for the machine age. It&apos;s fun.
               </h2>
             </div>
 
@@ -70,7 +70,7 @@ export default function About() {
               <div className="border-t border-black pt-6">
                 <div className="max-w-[420px]">
                   <p className="text-[14px] text-black/70 leading-relaxed mb-8">
-                    Ryan Palmieri is a brand strategist and creative director who builds at the intersection of culture, technology, and emerging media. His work spans global campaigns, documentary film, frontier-tech platforms, and AI agent systems — always grounded in the story beneath the product.
+                    Ryan Palmieri is a brand strategist, marketing leader, and creative director developing narratives for technically complex, category-defining products. His work spans frontier tech, Web3, documentary film, and global campaigns for companies including Gaia, Samsung, DC Comics, and Nike.
                   </p>
                   <a
                     href="/ryan-palmieri-resume.pdf"
