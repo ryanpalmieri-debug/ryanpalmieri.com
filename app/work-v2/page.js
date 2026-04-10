@@ -1,4 +1,4 @@
-import Nav from '../../components/Nav'
+import NavV2 from '../../components/work-v2/NavV2'
 import Footer from '../../components/Footer'
 import WorkGridV2 from '../../components/work-v2/WorkGridV2'
 import { client } from '../../lib/sanity/client'
@@ -21,8 +21,8 @@ export default async function WorkV2Page() {
 
   return (
     <>
-      <Nav />
-      <main>
+      <NavV2 active="Work" />
+      <main className="pt-[88px]">
         <WorkGridV2 works={works} />
       </main>
       <Footer />

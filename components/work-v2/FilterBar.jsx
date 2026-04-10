@@ -1,75 +1,107 @@
 'use client'
 
-import { useState } from 'react'
-
 const filterGroups = {
-  sector: ['Technology', 'Culture', 'Sports', 'Film', 'Music', 'Web3', 'Social'],
-  expertise: ['Strategy', 'Brand Identity', 'Creative Direction', 'Film & Production', 'Campaigns', 'Content Systems', 'AI & Automation', 'Marketing'],
+  Outcome: [
+    'Accelerate Early Traction',
+    'Bridge to Mainstream',
+    'Lead Emergent Categories',
+    'Evolve & Extend Brand Equity',
+    'Activate Brand-Led Innovation',
+  ],
+  Sector: [
+    'Technology',
+    'Culture',
+    'Sports',
+    'Film',
+    'Music',
+    'Web3',
+    'Social',
+  ],
+  Expertise: [
+    'Strategy',
+    'Brand Identity',
+    'Creative Direction',
+    'Film & Production',
+    'Campaigns',
+    'Content Systems',
+    'AI & Automation',
+  ],
+  Theme: [
+    'Emergent Technologies',
+    'Human Wellbeing',
+    'Energy Independence',
+    'Nature Reimagined',
+    'Cultural Expression',
+    'Societal Futures',
+  ],
 }
 
 export default function FilterBar({ activeFilters, setActiveFilters }) {
-  const [openGroup, setOpenGroup] = useState(null)
-
   const toggleFilter = (group, value) => {
+    const key = group.toLowerCase()
     setActiveFilters((prev) => {
-      const current = prev[group] || []
+      const current = prev[key] || []
       const next = current.includes(value)
         ? current.filter((v) => v !== value)
         : [...current, value]
-      return { ...prev, [group]: next }
+      return { ...prev, [key]: next }
     })
   }
 
-  const clearAll = () => setActiveFilters({ sector: [], expertise: [] })
+  const clearAll = () =>
+    setActiveFilters({ outcome: [], sector: [], expertise: [], theme: [] })
 
   const totalActive = Object.values(activeFilters).flat().length
+  const isAllActive = totalActive === 0
 
   return (
-    <div className="border-t border-b border-black/10 py-6 mb-12">
-      <div className="flex flex-wrap items-start gap-8">
-        {Object.entries(filterGroups).map(([group, options]) => (
-          <div key={group} className="flex-1 min-w-[240px]">
-            <button
-              onClick={() => setOpenGroup(openGroup === group ? null : group)}
-              className="text-[11px] font-medium uppercase tracking-wider text-black/50 hover:text-black transition-colors mb-3 flex items-center gap-2"
-            >
-              {group}
-              <span className="text-black/30">
-                {openGroup === group ? '−' : '+'}
-              </span>
-            </button>
-
-            {openGroup === group && (
-              <div className="flex flex-wrap gap-2">
-                {options.map((option) => {
-                  const isActive = activeFilters[group]?.includes(option)
-                  return (
-                    <button
-                      key={option}
-                      onClick={() => toggleFilter(group, option)}
-                      className={`text-[12px] rounded-full px-3 py-1.5 border transition-colors ${
-                        isActive
-                          ? 'bg-black text-white border-black'
-                          : 'border-black/15 text-black/60 hover:border-black/40'
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  )
-                })}
-              </div>
-            )}
-          </div>
-        ))}
-
-        {totalActive > 0 && (
+    <div className="py-10 border-b border-black/10">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-6">
+        {/* All indicator — leftmost column */}
+        <div className="flex items-start md:items-start">
           <button
             onClick={clearAll}
-            className="text-[12px] text-black/50 hover:text-black transition-colors border-b border-black/20 hover:border-black pb-0.5"
+            className="flex items-center gap-2 text-[15px] font-normal text-black hover:opacity-60 transition-opacity"
           >
-            Clear {totalActive} {totalActive === 1 ? 'filter' : 'filters'}
+            <span
+              className={`inline-block w-[7px] h-[7px] rounded-full ${
+                isAllActive ? 'bg-black' : 'bg-black/20'
+              }`}
+            />
+            All
           </button>
-        )}
+        </div>
+
+        {/* Four filter columns */}
+        {Object.entries(filterGroups).map(([group, options]) => {
+          const key = group.toLowerCase()
+          return (
+            <div key={group}>
+              <h4 className="text-[15px] font-semibold text-black mb-5">
+                {group}
+              </h4>
+              <ul className="flex flex-col gap-[6px]">
+                {options.map((option) => {
+                  const isActive = activeFilters[key]?.includes(option)
+                  return (
+                    <li key={option}>
+                      <button
+                        onClick={() => toggleFilter(group, option)}
+                        className={`text-left text-[15px] transition-colors leading-snug ${
+                          isActive
+                            ? 'text-black font-medium'
+                            : 'text-black/30 hover:text-black/70'
+                        }`}
+                      >
+                        {option}
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
