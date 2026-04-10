@@ -1,9 +1,8 @@
-import Nav from '../components/Nav'
-import Hero from '../components/Hero'
-import About from '../components/About'
-import WorkGrid from '../components/WorkGrid'
-import Services from '../components/Services'
-import Footer from '../components/Footer'
+import NavStaging from '../components/staging/NavStaging'
+import HeroStaging from '../components/staging/HeroStaging'
+import Marquee from '../components/staging/Marquee'
+import FeaturedGrid from '../components/staging/FeaturedGrid'
+import FooterStaging from '../components/staging/FooterStaging'
 import { client } from '../lib/sanity/client'
 import { worksQuery } from '../lib/sanity/queries'
 import { works as staticWorks } from '../data/works'
@@ -24,14 +23,13 @@ export default async function Home() {
 
   return (
     <>
-      <Nav />
-      <main>
-        <Hero />
-        <About />
-        <WorkGrid works={works} />
-        <Services />
+      <NavStaging />
+      <main className="pt-[56px]">
+        <HeroStaging />
+        <Marquee />
+        <FeaturedGrid works={works} />
       </main>
-      <Footer />
+      <FooterStaging />
     </>
   )
 }
