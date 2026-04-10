@@ -1,54 +1,110 @@
-/**
- * One-time migration: pushes all works from data/works.js into Sanity.
- * Run with: SANITY_TOKEN=your_token node scripts/migrate-to-sanity.mjs
- */
+// Migration: wipes old work documents in Sanity, uploads thumbnails,
+// and recreates all projects from data/works.js
+// Run with: SANITY_TOKEN=xxx node scripts/migrate-to-sanity.mjs
 
 import { createClient } from '@sanity/client'
+import fs from 'fs'
+import path from 'path'
+import { works } from '../data/works.js'
+
+const token = process.env.SANITY_TOKEN
+if (!token) {
+  console.error('Missing SANITY_TOKEN env var')
+  process.exit(1)
+}
 
 const client = createClient({
   projectId: 'k7b94oei',
   dataset: 'production',
   apiVersion: '2024-01-01',
-  token: process.env.SANITY_TOKEN,
+  token,
   useCdn: false,
 })
 
-const works = [
-  { slug: 'samsung', title: 'Gaia x Samsung: The First Sovereign AI Phone', category: 'Strategy & Brand', client: 'Samsung / Gaia', year: '2024', role: 'Creative Strategist', summary: 'Repositioning on-device AI as a consumer sovereignty story — reframing the phone itself as the message.', featured: true },
-  { slug: 'generosity', title: 'From Water to Data: Powering the Future of Intelligent Hydration', category: 'Campaigns & Partnerships', client: 'Generosity™', year: '2024', role: 'Campaign Director', summary: 'A partnership campaign connecting water infrastructure data to consumer health intelligence.', featured: false },
-  { slug: 'hackathon', title: 'Agents of Change — The First Ever Autonomous Hackathon', category: 'Campaigns & Partnerships', client: 'Gaia', year: '2024', role: 'Executive Producer', summary: "Designing the world's first fully autonomous hackathon event — where AI agents competed alongside humans.", featured: true },
-  { slug: 'dc-visionnaires', title: "DC's Visionnaires", category: 'Branded Content', client: 'DC', year: '2023', role: 'Director', summary: "A branded content series celebrating the next generation of visionary creators in DC's extended universe.", featured: false },
-  { slug: 'verifiable-intelligence', title: 'Verifiable Intelligence: When AI Outputs Require Proof', category: 'Campaigns & Partnerships', client: 'Gaia', year: '2024', role: 'Creative Director', summary: 'A thought-leadership campaign redefining trust in AI systems through verifiable, on-chain proof of output.', featured: true },
-  { slug: 'center-for-common-ground', title: 'Center for Common Ground', category: 'Branded Content', client: 'Center for Common Ground', year: '2022', role: 'Director', summary: 'A civic engagement campaign mobilizing underrepresented communities through authentic storytelling and film.', featured: false },
-  { slug: 'kettle', title: 'Kettle Finance — Breaking Down Authentication', category: 'Branded Content', client: 'Kettle Finance', year: '2023', role: 'Creative Director', summary: 'Translating complex DeFi authentication concepts into approachable, human-centered branded content.', featured: false },
-  { slug: 'syngenta', title: 'Feeding the Future — Innovation, Sustainability, and the Modern Farmer', category: 'Branded Content', client: 'Syngenta', year: '2023', role: 'Director & Producer', summary: 'A documentary-style branded series exploring how agricultural innovation is reshaping global food systems.', featured: true },
-  { slug: 'contact-high', title: 'Contact High (Teaser)', category: 'Film & Production', client: 'Independent', year: '2023', role: 'Director', summary: 'A short film teaser exploring the visceral, kinetic energy of street culture and human connection.', featured: false },
-  { slug: 'eth-anniversary', title: 'ETH Anniversary', category: 'Strategy & Brand', client: 'Ethereum Foundation', year: '2022', role: 'Creative Director', summary: "Commemorating Ethereum's anniversary through a brand campaign that honored the protocol's cultural impact.", featured: false },
-  { slug: 'dc-daily', title: 'DC Daily', category: 'Branded Content', client: 'DC', year: '2022', role: 'Producer', summary: "Daily branded content production for DC's digital channels — building a consistent editorial voice for superfans.", featured: false },
-]
-
-async function migrate() {
-  console.log(`Migrating ${works.length} works to Sanity...`)
-  for (const work of works) {
-    const doc = {
-      _type: 'work',
-      title: work.title,
-      slug: { _type: 'slug', current: work.slug },
-      featured: work.featured,
-      category: work.category,
-      client: work.client,
-      year: work.year,
-      role: work.role,
-      summary: work.summary,
-    }
-    try {
-      await client.create(doc)
-      console.log(`  ✓ ${work.title}`)
-    } catch (e) {
-      console.error(`  ✗ ${work.title}: ${e.message}`)
-    }
+async function uploadImage(relativePath) {
+  const fullPath = path.join('public', relativePath)
+  if (!fs.existsSync(fullPath)) {
+    console.warn(`  ⚠ Missing: ${fullPath}`)
+    return null
   }
-  console.log('\nDone! Add thumbnails in the Sanity Studio at ryanpalmieri.com/studio')
+  const buffer = fs.readFileSync(fullPath)
+  const asset = await client.assets.upload('image', buffer, {
+    filename: path.basename(relativePath),
+  })
+  return asset._id
 }
 
-migrate()
+async function migrate() {
+  console.log('🗑  Deleting all existing work documents...')
+  const existing = await client.fetch(`*[_type == "work"]._id`)
+  for (const id of existing) {
+    await client.delete(id)
+  }
+  console.log(`   Deleted ${existing.length} existing documents.`)
+
+  console.log(`\n📤 Uploading ${works.length} projects...`)
+
+  for (const [index, w] of works.entries()) {
+    console.log(`\n[${index + 1}/${works.length}] ${w.title}`)
+
+    const thumbAssetId = await uploadImage(w.thumbnail)
+    if (!thumbAssetId) {
+      console.log(`  ⏭ Skipping (no thumbnail)`)
+      continue
+    }
+
+    const galleryAssetIds = []
+    if (w.images && w.images.length > 0) {
+      for (const img of w.images) {
+        const id = await uploadImage(img)
+        if (id) galleryAssetIds.push(id)
+      }
+    }
+
+    const doc = {
+      _type: 'work',
+      _id: `work-${w.slug}`,
+      title: w.title,
+      slug: { _type: 'slug', current: w.slug },
+      featured: w.featured || false,
+      order: index + 1,
+      category: w.category,
+      client: w.client || '',
+      year: w.year || '',
+      role: w.role || '',
+      summary: w.summary || '',
+      thumbnail: {
+        _type: 'image',
+        asset: { _type: 'reference', _ref: thumbAssetId },
+      },
+      ...(galleryAssetIds.length > 0 && {
+        images: galleryAssetIds.map((id, i) => ({
+          _type: 'image',
+          _key: `img-${i}-${id.slice(-6)}`,
+          asset: { _type: 'reference', _ref: id },
+        })),
+      }),
+      ...(w.videoUrl && { videoUrl: w.videoUrl }),
+      ...(w.link && { link: w.link }),
+      ...(w.body && {
+        body: w.body.split('\n\n').filter(Boolean).map((para, i) => ({
+          _type: 'block',
+          _key: `blk-${i}`,
+          style: 'normal',
+          markDefs: [],
+          children: [{ _type: 'span', _key: `sp-${i}`, text: para.trim(), marks: [] }],
+        })),
+      }),
+    }
+
+    await client.createOrReplace(doc)
+    console.log(`  ✓ Uploaded with ${galleryAssetIds.length > 0 ? `${galleryAssetIds.length} gallery images` : 'thumbnail only'}`)
+  }
+
+  console.log(`\n✅ Done. ${works.length} projects live in Sanity.`)
+}
+
+migrate().catch((err) => {
+  console.error(err)
+  process.exit(1)
+})

@@ -24,6 +24,12 @@ export const work = {
       initialValue: false,
     },
     {
+      name: 'order',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Lower numbers appear first. Use to manually order projects.',
+    },
+    {
       name: 'category',
       title: 'Category',
       type: 'string',
@@ -104,14 +110,14 @@ export const work = {
   },
   orderings: [
     {
+      title: 'Display Order',
+      name: 'orderAsc',
+      by: [{ field: 'order', direction: 'asc' }],
+    },
+    {
       title: 'Featured First',
       name: 'featuredDesc',
       by: [{ field: 'featured', direction: 'desc' }, { field: 'year', direction: 'desc' }],
-    },
-    {
-      title: 'Year, Newest First',
-      name: 'yearDesc',
-      by: [{ field: 'year', direction: 'desc' }],
     },
   ],
 }

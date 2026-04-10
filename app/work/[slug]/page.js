@@ -1,8 +1,20 @@
-import { works } from '../../../data/works'
+import { client } from '../../../lib/sanity/client'
+import { workBySlugQuery } from '../../../lib/sanity/queries'
+import { works as staticWorks } from '../../../data/works'
 import WorkDetail from '../../../components/WorkDetail'
 
-export default function WorkPage({ params }) {
-  const work = works.find(w => w.slug === params.slug)
+export const revalidate = 60
+
+async function getWork(slug) {
+  try {
+    const data = await client.fetch(workBySlugQuery, { slug })
+    if (data) return data
+  } catch {}
+  return staticWorks.find(w => w.slug === slug) || null
+}
+
+export default async function WorkPage({ params }) {
+  const work = await getWork(params.slug)
 
   if (!work) {
     return (
@@ -13,8 +25,4 @@ export default function WorkPage({ params }) {
   }
 
   return <WorkDetail work={work} />
-}
-
-export function generateStaticParams() {
-  return works.map(w => ({ slug: w.slug }))
 }
