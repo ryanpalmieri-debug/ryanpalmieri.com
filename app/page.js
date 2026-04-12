@@ -1,8 +1,9 @@
 import NavStaging from '../components/staging/NavStaging'
 import HeroStaging from '../components/staging/HeroStaging'
 import Marquee from '../components/staging/Marquee'
-import FeaturedGrid from '../components/staging/FeaturedGrid'
+import FeaturedStack from '../components/staging/FeaturedStack'
 import FooterStaging from '../components/staging/FooterStaging'
+import CustomCursor from '../components/staging/CustomCursor'
 import { client } from '../lib/sanity/client'
 import { worksQuery } from '../lib/sanity/queries'
 import { works as staticWorks } from '../data/works'
@@ -23,11 +24,12 @@ export default async function Home() {
 
   return (
     <>
+      <CustomCursor />
       <NavStaging />
       <main className="pt-[56px]">
         <HeroStaging />
         <Marquee />
-        <FeaturedGrid works={works} />
+        <FeaturedStack works={works} />
       </main>
       <FooterStaging />
     </>

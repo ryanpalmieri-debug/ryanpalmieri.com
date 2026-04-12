@@ -9,8 +9,10 @@ export default function FooterStaging() {
           <p className="text-[11px] uppercase tracking-[0.18em] text-white/40 mb-8">
             Contact
           </p>
-          <h2 className="text-[clamp(2.5rem,6vw,6rem)] leading-[0.95] tracking-[-0.03em] font-medium mb-12">
-            Let&apos;s build<br />together.
+          <h2 className="font-serif text-[clamp(2.8rem,7vw,7.5rem)] leading-[0.92] tracking-[-0.03em] mb-12">
+            <span className="italic font-normal">Let&apos;s build</span>
+            <br />
+            <span className="font-medium">together.</span>
           </h2>
           <a
             href="mailto:ryanpalmieri@gmail.com"

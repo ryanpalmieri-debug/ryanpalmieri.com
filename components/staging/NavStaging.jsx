@@ -28,9 +28,10 @@ export default function NavStaging() {
         <div className="flex-1 flex justify-center">
           <a
             href="/"
-            className="text-[15px] font-medium tracking-tight text-black hover:opacity-60 transition-opacity"
+            className="font-serif text-[20px] tracking-[-0.01em] text-black hover:opacity-60 transition-opacity"
           >
-            Ryan Palmieri
+            <span className="italic font-normal">Ryan</span>{' '}
+            <span className="font-medium">Palmieri</span>
           </a>
         </div>
 

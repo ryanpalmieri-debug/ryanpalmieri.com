@@ -20,8 +20,11 @@ export default function AboutPage() {
             <p className="text-[11px] uppercase tracking-[0.18em] text-black/50 mb-8">
               About
             </p>
-            <h1 className="text-[clamp(2.2rem,5vw,5rem)] leading-[1.1] tracking-[-0.03em] font-medium max-w-[900px]">
-              I build brands for the machine age. It&apos;s fun.
+            <h1 className="font-serif text-[clamp(2.2rem,5.5vw,6rem)] leading-[1] tracking-[-0.03em] max-w-[1100px]">
+              <span className="italic font-normal">I build brands</span>
+              <br />
+              <span className="font-medium">for the machine age.</span>
+              <span className="italic font-light text-black/40"> It&apos;s fun.</span>
             </h1>
           </div>
         </section>
