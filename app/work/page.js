@@ -1,69 +1,53 @@
-import { client } from '../../lib/sanity/client'
-import { worksQuery } from '../../lib/sanity/queries'
-import { works as staticWorks } from '../../data/works'
+'use client'
+
+import { useState, useEffect } from 'react'
+import { WorkCard } from '../../components/WorkCard'
 import { AnimateIn } from '../../components/AnimateIn'
+import { works as staticWorks } from '../../data/works'
 
-export const revalidate = 10
+const CATEGORIES = ['All Works', 'Strategy & Brand', 'Film & Production', 'Campaigns & Partnerships', 'Branded Content']
 
-async function getWorks() {
-  try {
-    const data = await client.fetch(worksQuery)
-    return data && data.length > 0 ? data : staticWorks
-  } catch {
-    return staticWorks
-  }
-}
+export default function WorkPage() {
+  const [active, setActive] = useState('All Works')
+  const [projects, setProjects] = useState(staticWorks)
 
-export default async function WorkPage() {
-  const allWorks = await getWorks()
-  const featured = allWorks.filter(p => p.featured).slice(0, 4)
-  const displayFeatured = featured.length >= 4 ? featured : allWorks.slice(0, 4)
+  // Try to load from Sanity client-side
+  useEffect(() => {
+    fetch(`https://k7b94oei.api.sanity.io/v2024-01-01/data/query/production?query=${encodeURIComponent('*[_type == "work"] | order(order asc) { _id, title, "slug": slug.current, featured, category, client, year, "thumbnail": thumbnail.asset->url }')}`)
+      .then(r => r.json())
+      .then(data => { if (data.result?.length > 0) setProjects(data.result) })
+      .catch(() => {})
+  }, [])
+
+  const filtered = active === 'All Works' ? projects : projects.filter(p => p.category === active)
 
   return (
     <main>
       <div className="page-header">
-        <h1 className="page-title">Work</h1>
-        <p className="page-description">
-          Selected projects across brand strategy, campaign, content, and AI.
-        </p>
+        <h1 className="page-header__label">All Works</h1>
       </div>
 
-      {/* 2x2 Featured Grid */}
-      <section style={{ padding: '0 var(--gutter) 80px' }}>
-        <h2 className="section-label">Selected Works</h2>
-        <div className="featured-grid__items">
-          {displayFeatured.map((p) => (
-            <AnimateIn key={p._id || p.slug}>
-              <a href={`/work/${p.slug}`} className="featured-card">
-                <div className="featured-card__media">
-                  <img src={p.thumbnail} alt={p.title} />
-                  <div className="featured-card__overlay">
-                    <span className="featured-card__title paren-link">
-                      <span className="paren-open">(</span>
-                      {p.title}
-                      <span className="paren-close">)</span>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </AnimateIn>
-          ))}
-        </div>
-      </section>
+      <div className="filter-tabs">
+        {CATEGORIES.map(cat => (
+          <button
+            key={cat}
+            className={`filter-tab ${active === cat ? 'active' : ''}`}
+            onClick={() => setActive(cat)}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
 
-      {/* Full list */}
-      <div className="work-list" style={{ padding: '0 var(--gutter)' }}>
-        {allWorks.map((p, i) => (
+      <div className="work-grid work-grid--3col">
+        {filtered.map((p, i) => (
           <AnimateIn key={p._id || p.slug} delay={i * 60}>
-            <a href={`/work/${p.slug}`} className="work-list__item paren-link">
-              <span className="work-list__title">
-                <span className="paren-open">(</span>
-                {p.title}
-                <span className="paren-close">)</span>
-              </span>
-              <span className="work-list__client">{p.client}</span>
-              <span className="work-list__category">{p.category}</span>
-            </a>
+            <WorkCard
+              href={`/work/${p.slug}`}
+              title={p.title}
+              category={p.category}
+              thumbnail={p.thumbnail}
+            />
           </AnimateIn>
         ))}
       </div>

@@ -1,15 +1,24 @@
-import { ParenLink } from './ParenLink'
-
 export function Footer() {
   return (
     <footer className="footer">
-      <div className="footer__top">
-        <ParenLink href="/" size="sm">Ryan Palmieri</ParenLink>
-        <ParenLink href="mailto:ryanpalmieri@gmail.com" size="sm">ryanpalmieri@gmail.com</ParenLink>
-      </div>
-      <hr className="footer__divider" />
-      <div className="footer__bottom">
-        <span>&copy; 2026 Ryan Palmieri. All rights reserved.</span>
+      <div className="footer__grid">
+        <div className="footer__col">
+          <span className="footer__label">Socials</span>
+          <a href="https://www.linkedin.com/in/ryan-palmieri-715190213/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://x.com/ryanppalmieri" target="_blank" rel="noopener noreferrer">Twitter / X</a>
+        </div>
+        <div className="footer__col">
+          <span className="footer__label">Work</span>
+          <a href="/work">All Projects</a>
+        </div>
+        <div className="footer__col">
+          <span className="footer__label">Let&apos;s Talk</span>
+          <a href="mailto:ryanpalmieri@gmail.com">ryanpalmieri@gmail.com</a>
+        </div>
+        <div className="footer__col">
+          <span className="footer__label">About</span>
+          <a href="/about">About Me</a>
+        </div>
       </div>
     </footer>
   )

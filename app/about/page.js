@@ -1,86 +1,90 @@
-import { ParenLink } from '../../components/ParenLink'
 import { AnimateIn } from '../../components/AnimateIn'
 
-const services = [
+const disciplines = [
   'Brand Strategy',
   'Campaign & Creative Direction',
   'Content Systems & AI Workflows',
   'Go-To-Market Planning',
   'Web3 & Ecosystem Marketing',
-  'Community & Growth',
+  'Film & Production',
 ]
 
 const experience = [
-  { name: 'Gaia', year: '2022–2026' },
-  { name: '4K Protocol', year: '2021–2024' },
-  { name: 'DevSpot', year: '2026' },
-  { name: 'Samsung', year: 'Prior' },
-  { name: 'Nike', year: 'Prior' },
-  { name: 'DC Comics', year: 'Prior' },
+  { company: 'Gaia', date: '2022 — 2026' },
+  { company: '4K Protocol', date: '2021 — 2024' },
+  { company: 'DevSpot', date: '2026' },
+  { company: 'Samsung', date: 'Prior' },
+  { company: 'Nike', date: 'Prior' },
+  { company: 'DC Comics', date: 'Prior' },
+  { company: 'Warner Bros.', date: 'Prior' },
 ]
 
-export const metadata = {
-  title: 'About — Ryan Palmieri',
-}
+export const metadata = { title: 'About — Ryan Palmieri' }
 
 export default function AboutPage() {
   return (
     <main>
-      <div className="page-header">
+      {/* Opening statement */}
+      <section className="about-statement">
         <AnimateIn>
-          <h1 className="page-title">About</h1>
+          <p className="statement-line">I believe every</p>
+          <p className="statement-line">brand has a</p>
         </AnimateIn>
         <AnimateIn delay={100}>
-          <p className="page-description">
-            Senior marketing leader and brand strategist. I build brands, campaigns, and AI-powered content systems for frontier tech companies, Web3 protocols, and global consumer brands.
-          </p>
+          <div className="statement-image">
+            <img src="/headshot.png" alt="Ryan Palmieri" />
+          </div>
         </AnimateIn>
-      </div>
+        <AnimateIn delay={200}>
+          <p className="statement-line">story worth</p>
+          <p className="statement-line statement-line--muted">telling well.</p>
+        </AnimateIn>
+      </section>
 
-      {/* Hero image */}
-      <AnimateIn delay={200}>
-        <div className="about-hero-image">
-          <img src="/headshot.png" alt="Ryan Palmieri" />
+      {/* Bio */}
+      <AnimateIn delay={100}>
+        <div className="about-bio">
+          <p>
+            Ryan Palmieri is a senior marketing leader, brand strategist, and creative director. He builds brands, campaigns, and AI-powered content systems for frontier tech companies, Web3 protocols, and global consumer brands — including Gaia, Samsung, DC Comics, and Nike. Based in Los Angeles.
+          </p>
         </div>
       </AnimateIn>
 
-      {/* Services */}
-      <section className="about-section">
+      {/* Disciplines */}
+      <section className="about-disciplines">
         <AnimateIn>
-          <h3 className="section-label">What I Do</h3>
+          <span className="section-label">What I Do</span>
         </AnimateIn>
         <ul className="divider-list">
-          {services.map((s, i) => (
-            <AnimateIn key={s} delay={i * 60}>
-              <li className="divider-list__item">{s}</li>
+          {disciplines.map((d, i) => (
+            <AnimateIn key={d} delay={i * 60}>
+              <li>{d}</li>
             </AnimateIn>
           ))}
         </ul>
       </section>
 
       {/* Experience */}
-      <section className="about-section">
+      <section className="about-experience">
         <AnimateIn>
-          <h3 className="section-label">Experience</h3>
+          <span className="section-label">Experience</span>
         </AnimateIn>
-        <ul className="clients-list">
+        <ul className="experience-list">
           {experience.map((e, i) => (
-            <AnimateIn key={e.name} delay={i * 60}>
-              <li className="clients-list__item">
-                <span className="clients-list__name">{e.name}</span>
-                <span className="clients-list__year">{e.year}</span>
+            <AnimateIn key={e.company} delay={i * 60}>
+              <li className="experience-item">
+                <span className="experience-item__company">{e.company}</span>
+                <span className="experience-item__date">{e.date}</span>
               </li>
             </AnimateIn>
           ))}
         </ul>
       </section>
 
-      {/* CTA */}
+      {/* Closing image */}
       <AnimateIn>
-        <div className="about-cta">
-          <ParenLink href="mailto:ryanpalmieri@gmail.com" size="lg">
-            Get In Touch
-          </ParenLink>
+        <div className="about-closing-image">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2940&auto=format&fit=crop" alt="" />
         </div>
       </AnimateIn>
     </main>

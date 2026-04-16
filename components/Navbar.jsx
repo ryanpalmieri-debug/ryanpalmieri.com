@@ -1,6 +1,6 @@
 'use client'
+import Link from 'next/link'
 import { useState } from 'react'
-import { ParenLink } from './ParenLink'
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
@@ -8,32 +8,19 @@ export function Navbar() {
   return (
     <>
       <nav className="navbar">
+        <Link href="/" className="navbar__name">Ryan Palmieri</Link>
         <ul className="navbar__links">
-          <li><ParenLink href="/" size="name">Ryan Palmieri</ParenLink></li>
-          <li><ParenLink href="/work">Work</ParenLink></li>
-          <li><ParenLink href="/about">About</ParenLink></li>
-          <li><ParenLink href="mailto:ryanpalmieri@gmail.com">Contact</ParenLink></li>
+          <li><Link href="/work">Works</Link></li>
+          <li><Link href="/about">About</Link></li>
+          <li><Link href="/contact" className="navbar__cta">Let&apos;s Talk</Link></li>
         </ul>
-        <button
-          className="navbar__hamburger"
-          onClick={() => setOpen(true)}
-          aria-label="Open menu"
-        >
-          <span /><span />
-        </button>
+        <button className="navbar__hamburger" onClick={() => setOpen(true)} aria-label="Open menu">MENU</button>
       </nav>
-
-      {/* Mobile overlay */}
       <div className={`mobile-menu ${open ? 'open' : ''}`}>
-        <button
-          className="mobile-menu__close"
-          onClick={() => setOpen(false)}
-          aria-label="Close menu"
-        >&times;</button>
-        <ParenLink href="/" size="lg" onClick={() => setOpen(false)}>Ryan Palmieri</ParenLink>
-        <ParenLink href="/work" size="lg" onClick={() => setOpen(false)}>Work</ParenLink>
-        <ParenLink href="/about" size="lg" onClick={() => setOpen(false)}>About</ParenLink>
-        <ParenLink href="mailto:ryanpalmieri@gmail.com" size="lg">Contact</ParenLink>
+        <button className="mobile-menu__close" onClick={() => setOpen(false)} aria-label="Close menu">&times;</button>
+        <Link href="/work" onClick={() => setOpen(false)}>Works</Link>
+        <Link href="/about" onClick={() => setOpen(false)}>About</Link>
+        <Link href="/contact" onClick={() => setOpen(false)}>Let&apos;s Talk</Link>
       </div>
     </>
   )

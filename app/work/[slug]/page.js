@@ -1,5 +1,6 @@
 import { works as staticWorks } from '../../../data/works'
 import { client } from '../../../lib/sanity/client'
+import { WorkCard } from '../../../components/WorkCard'
 
 export const revalidate = 10
 
@@ -12,6 +13,14 @@ async function getWork(slug) {
   return staticWorks.find(w => w.slug === slug) || null
 }
 
+async function getOtherWorks(slug) {
+  try {
+    const all = await client.fetch(`*[_type == "work" && slug.current != $slug] | order(order asc)[0...2] { _id, title, "slug": slug.current, category, "thumbnail": thumbnail.asset->url }`, { slug })
+    if (all?.length) return all
+  } catch {}
+  return staticWorks.filter(w => w.slug !== slug).slice(0, 2)
+}
+
 function toPlayableEmbed(url) {
   if (!url) return null
   const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/)
@@ -22,56 +31,28 @@ function toPlayableEmbed(url) {
 }
 
 export default async function ProjectPage({ params }) {
-  const project = await getWork(params.slug)
+  const [project, others] = await Promise.all([
+    getWork(params.slug),
+    getOtherWorks(params.slug),
+  ])
+
   if (!project) {
-    return <main className="page-header"><h1 className="page-title">Not Found</h1></main>
+    return <main className="page-header"><h1 className="page-header__label">Project Not Found</h1></main>
   }
 
   const videoEmbed = toPlayableEmbed(project.videoUrl)
 
   return (
     <main>
-      {/* Hero */}
-      <section className="project-hero">
-        <div className="project-hero__media">
-          <img src={project.thumbnail} alt={project.title} />
-        </div>
-        <div className="project-hero__title">
-          <h1>{project.title}</h1>
-        </div>
-      </section>
-
-      {/* Metadata */}
-      <div className="project-meta">
-        {project.role && (
-          <div className="meta-field">
-            <span className="meta-field__label">Role</span>
-            <span className="meta-field__value">{project.role}</span>
-          </div>
-        )}
-        {project.client && (
-          <div className="meta-field">
-            <span className="meta-field__label">Client</span>
-            <span className="meta-field__value">{project.client}</span>
-          </div>
-        )}
-        {project.year && (
-          <div className="meta-field">
-            <span className="meta-field__label">Year</span>
-            <span className="meta-field__value">{project.year}</span>
-          </div>
-        )}
-        {project.category && (
-          <div className="meta-field">
-            <span className="meta-field__label">Category</span>
-            <span className="meta-field__value">{project.category}</span>
-          </div>
-        )}
+      {/* Header */}
+      <div className="project-header">
+        <span className="project-header__category">{project.category}</span>
+        <h1 className="project-header__title">{project.title}</h1>
       </div>
 
-      {/* Video embed */}
+      {/* Video embed if available */}
       {videoEmbed && (
-        <div style={{ padding: '4px var(--gutter)', marginBottom: '4px' }}>
+        <div style={{ padding: '0 var(--gutter)', marginBottom: 48 }}>
           <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: '#000' }}>
             <iframe
               src={videoEmbed}
@@ -84,47 +65,98 @@ export default async function ProjectPage({ params }) {
         </div>
       )}
 
-      {/* Summary */}
-      {project.summary && (
-        <div style={{ padding: '48px var(--gutter)', maxWidth: '800px' }}>
-          <p style={{ fontSize: 'clamp(16px, 2vw, 22px)', lineHeight: 1.6, textTransform: 'none' }}>
-            {project.summary}
-          </p>
+      {/* Stills strip if images available */}
+      {project.images && project.images.length > 0 && (
+        <div className="project-slides">
+          <div className="project-slides__track">
+            {project.images.map((img, i) => (
+              <img key={i} src={img} alt="" className="project-slide" />
+            ))}
+          </div>
         </div>
       )}
 
-      {/* Body text */}
-      {project.body && (
-        <div style={{ padding: '0 var(--gutter) 48px', maxWidth: '800px' }}>
-          {typeof project.body === 'string' ? (
-            project.body.split('\n\n').filter(Boolean).map((para, i) => (
-              <p key={i} style={{ fontSize: '16px', lineHeight: 1.7, textTransform: 'none', marginBottom: '16px', color: 'var(--color-gray-mid)' }}>
-                {para.trim()}
-              </p>
-            ))
-          ) : (
-            Array.isArray(project.body) && project.body.map((block, i) => {
-              if (block._type === 'block') {
-                return (
-                  <p key={block._key || i} style={{ fontSize: '16px', lineHeight: 1.7, textTransform: 'none', marginBottom: '16px', color: 'var(--color-gray-mid)' }}>
-                    {block.children?.map(child => child.text).join('')}
-                  </p>
-                )
-              }
-              return null
-            })
+      {/* Thumbnail as hero if no video/images */}
+      {!videoEmbed && (!project.images || project.images.length === 0) && project.thumbnail && (
+        <div style={{ padding: '0 var(--gutter)', marginBottom: 48 }}>
+          <img src={project.thumbnail} alt={project.title} style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', display: 'block' }} />
+        </div>
+      )}
+
+      {/* Metadata */}
+      <div className="project-meta">
+        {project.role && (
+          <div className="meta-col">
+            <span className="meta-col__label">Role</span>
+            <span className="meta-col__value">{project.role}</span>
+          </div>
+        )}
+        {project.client && (
+          <div className="meta-col">
+            <span className="meta-col__label">Client</span>
+            <span className="meta-col__value">{project.client}</span>
+          </div>
+        )}
+        {project.year && (
+          <div className="meta-col">
+            <span className="meta-col__label">Year</span>
+            <span className="meta-col__value">{project.year}</span>
+          </div>
+        )}
+        {project.category && (
+          <div className="meta-col">
+            <span className="meta-col__label">Category</span>
+            <span className="meta-col__value">{project.category}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Case study text — 2-column writeup */}
+      {(project.summary || project.body) && (
+        <div className="project-writeup">
+          {project.summary && (
+            <div className="writeup-section">
+              <h3 className="writeup-section__label">Overview</h3>
+              <p className="writeup-section__body">{project.summary}</p>
+            </div>
+          )}
+          {project.body && (
+            <div className="writeup-section">
+              <h3 className="writeup-section__label">Details</h3>
+              <div className="writeup-section__body">
+                {typeof project.body === 'string' ? (
+                  project.body.split('\n\n').filter(Boolean).map((para, i) => (
+                    <p key={i} style={{ marginBottom: 16 }}>{para.trim()}</p>
+                  ))
+                ) : (
+                  Array.isArray(project.body) && project.body.map((block, i) => {
+                    if (block._type === 'block') {
+                      return <p key={block._key || i} style={{ marginBottom: 16 }}>{block.children?.map(c => c.text).join('')}</p>
+                    }
+                    return null
+                  })
+                )}
+              </div>
+            </div>
           )}
         </div>
       )}
 
-      {/* Gallery */}
-      {project.images && project.images.length > 0 && (
-        <div className="project-gallery">
-          {project.images.map((img, i) => (
-            <div key={i} className="gallery-image">
-              <img src={img} alt="" />
-            </div>
-          ))}
+      {/* Other works */}
+      {others.length > 0 && (
+        <div className="other-works">
+          <span className="other-works__label">Other Works</span>
+          <div className="work-grid work-grid--2col">
+            {others.map((p) => (
+              <WorkCard
+                key={p._id || p.slug}
+                href={`/work/${p.slug}`}
+                title={p.title}
+                category={p.category}
+                thumbnail={p.thumbnail}
+              />
+            ))}
+          </div>
         </div>
       )}
     </main>
