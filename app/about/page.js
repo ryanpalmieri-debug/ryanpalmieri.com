@@ -1,134 +1,88 @@
-import Nav from '../../components/staging/Nav'
-import Footer from '../../components/staging/Footer'
-import { clients } from '../../data/works'
+import { ParenLink } from '../../components/ParenLink'
+import { AnimateIn } from '../../components/AnimateIn'
+
+const services = [
+  'Brand Strategy',
+  'Campaign & Creative Direction',
+  'Content Systems & AI Workflows',
+  'Go-To-Market Planning',
+  'Web3 & Ecosystem Marketing',
+  'Community & Growth',
+]
+
+const experience = [
+  { name: 'Gaia', year: '2022–2026' },
+  { name: '4K Protocol', year: '2021–2024' },
+  { name: 'DevSpot', year: '2026' },
+  { name: 'Samsung', year: 'Prior' },
+  { name: 'Nike', year: 'Prior' },
+  { name: 'DC Comics', year: 'Prior' },
+]
 
 export const metadata = {
   title: 'About — Ryan Palmieri',
-  description: 'Brand strategist, creative director, and AI builder based in Los Angeles.',
 }
 
 export default function AboutPage() {
-  const uniqueClients = [...new Set(clients)]
-
   return (
-    <>
-      <Nav />
-      <main className="pt-[56px] bg-white text-black">
-        {/* Top large statement */}
-        <section className="px-6 md:px-8 pt-24 md:pt-32 pb-20">
-          <div className="max-w-[1200px] mx-auto">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-black/50 mb-8">
-              About
-            </p>
-            <h1 className="text-[clamp(2.2rem,5.5vw,6rem)] leading-[1] tracking-[-0.03em] max-w-[1100px]">
-              <span className="italic font-normal">I build brands</span>
-              <br />
-              <span className="font-medium">for the machine age.</span>
-              <span className="italic font-light text-black/40"> It&apos;s fun.</span>
-            </h1>
-          </div>
-        </section>
+    <main>
+      <div className="page-header">
+        <AnimateIn>
+          <h1 className="page-title">About</h1>
+        </AnimateIn>
+        <AnimateIn delay={100}>
+          <p className="page-description">
+            Senior marketing leader and brand strategist. I build brands, campaigns, and AI-powered content systems for frontier tech companies, Web3 protocols, and global consumer brands.
+          </p>
+        </AnimateIn>
+      </div>
 
-        {/* Two column bio */}
-        <section className="px-6 md:px-8 pb-24 border-t border-black/10 pt-20">
-          <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-12 md:gap-20">
-            {/* Left: photo */}
-            <div>
-              <div
-                className="w-full aspect-[4/5] bg-gray-100 bg-cover bg-center"
-                style={{ backgroundImage: 'url(/headshot.png)' }}
-              />
-            </div>
+      {/* Hero image */}
+      <AnimateIn delay={200}>
+        <div className="about-hero-image">
+          <img src="/headshot.png" alt="Ryan Palmieri" />
+        </div>
+      </AnimateIn>
 
-            {/* Right: copy */}
-            <div className="flex flex-col gap-8 max-w-[560px]">
-              <p className="text-[17px] leading-[1.6] text-black/80">
-                Ryan Palmieri is a brand strategist, marketing leader, and creative director developing narratives for technically complex, category-defining products. His work spans frontier tech, Web3, documentary film, and global campaigns for companies including Gaia, Samsung, DC Comics, and Nike.
-              </p>
-              <p className="text-[17px] leading-[1.6] text-black/60">
-                Based in Los Angeles, working worldwide. Currently focused on the intersection of brand, AI, and emerging media.
-              </p>
+      {/* Services */}
+      <section className="about-section">
+        <AnimateIn>
+          <h3 className="section-label">What I Do</h3>
+        </AnimateIn>
+        <ul className="divider-list">
+          {services.map((s, i) => (
+            <AnimateIn key={s} delay={i * 60}>
+              <li className="divider-list__item">{s}</li>
+            </AnimateIn>
+          ))}
+        </ul>
+      </section>
 
-              {/* Meta block */}
-              <div className="mt-6 grid grid-cols-2 gap-6 pt-8 border-t border-black/10">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.15em] text-black/40 mb-2">Location</p>
-                  <p className="text-[14px] text-black">Los Angeles, CA</p>
-                </div>
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.15em] text-black/40 mb-2">Availability</p>
-                  <p className="text-[14px] text-black">Worldwide</p>
-                </div>
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.15em] text-black/40 mb-2">Experience</p>
-                  <a
-                    href="/ryan-palmieri-resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[14px] text-black border-b border-black/30 hover:border-black pb-0.5"
-                  >
-                    Download resume
-                  </a>
-                </div>
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.15em] text-black/40 mb-2">Contact</p>
-                  <a
-                    href="mailto:ryanpalmieri@gmail.com"
-                    className="text-[14px] text-black border-b border-black/30 hover:border-black pb-0.5"
-                  >
-                    ryanpalmieri@gmail.com
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+      {/* Experience */}
+      <section className="about-section">
+        <AnimateIn>
+          <h3 className="section-label">Experience</h3>
+        </AnimateIn>
+        <ul className="clients-list">
+          {experience.map((e, i) => (
+            <AnimateIn key={e.name} delay={i * 60}>
+              <li className="clients-list__item">
+                <span className="clients-list__name">{e.name}</span>
+                <span className="clients-list__year">{e.year}</span>
+              </li>
+            </AnimateIn>
+          ))}
+        </ul>
+      </section>
 
-        {/* Disciplines */}
-        <section className="px-6 md:px-8 py-24 border-t border-black/10">
-          <div className="max-w-[1200px] mx-auto">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-black/50 mb-12">
-              Disciplines
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-20 max-w-[900px]">
-              {[
-                { num: '01', title: 'Brand Strategy', desc: 'Positioning, identity systems, cultural relevance defined with intention.' },
-                { num: '02', title: 'Creative Direction', desc: 'End-to-end creative vision across campaigns, content, and platforms.' },
-                { num: '03', title: 'Film & Production', desc: 'Directing branded content, documentaries, and campaign films.' },
-                { num: '04', title: 'Campaigns & Partnerships', desc: 'Integrated campaigns connecting brands to culture and community.' },
-                { num: '05', title: 'Content Systems', desc: 'Scalable content strategy and editorial frameworks.' },
-                { num: '06', title: 'AI & Automation', desc: 'Intelligent systems, agents, and pipelines designed for scale.' },
-              ].map((d) => (
-                <div key={d.num} className="border-t border-black/15 pt-6">
-                  <p className="text-[11px] text-black/40 mb-3">{d.num}</p>
-                  <h3 className="text-[22px] font-medium tracking-[-0.01em] mb-3">{d.title}</h3>
-                  <p className="text-[14px] text-black/60 leading-relaxed">{d.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Clients / logos */}
-        <section className="px-6 md:px-8 py-20 border-t border-black/10">
-          <div className="max-w-[1200px] mx-auto">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-black/50 mb-12">
-              Selected Clients
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-y-6 gap-x-8">
-              {uniqueClients.map((c) => (
-                <div
-                  key={c}
-                  className="text-[12px] uppercase tracking-wide text-black/40 hover:text-black/80 transition-colors"
-                >
-                  {c}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+      {/* CTA */}
+      <AnimateIn>
+        <div className="about-cta">
+          <ParenLink href="mailto:ryanpalmieri@gmail.com" size="lg">
+            Get In Touch
+          </ParenLink>
+        </div>
+      </AnimateIn>
+    </main>
   )
 }

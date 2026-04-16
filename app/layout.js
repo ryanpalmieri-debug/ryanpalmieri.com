@@ -1,8 +1,10 @@
 import './globals.css'
+import { Navbar } from '../components/Navbar'
+import { Footer } from '../components/Footer'
 
 export const metadata = {
   title: 'Ryan Palmieri — Brand Strategist & Creative Director',
-  description: 'Brand strategist, marketing leader, and creative director at the intersection of culture and emerging tech.',
+  description: 'Senior marketing leader and brand strategist building brands, campaigns, and AI agents for the machine age.',
 }
 
 export default function RootLayout({ children }) {
@@ -11,13 +13,12 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
-      <body className="bg-white text-black w-full min-h-screen overflow-x-hidden flex flex-col">
+      <body>
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   )
