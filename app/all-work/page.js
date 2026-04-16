@@ -1,5 +1,5 @@
-import NavStaging from '../../components/staging/NavStaging'
-import FooterStaging from '../../components/staging/FooterStaging'
+import Nav from '../../components/staging/Nav'
+import Footer from '../../components/staging/Footer'
 import { client } from '../../lib/sanity/client'
 import { worksQuery } from '../../lib/sanity/queries'
 import { works as staticWorks } from '../../data/works'
@@ -24,7 +24,7 @@ export default async function AllWorkPage() {
 
   return (
     <>
-      <NavStaging />
+      <Nav />
       <main className="pt-[56px] bg-white text-black">
         {/* Header */}
         <section className="px-6 md:px-8 pt-24 md:pt-32 pb-16">
@@ -32,10 +32,8 @@ export default async function AllWorkPage() {
             <p className="text-[11px] uppercase tracking-[0.18em] text-black/50 mb-8">
               All Work
             </p>
-            <h1 className="font-serif text-[clamp(2.2rem,5.5vw,6rem)] leading-[0.98] tracking-[-0.03em] max-w-[1100px]">
-              <span className="italic font-normal">A complete archive</span>
-              <br />
-              <span className="font-medium">of selected projects.</span>
+            <h1 className="text-[clamp(2.2rem,5vw,5rem)] leading-[1.05] tracking-[-0.025em] font-semibold max-w-[900px]">
+              A complete archive of selected projects.
             </h1>
           </div>
         </section>
@@ -76,7 +74,7 @@ export default async function AllWorkPage() {
           </div>
         </section>
       </main>
-      <FooterStaging />
+      <Footer />
     </>
   )
 }

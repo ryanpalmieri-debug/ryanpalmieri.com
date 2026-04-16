@@ -9,7 +9,6 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        serif: ['"Bodoni Moda"', 'Didot', 'Georgia', 'serif'],
       },
       colors: {
         black: '#0a0a0a',

@@ -1,5 +1,5 @@
-import NavStaging from '../../components/staging/NavStaging'
-import FooterStaging from '../../components/staging/FooterStaging'
+import Nav from '../../components/staging/Nav'
+import Footer from '../../components/staging/Footer'
 import { clients } from '../../data/works'
 
 export const metadata = {
@@ -12,7 +12,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <NavStaging />
+      <Nav />
       <main className="pt-[56px] bg-white text-black">
         {/* Top large statement */}
         <section className="px-6 md:px-8 pt-24 md:pt-32 pb-20">
@@ -20,7 +20,7 @@ export default function AboutPage() {
             <p className="text-[11px] uppercase tracking-[0.18em] text-black/50 mb-8">
               About
             </p>
-            <h1 className="font-serif text-[clamp(2.2rem,5.5vw,6rem)] leading-[1] tracking-[-0.03em] max-w-[1100px]">
+            <h1 className="text-[clamp(2.2rem,5.5vw,6rem)] leading-[1] tracking-[-0.03em] max-w-[1100px]">
               <span className="italic font-normal">I build brands</span>
               <br />
               <span className="font-medium">for the machine age.</span>
@@ -128,7 +128,7 @@ export default function AboutPage() {
           </div>
         </section>
       </main>
-      <FooterStaging />
+      <Footer />
     </>
   )
 }
