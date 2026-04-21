@@ -1,57 +1,66 @@
-import { client } from '../lib/sanity/client'
-import { worksQuery } from '../lib/sanity/queries'
-import { works as staticWorks } from '../data/works'
-import { WorkCard } from '../components/WorkCard'
-import { AnimateIn } from '../components/AnimateIn'
+import WorkRow from '../components/WorkRow'
+import Ticker from '../components/Ticker'
+import FadeIn from '../components/FadeIn'
 
-export const revalidate = 10
+const selectedWork = [
+  { num: '01', title: 'The First Autonomous AI Phone', client: 'Gaia x Samsung', slug: 'gaia-samsung', thumbnail: '/work/gaia-token2049.png' },
+  { num: '02', title: 'First Autonomous Agents Hackathon', client: 'Gaia', slug: 'agents-hackathon', thumbnail: '/work/gaia-builder-day.png' },
+  { num: '03', title: 'Brand & Growth Strategy 2025', client: 'Gaia', slug: 'gaia-2025', thumbnail: '/work/gaia-token2049.png' },
+  { num: '04', title: 'DC Visionnaires', client: 'Warner Bros / DC Comics', slug: 'dc-visionnaires', thumbnail: '/work/dc-visionnaires.png' },
+  { num: '05', title: 'RWA Protocol Marketing', client: '4K Protocol', slug: '4k-protocol', thumbnail: '/work/4k-protocol.jpg' },
+  { num: '06', title: 'Nike Swim Campaign', client: 'Nike', slug: 'nike-swim', thumbnail: '/work/nike-swim.png' },
+]
 
-async function getWorks() {
-  try {
-    const data = await client.fetch(worksQuery)
-    return data && data.length > 0 ? data : staticWorks
-  } catch { return staticWorks }
-}
+const disciplines = [
+  { num: '01', name: 'Brand Strategy' },
+  { num: '02', name: 'Go-to-Market' },
+  { num: '03', name: 'Creative Direction' },
+  { num: '04', name: 'Content Systems' },
+  { num: '05', name: 'Developer Marketing' },
+  { num: '06', name: 'AI & Automation' },
+]
 
-export default async function HomePage() {
-  const allWorks = await getWorks()
-  const featured = allWorks.filter(w => w.featured).slice(0, 6)
-  const displayed = featured.length >= 6 ? featured : allWorks.slice(0, 6)
-
+export default function HomePage() {
   return (
     <main>
-      {/* Hero */}
-      <section className="hero">
-        <div>
-          <h1 className="hero__headline">Brand strategist &amp;<br />creative director.</h1>
-          <p className="hero__sub">I build brands for the machine age.</p>
-        </div>
+      <section className="content hero">
+        <FadeIn>
+          <h1 className="hero__headline">I&apos;m a marketing<br />multi-tool.</h1>
+        </FadeIn>
+        <FadeIn delay={100}>
+          <p className="hero__body">
+            I build brands, write the narrative, run the team, and execute the campaign, usually for products that don&apos;t fit into any existing category. The last few years: AI infrastructure, Web3, autonomous agents, decentralized networks. Before that, a decade inside production for Nike, Apple, Samsung, and DC Comics.
+          </p>
+        </FadeIn>
+        <FadeIn delay={200}>
+          <div className="hero__links">
+            <a href="/work">View Work &rarr;</a>
+            <a href="/contact">Get in touch &rarr;</a>
+          </div>
+        </FadeIn>
       </section>
 
-      {/* Work grid */}
-      <section className="home-grid">
-        <div className="home-grid__header">
-          <h2 className="home-grid__label">Selected Work</h2>
-          <a href="/work" className="home-grid__viewall">View all &rarr;</a>
-        </div>
-        <div className="work-grid work-grid--3col">
-          {displayed.map((p, i) => (
-            <AnimateIn key={p._id || p.slug} delay={i * 80}>
-              <WorkCard
-                href={`/work/${p.slug}`}
-                title={p.title}
-                category={p.category}
-                thumbnail={p.thumbnail}
-              />
-            </AnimateIn>
-          ))}
-        </div>
+      <Ticker />
+
+      <section className="content" style={{ marginBottom: 80 }}>
+        <FadeIn><h2 className="section-label">Selected Work</h2></FadeIn>
+        {selectedWork.map((w, i) => (
+          <FadeIn key={w.slug} delay={i * 60}>
+            <WorkRow num={w.num} title={w.title} client={w.client} slug={w.slug} thumbnail={w.thumbnail} />
+          </FadeIn>
+        ))}
       </section>
 
-      {/* Closing */}
-      <section className="home-closing">
-        <p className="home-closing__line">I build brands</p>
-        <p className="home-closing__line home-closing__line--right">for the machine age.</p>
+      <section className="content" style={{ marginBottom: 120 }}>
+        <FadeIn><h2 className="section-label">What I Do</h2></FadeIn>
+        {disciplines.map((d, i) => (
+          <FadeIn key={d.num} delay={i * 60}>
+            <div className="disc-row">
+              <span className="disc-row__num">{d.num}</span>
+              <span>{d.name}</span>
+            </div>
+          </FadeIn>
+        ))}
       </section>
     </main>
   )

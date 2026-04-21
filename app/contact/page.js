@@ -1,36 +1,33 @@
-import { AnimateIn } from '../../components/AnimateIn'
+import FadeIn from '../../components/FadeIn'
 
 export const metadata = { title: 'Contact — Ryan Palmieri' }
 
 export default function ContactPage() {
   return (
-    <main className="contact-page">
-      <AnimateIn>
-        <div className="contact-item">
-          <span className="contact-item__label">send an email</span>
-          <a href="mailto:ryanpalmieri@gmail.com" className="contact-item__link">
-            RYANPALMIERI@GMAIL.COM
-          </a>
-        </div>
-      </AnimateIn>
+    <main className="content contact">
+      <FadeIn>
+        <h1>Let&apos;s talk.</h1>
+      </FadeIn>
 
-      <AnimateIn delay={100}>
-        <div className="contact-item">
-          <span className="contact-item__label">connect</span>
-          <a href="https://www.linkedin.com/in/ryan-palmieri-715190213/" target="_blank" rel="noopener noreferrer" className="contact-item__link">
-            LinkedIn
-          </a>
+      <FadeIn delay={100}>
+        <div className="contact__item">
+          <p className="contact__label">Email</p>
+          <a href="mailto:ryanpalmieri@gmail.com" className="contact__link">ryanpalmieri@gmail.com</a>
         </div>
-      </AnimateIn>
+      </FadeIn>
 
-      <AnimateIn delay={200}>
-        <div className="contact-item">
-          <span className="contact-item__label">follow</span>
-          <a href="https://x.com/ryanppalmieri" target="_blank" rel="noopener noreferrer" className="contact-item__link">
-            Twitter / X
-          </a>
+      <FadeIn delay={150}>
+        <div className="contact__item">
+          <p className="contact__label">LinkedIn</p>
+          <a href="https://www.linkedin.com/in/ryan-palmieri-715190213/" target="_blank" rel="noopener noreferrer" className="contact__link">linkedin.com/in/ryan-palmieri</a>
         </div>
-      </AnimateIn>
+      </FadeIn>
+
+      <FadeIn delay={200}>
+        <p className="contact__note">
+          Open to Head of Marketing, VP Marketing, and Creative Director roles. Remote preferred.
+        </p>
+      </FadeIn>
     </main>
   )
 }

@@ -1,92 +1,62 @@
-import { AnimateIn } from '../../components/AnimateIn'
+import FadeIn from '../../components/FadeIn'
 
-const disciplines = [
-  'Brand Strategy',
-  'Campaign & Creative Direction',
-  'Content Systems & AI Workflows',
-  'Go-To-Market Planning',
-  'Web3 & Ecosystem Marketing',
-  'Film & Production',
-]
+export const metadata = { title: 'About — Ryan Palmieri', description: 'Marketing multi-tool. Brand strategy, creative direction, and AI systems for frontier tech.' }
 
 const experience = [
-  { company: 'Gaia', date: '2022 — 2026' },
-  { company: '4K Protocol', date: '2021 — 2024' },
-  { company: 'DevSpot', date: '2026' },
-  { company: 'Samsung', date: 'Prior' },
-  { company: 'Nike', date: 'Prior' },
-  { company: 'DC Comics', date: 'Prior' },
-  { company: 'Warner Bros.', date: 'Prior' },
+  { title: 'Head of Marketing (Contract)', company: 'DevSpot', date: '2026–Present' },
+  { title: 'Head of Marketing', company: 'Gaia', date: '2024–2026' },
+  { title: 'Director of Brand Marketing & Creative', company: '4K Protocol', date: '2021–2024' },
+  { title: 'Director / Supervising Producer', company: 'Warner Bros / DC Comics', date: '2019–2020' },
+  { title: 'Production Operations & Logistics', company: 'RadicalMedia', date: '2009–2019' },
 ]
-
-export const metadata = { title: 'About — Ryan Palmieri' }
 
 export default function AboutPage() {
   return (
-    <main>
-      {/* Opening statement */}
-      <section className="about-statement">
-        <AnimateIn>
-          <p className="statement-line">I believe every</p>
-          <p className="statement-line">brand has a</p>
-        </AnimateIn>
-        <AnimateIn delay={100}>
-          <div className="statement-image">
-            <img src="/headshot.png" alt="Ryan Palmieri" />
-          </div>
-        </AnimateIn>
-        <AnimateIn delay={200}>
-          <p className="statement-line">story worth</p>
-          <p className="statement-line statement-line--muted">telling well.</p>
-        </AnimateIn>
-      </section>
+    <main className="content">
+      <div className="page-header">
+        <FadeIn><h1 className="page-title">About</h1></FadeIn>
+      </div>
 
-      {/* Bio */}
-      <AnimateIn delay={100}>
+      <FadeIn>
         <div className="about-bio">
           <p>
-            Ryan Palmieri is a senior marketing leader, brand strategist, and creative director. He builds brands, campaigns, and AI-powered content systems for frontier tech companies, Web3 protocols, and global consumer brands — including Gaia, Samsung, DC Comics, and Nike. Based in Los Angeles.
+            I&apos;m a marketing multi-tool. I build brands, write the narrative, run the team, and execute the campaign, usually for products that don&apos;t fit into any existing category.
+          </p>
+          <p>
+            The last few years: AI infrastructure, Web3, autonomous agents, decentralized networks. Before that, a decade inside production for Nike, Apple, Samsung, and DC Comics. None of which has anything to do with marketing but tells you something about how I think — I also play chess, hockey, and 3 instruments (4 if you include the recorder).
+          </p>
+          <p>
+            If you&apos;re building something the market doesn&apos;t understand yet, that&apos;s usually where I do my best work.
           </p>
         </div>
-      </AnimateIn>
-
-      {/* Disciplines */}
-      <section className="about-disciplines">
-        <AnimateIn>
-          <span className="section-label">What I Do</span>
-        </AnimateIn>
-        <ul className="divider-list">
-          {disciplines.map((d, i) => (
-            <AnimateIn key={d} delay={i * 60}>
-              <li>{d}</li>
-            </AnimateIn>
-          ))}
-        </ul>
-      </section>
+      </FadeIn>
 
       {/* Experience */}
-      <section className="about-experience">
-        <AnimateIn>
-          <span className="section-label">Experience</span>
-        </AnimateIn>
-        <ul className="experience-list">
-          {experience.map((e, i) => (
-            <AnimateIn key={e.company} delay={i * 60}>
-              <li className="experience-item">
-                <span className="experience-item__company">{e.company}</span>
-                <span className="experience-item__date">{e.date}</span>
-              </li>
-            </AnimateIn>
-          ))}
-        </ul>
-      </section>
+      <FadeIn>
+        <h2 className="section-label">Experience</h2>
+      </FadeIn>
+      <ul className="exp-list">
+        {experience.map((e, i) => (
+          <FadeIn key={e.company + e.date} delay={i * 60}>
+            <li className="exp-item">
+              <div>
+                <span className="exp-title">{e.title}</span>
+                <span className="exp-company"> — {e.company}</span>
+              </div>
+              <span className="exp-date">{e.date}</span>
+            </li>
+          </FadeIn>
+        ))}
+      </ul>
 
-      {/* Closing image */}
-      <AnimateIn>
-        <div className="about-closing-image">
-          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2940&auto=format&fit=crop" alt="" />
+      {/* Education */}
+      <FadeIn>
+        <div style={{ marginTop: 64 }}>
+          <h2 className="section-label">Education</h2>
+          <p style={{ fontSize: 16, color: 'var(--text)', marginBottom: 8 }}>BA Media Arts, Bloomsburg University</p>
+          <p style={{ fontSize: 14, color: 'var(--muted)' }}>Member, Television Academy</p>
         </div>
-      </AnimateIn>
+      </FadeIn>
     </main>
   )
 }
