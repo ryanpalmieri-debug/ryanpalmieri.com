@@ -1,6 +1,7 @@
 import { works as staticWorks } from '../../../data/works'
 import { client } from '../../../lib/sanity/client'
 import FadeIn from '../../../components/FadeIn'
+import WorkRow from '../../../components/WorkRow'
 
 export const revalidate = 10
 
@@ -24,16 +25,15 @@ async function getWork(slug) {
 
 export default async function ProjectPage({ params }) {
   const p = await getWork(params.slug)
-  if (!p) return <main className="content page-header"><h1 className="page-title">Not Found</h1></main>
+  if (!p) return <main className="page-header"><h1 className="page-title">Not Found</h1></main>
 
   const embed = toEmbed(p.videoUrl)
   const idx = staticWorks.findIndex(w => w.slug === params.slug)
   const next = staticWorks[(idx + 1) % staticWorks.length]
 
   return (
-    <main className="content">
-      {/* Header */}
-      <div style={{ paddingTop: 140, marginBottom: 48 }}>
+    <main>
+      <div className="cs-header">
         <FadeIn>
           <span className="cs-category">{p.category}</span>
           <h1 className="cs-title">{p.title}</h1>
@@ -41,75 +41,54 @@ export default async function ProjectPage({ params }) {
         </FadeIn>
       </div>
 
-      {/* Cover image */}
-      {p.thumbnail && !embed && (
-        <FadeIn>
-          <img src={p.thumbnail} alt={p.title} className="cs-cover" width={900} height={506} loading="lazy" />
-        </FadeIn>
-      )}
-
-      {/* Video */}
-      {embed && (
-        <FadeIn>
-          <div className="cs-video">
-            <iframe src={embed} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
-          </div>
-        </FadeIn>
-      )}
+      {/* Video or cover image */}
+      <div className="cs-media">
+        {embed ? (
+          <FadeIn>
+            <div className="cs-video">
+              <iframe src={embed} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
+            </div>
+          </FadeIn>
+        ) : p.thumbnail ? (
+          <FadeIn>
+            <img src={p.thumbnail} alt={p.title} width={1400} height={788} loading="lazy" />
+          </FadeIn>
+        ) : null}
+      </div>
 
       {/* Meta */}
-      <FadeIn>
-        <div className="cs-meta">
-          {p.role && <div className="cs-meta-item"><span className="cs-meta-label">Role</span><span className="cs-meta-value">{p.role}</span></div>}
-          {p.client && <div className="cs-meta-item"><span className="cs-meta-label">Client</span><span className="cs-meta-value">{p.client}</span></div>}
-          {p.year && <div className="cs-meta-item"><span className="cs-meta-label">Year</span><span className="cs-meta-value">{p.year}</span></div>}
-          {p.category && <div className="cs-meta-item"><span className="cs-meta-label">Category</span><span className="cs-meta-value">{p.category}</span></div>}
-        </div>
-      </FadeIn>
-
-      {/* Overview */}
-      {p.summary && (
+      <div className="cs-body-section">
         <FadeIn>
-          <h3 className="cs-section-label">Overview</h3>
-          <p className="cs-body">{p.summary}</p>
+          <div className="cs-meta">
+            {p.role && <div className="cs-meta-item"><span className="cs-meta-label">Role</span><span className="cs-meta-value">{p.role}</span></div>}
+            {p.client && <div className="cs-meta-item"><span className="cs-meta-label">Client</span><span className="cs-meta-value">{p.client}</span></div>}
+            {p.year && <div className="cs-meta-item"><span className="cs-meta-label">Year</span><span className="cs-meta-value">{p.year}</span></div>}
+            {p.category && <div className="cs-meta-item"><span className="cs-meta-label">Category</span><span className="cs-meta-value">{p.category}</span></div>}
+          </div>
         </FadeIn>
-      )}
 
-      {/* Body */}
-      {p.body && (
-        <FadeIn>
-          <h3 className="cs-section-label">Details</h3>
-          {typeof p.body === 'string' ? (
-            p.body.split('\n\n').filter(Boolean).map((para, i) => (
-              <p key={i} className="cs-body">{para.trim()}</p>
-            ))
-          ) : Array.isArray(p.body) ? (
-            p.body.map((block, i) => {
-              if (block._type === 'block') {
-                return <p key={block._key || i} className="cs-body">{block.children?.map(c => c.text).join('')}</p>
-              }
-              return null
-            })
-          ) : null}
-        </FadeIn>
-      )}
+        {p.summary && (
+          <FadeIn>
+            <h3 className="cs-section-label">Overview</h3>
+            <p className="cs-body">{p.summary}</p>
+          </FadeIn>
+        )}
 
-      {/* Gallery */}
-      {p.images?.length > 0 && (
-        <FadeIn>
-          <h3 className="cs-section-label">Gallery</h3>
-          {p.images.map((img, i) => (
-            <img key={i} src={img} alt="" style={{ width: '100%', marginBottom: 4, display: 'block' }} width={900} height={506} loading="lazy" />
-          ))}
-        </FadeIn>
-      )}
+        {p.body && (
+          <FadeIn>
+            <h3 className="cs-section-label">Details</h3>
+            {typeof p.body === 'string' ? (
+              p.body.split('\n\n').filter(Boolean).map((para, i) => <p key={i} className="cs-body">{para.trim()}</p>)
+            ) : Array.isArray(p.body) ? (
+              p.body.map((block, i) => block._type === 'block' ? <p key={block._key || i} className="cs-body">{block.children?.map(c => c.text).join('')}</p> : null)
+            ) : null}
+          </FadeIn>
+        )}
 
-      {/* Next */}
-      {next && (
-        <a href={`/work/${next.slug}`} className="cs-next">
-          Next Project: {next.title} &rarr;
-        </a>
-      )}
+        {next && (
+          <a href={`/work/${next.slug}`} className="cs-next">Next Project: {next.title} &rarr;</a>
+        )}
+      </div>
     </main>
   )
 }

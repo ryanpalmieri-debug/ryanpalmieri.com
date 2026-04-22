@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function WorkRow({ num, title, client, slug, thumbnail }) {
+export default function WorkRow({ num, title, client, slug, year, thumbnail }) {
   return (
     <Link href={`/work/${slug}`} className="work-row">
       <div className="work-row__left">
@@ -10,8 +10,9 @@ export default function WorkRow({ num, title, client, slug, thumbnail }) {
           <div className="work-row__client">{client}</div>
         </div>
       </div>
+      {year && <span className="work-row__year">{year}</span>}
       {thumbnail ? (
-        <img src={thumbnail} alt={title} className="work-row__thumb" width={120} height={80} loading="lazy" />
+        <img src={thumbnail} alt={title} className="work-row__thumb" width={140} height={90} loading="lazy" />
       ) : (
         <div className="work-row__thumb" />
       )}
