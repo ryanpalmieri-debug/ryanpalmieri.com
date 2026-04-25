@@ -24,6 +24,8 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <span className="page-edge page-edge--left" aria-hidden="true" />
+        <span className="page-edge page-edge--right" aria-hidden="true" />
         <Nav />
         {children}
         <Footer />

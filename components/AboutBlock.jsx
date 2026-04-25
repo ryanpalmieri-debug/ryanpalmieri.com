@@ -1,10 +1,26 @@
 import Link from 'next/link'
 
 const background = [
-  { role: 'Head of Marketing', meta: 'GAIA · 2024 — 2026' },
-  { role: 'Director, Brand & Creative', meta: '4K PROTOCOL · 2021 — 2024' },
-  { role: 'Supervising Producer', meta: 'WARNER BROS / DC · 2019 — 2020' },
-  { role: 'Production Operations', meta: 'RADICALMEDIA · 2009 — 2019' },
+  {
+    logo: 'gaia',
+    role: 'Head of Marketing',
+    meta: 'Scaled active nodes from 80K to 700K+',
+  },
+  {
+    logo: 'SAMSUNG',
+    role: 'Global Brand Marketing Lead',
+    meta: 'Digital & mobility',
+  },
+  {
+    logo: 'Nike',
+    role: 'Brand Marketing',
+    meta: 'Global campaigns',
+  },
+  {
+    logo: 'DC',
+    role: 'Integrated Marketing',
+    meta: 'Fan & brand experiences',
+  },
 ]
 
 export default function AboutBlock() {
@@ -22,26 +38,28 @@ export default function AboutBlock() {
           </div>
 
           <div className="about-panel__copy">
-            <h3>Senior marketing leader.<br />Strategist. Builder. Operator.</h3>
+            <h3>
+              Senior marketing leader.<br />
+              Strategist. Builder. Operator.<span className="hero__cursor" aria-hidden="true" />
+            </h3>
             <p>
-              I build brands at the intersection of technology, culture, and experience. With a background in storytelling and a deep understanding of systems, I help companies turn complex ideas into brands that connect.
+              I&apos;ve led marketing and brand for AI infrastructure and developer platforms, scaling from early stage to global impact.
             </p>
-            <p>Strategy first. Design always. Impact only.</p>
             <Link href="/about" className="about-panel__copy-link">
               READ MORE &rarr;
             </Link>
           </div>
 
-          <div>
-            <p className="about-panel__list-title">Background</p>
-            <ul className="about-panel__list">
-              {background.map((item) => (
-                <li key={item.meta} className="about-panel__list-item">
-                  <span className="about-panel__list-role">{item.role}</span>
-                  <span className="about-panel__list-meta">{item.meta}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="about-panel__bg-list">
+            {background.map((item) => (
+              <div key={item.logo} className="about-panel__bg-item">
+                <span className="about-panel__bg-logo">{item.logo}</span>
+                <div className="about-panel__bg-text">
+                  <span className="about-panel__bg-role">{item.role}</span>
+                  <span className="about-panel__bg-meta">{item.meta}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

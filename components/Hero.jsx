@@ -1,9 +1,4 @@
-'use client'
-import { useState } from 'react'
-
 export default function Hero() {
-  const [imgError, setImgError] = useState(false)
-
   return (
     <section className="hero">
       <div className="hero__grid">
@@ -36,23 +31,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* RIGHT: Computer image */}
-        <div className="hero__computer">
-          {!imgError ? (
-            <img
-              src="/assets/hero-computer.png"
-              alt="Vintage personal computer"
-              onError={() => setImgError(true)}
-              width="640"
-              height="540"
-            />
-          ) : (
-            <div className="hero__computer-fallback">
-              [ HERO COMPUTER IMAGE ]<br />
-              upload to<br />
-              /public/assets/hero-computer.png
-            </div>
-          )}
+        {/* RIGHT: Computer image — transparent, floats on cream */}
+        <div className="hero-image">
+          <img src="/assets/computer.png" alt="" />
         </div>
       </div>
     </section>
