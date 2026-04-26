@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 
-export default function FadeIn({ children, delay = 0, className = '' }) {
+export default function FadeIn({ children, delay = 0, className = '', style }) {
   const ref = useRef(null)
   useEffect(() => {
     const el = ref.current
@@ -13,9 +13,8 @@ export default function FadeIn({ children, delay = 0, className = '' }) {
     obs.observe(el)
     return () => obs.disconnect()
   }, [])
-
   return (
-    <div ref={ref} className={`fade-in ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+    <div ref={ref} className={`fade-in ${className}`} style={{ transitionDelay: `${delay}ms`, ...style }}>
       {children}
     </div>
   )

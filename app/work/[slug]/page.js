@@ -23,65 +23,99 @@ async function getWork(slug) {
 
 export default async function ProjectPage({ params }) {
   const p = await getWork(params.slug)
-  if (!p) return <main className="page-header"><h1 className="page-title">Not Found</h1></main>
-
+  if (!p) return (
+    <main style={{ padding: '120px var(--container-padding-x)', maxWidth: 'var(--container-max-width)', margin: '0 auto' }}>
+      <h1>Project not found</h1>
+    </main>
+  )
   const embed = toEmbed(p.videoUrl)
   const idx = staticWorks.findIndex(w => w.slug === params.slug)
   const next = staticWorks[(idx + 1) % staticWorks.length]
 
   return (
-    <main>
-      <div className="cs-header">
-        <span className="cs-category">{p.category}</span>
-        <h1 className="cs-title">{p.title}</h1>
-        <p className="cs-client">{p.client}{p.year ? ` // ${p.year}` : ''}</p>
+    <main style={{ width: '100%' }}>
+      <div style={{ width: '100%', maxWidth: 'var(--container-max-width)', margin: '0 auto', padding: '80px var(--container-padding-x) 40px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 24, marginBottom: 24 }}>
+          <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 500, letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-cod-gray)' }}>/{p.category}</span>
+          <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 500, letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-gray)' }}>{p.year}</span>
+        </div>
+        <h1 style={{
+          margin: 0,
+          fontSize: 'var(--font-size-h2)',
+          fontWeight: 'var(--font-weight-medium)',
+          lineHeight: 'var(--line-height-h2)',
+          letterSpacing: 'var(--letter-spacing-h2)',
+          color: 'var(--color-cod-gray)',
+          marginBottom: 8,
+        }}>{p.title}</h1>
+        <p style={{ fontSize: 'var(--font-size-h3)', fontWeight: 'var(--font-weight-medium)', color: 'var(--color-tundora)' }}>{p.client}</p>
       </div>
 
-      <div className="cs-media">
-        <div className="cs-media__inner">
+      <div style={{ width: '100%', maxWidth: 'var(--container-max-width)', margin: '0 auto', padding: '0 var(--container-padding-x) 40px' }}>
+        <div style={{ width: '100%', aspectRatio: '16/9', borderRadius: 'var(--radius-md)', overflow: 'hidden', background: '#1a1a1a' }}>
           {embed ? (
-            <iframe src={embed} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
+            <iframe src={embed} style={{ width: '100%', height: '100%', border: 0 }} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
           ) : p.thumbnail ? (
-            <img src={p.thumbnail} alt={p.title} loading="lazy" />
+            <img src={p.thumbnail} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           ) : null}
         </div>
       </div>
 
-      <div className="cs-body">
-        <div className="cs-meta">
-          {p.role && <div className="cs-meta-item"><span className="cs-meta-label">Role</span><span className="cs-meta-value">{p.role}</span></div>}
-          {p.client && <div className="cs-meta-item"><span className="cs-meta-label">Client</span><span className="cs-meta-value">{p.client}</span></div>}
-          {p.year && <div className="cs-meta-item"><span className="cs-meta-label">Year</span><span className="cs-meta-value">{p.year}</span></div>}
-          {p.category && <div className="cs-meta-item"><span className="cs-meta-label">Category</span><span className="cs-meta-value">{p.category}</span></div>}
+      <div style={{ width: '100%', maxWidth: 900, margin: '0 auto', padding: '40px var(--container-padding-x) 80px' }}>
+        <div style={{ display: 'flex', gap: 48, flexWrap: 'wrap', padding: '24px 0', borderTop: '1px solid var(--color-silver)', borderBottom: '1px solid var(--color-silver)', marginBottom: 40 }}>
+          {p.role && <MetaItem label="Role" value={p.role} />}
+          {p.client && <MetaItem label="Client" value={p.client} />}
+          {p.year && <MetaItem label="Year" value={p.year} />}
+          {p.category && <MetaItem label="Category" value={p.category} />}
         </div>
 
         {p.summary && (
           <>
-            <h3 className="cs-section-label">// Overview</h3>
-            <p className="cs-paragraph">{p.summary}</p>
+            <SectionLabel>Overview</SectionLabel>
+            <p style={bodyStyle}>{p.summary}</p>
           </>
         )}
 
         {p.body && (
           <>
-            <h3 className="cs-section-label">// Details</h3>
-            {typeof p.body === 'string' ? (
-              p.body.split('\n\n').filter(Boolean).map((para, i) => <p key={i} className="cs-paragraph">{para.trim()}</p>)
-            ) : Array.isArray(p.body) ? (
-              p.body.map((block, i) => block._type === 'block' ? <p key={block._key || i} className="cs-paragraph">{block.children?.map(c => c.text).join('')}</p> : null)
-            ) : null}
+            <SectionLabel>Details</SectionLabel>
+            {typeof p.body === 'string'
+              ? p.body.split('\n\n').filter(Boolean).map((para, i) => <p key={i} style={bodyStyle}>{para.trim()}</p>)
+              : Array.isArray(p.body)
+              ? p.body.map((block, i) => block._type === 'block' ? <p key={block._key || i} style={bodyStyle}>{block.children?.map(c => c.text).join('')}</p> : null)
+              : null
+            }
           </>
         )}
 
         {next && (
-          <a href={`/work/${next.slug}`} className="cs-next">
-            NEXT_PROJECT &rarr; {next.title}
+          <a href={`/work/${next.slug}`} style={{
+            display: 'block', marginTop: 64, padding: '24px 0',
+            borderTop: '1px solid var(--color-silver)',
+            fontSize: 'var(--font-size-sm)', fontWeight: 500,
+            letterSpacing: 'var(--letter-spacing-link)',
+            color: 'var(--color-cod-gray)', textDecoration: 'none',
+          }}>
+            Next project: {next.title} →
           </a>
         )}
       </div>
     </main>
   )
 }
+
+function SectionLabel({ children }) {
+  return <h3 style={{ margin: '40px 0 12px', fontSize: 'var(--font-size-sm)', fontWeight: 500, letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-gray)', textTransform: 'uppercase' }}>{children}</h3>
+}
+function MetaItem({ label, value }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <span style={{ fontSize: 11, fontWeight: 500, letterSpacing: '0.1em', color: 'var(--color-gray)', textTransform: 'uppercase' }}>{label}</span>
+      <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--color-cod-gray)' }}>{value}</span>
+    </div>
+  )
+}
+const bodyStyle = { fontSize: 17, lineHeight: 1.8, fontWeight: 400, color: 'var(--color-cod-gray)', marginBottom: 14, maxWidth: 720 }
 
 export function generateStaticParams() {
   return staticWorks.map(w => ({ slug: w.slug }))

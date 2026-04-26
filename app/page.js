@@ -1,8 +1,10 @@
-import Hero from '../components/Hero'
-import LogoBar from '../components/LogoBar'
-import FeaturedWork from '../components/FeaturedWork'
-import AboutBlock from '../components/AboutBlock'
-import ContactBlock from '../components/ContactBlock'
+import SectionHero from '../components/SectionHero'
+import SectionAbout from '../components/SectionAbout'
+import SectionProjects from '../components/SectionProjects'
+import SectionServices from '../components/SectionServices'
+import SectionProcess from '../components/SectionProcess'
+import SectionFAQs from '../components/SectionFAQs'
+import SectionContact from '../components/SectionContact'
 import { works as staticWorks } from '../data/works'
 import { client } from '../lib/sanity/client'
 import { worksQuery } from '../lib/sanity/queries'
@@ -18,14 +20,15 @@ async function getWorks() {
 
 export default async function HomePage() {
   const works = await getWorks()
-
   return (
-    <main>
-      <Hero />
-      <LogoBar />
-      <FeaturedWork works={works} />
-      <AboutBlock />
-      <ContactBlock />
+    <main style={{ width: '100%', backgroundColor: 'var(--color-white)' }}>
+      <SectionHero />
+      <SectionAbout />
+      <SectionProjects works={works} />
+      <SectionServices />
+      <SectionProcess />
+      <SectionFAQs />
+      <SectionContact />
     </main>
   )
 }

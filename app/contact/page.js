@@ -1,17 +1,11 @@
-import ContactBlock from '../../components/ContactBlock'
+import SectionContact from '../../components/SectionContact'
 
 export const metadata = { title: 'Contact — Ryan Palmieri' }
 
 export default function ContactPage() {
   return (
-    <main className="contact-page">
-      <div style={{ marginBottom: 16 }}>
-        <p className="page-subtitle">CONTACT.EXE</p>
-        <h1 className="page-title">Let&apos;s connect.</h1>
-      </div>
-      <div style={{ marginTop: 48 }}>
-        <ContactBlock />
-      </div>
+    <main style={{ width: '100%' }}>
+      <SectionContact />
     </main>
   )
 }
