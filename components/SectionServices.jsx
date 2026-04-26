@@ -17,7 +17,7 @@ function PlusIcon({ stroke = '#0A0A0A' }) {
 
 export default function SectionServices() {
   return (
-    <section style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+    <section id="services" style={{ width: '100%', display: 'flex', justifyContent: 'center', scrollMarginTop: 'var(--nav-h)' }}>
       <div style={{
         width: '100%', maxWidth: 'var(--container-max-width)',
         padding: '80px var(--container-padding-x)',

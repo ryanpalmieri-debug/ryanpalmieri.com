@@ -68,7 +68,7 @@ export default function SectionProjects({ works = [] }) {
               /Selected Work
             </span>
             <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-gray)' }}>
-              (02)
+              (01)
             </span>
           </div>
           <h2 style={{
