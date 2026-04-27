@@ -3,10 +3,10 @@ import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 
 export const metadata = {
-  title: 'Ryan Palmieri — Head of Marketing',
+  title: 'Ryan Palmieri — Brand & Marketing Leader',
   description: 'Senior marketing leader and brand strategist. AI infrastructure, Web3, and frontier tech. Based in Los Angeles.',
   openGraph: {
-    title: 'Ryan Palmieri — Head of Marketing',
+    title: 'Ryan Palmieri — Brand & Marketing Leader',
     description: 'Senior marketing leader and brand strategist. AI infrastructure, Web3, and frontier tech.',
     type: 'website',
   },

@@ -6,9 +6,8 @@ export default function SectionContact() {
         padding: '120px var(--container-padding-x)',
         display: 'flex', flexDirection: 'column', gap: 32,
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
           <span style={labelStyle}>/Contact</span>
-          <span style={mutedLabelStyle}>(04)</span>
         </div>
 
         {/* Headline + CTA on the same row */}

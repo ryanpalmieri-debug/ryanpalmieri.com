@@ -63,12 +63,9 @@ export default function SectionProjects({ works = [] }) {
         gap: 80,
       }}>
         <div style={{ width: '100%' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 24, marginBottom: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24, marginBottom: 16 }}>
             <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-cod-gray)' }}>
               /Selected Work
-            </span>
-            <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-gray)' }}>
-              (01)
             </span>
           </div>
           <h2 style={{

@@ -1,4 +1,5 @@
 import SectionHero from '../components/SectionHero'
+import LogoBar from '../components/LogoBar'
 import SectionAbout from '../components/SectionAbout'
 import SectionProjects from '../components/SectionProjects'
 import SectionServices from '../components/SectionServices'
@@ -21,6 +22,7 @@ export default async function HomePage() {
   return (
     <main style={{ width: '100%', backgroundColor: 'var(--color-white)' }}>
       <SectionHero />
+      <LogoBar />
       <SectionProjects works={works} />
       <SectionAbout />
       <SectionServices />
