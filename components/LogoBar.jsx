@@ -27,7 +27,6 @@ const LOGO_FILES = [
   'syn.png',
   'int.png',
   '9dcc.png',
-  'Untitled-1.png',
 ]
 
 const LOGO_HEIGHT = 40 // visual height all logos conform to
