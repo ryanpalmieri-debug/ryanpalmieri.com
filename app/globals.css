@@ -53,9 +53,18 @@
   --spacing-3xl: 120px;
 
   /* Layout */
-  --container-max-width: 1600px;
+  --container-max-width: 1280px;
   --container-padding-x: 40px;
   --nav-h: 72px;
+
+  /* ----- Auvra tokens (layered on top of Kanso) ----- */
+  --auvra-bg: #FFFFFF;
+  --auvra-fg: #0A0A0A;
+  --auvra-muted: #6B6B6B;
+  --auvra-line: #E5E5E5;
+  --auvra-accent: #0A0A0A;
+  --auvra-display: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --auvra-section-y: clamp(80px, 12vw, 160px);
 
   /* Radius */
   --radius-sm: 11px;
@@ -150,3 +159,111 @@ a { color: inherit; }
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ============================================================
+   Auvra primitives
+   ============================================================ */
+.auvra-container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding-x);
+}
+.auvra-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.auvra-section-inner {
+  width: 100%;
+  max-width: var(--container-max-width);
+  padding: var(--auvra-section-y) var(--container-padding-x);
+}
+.auvra-eyebrow {
+  display: inline-block;
+  font-family: var(--auvra-display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--auvra-muted);
+  text-transform: none;
+}
+.auvra-eyebrow::before { content: '[ '; color: var(--auvra-muted); }
+.auvra-eyebrow::after  { content: ' ]'; color: var(--auvra-muted); }
+.auvra-display {
+  font-family: var(--auvra-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  color: var(--auvra-fg);
+}
+.auvra-h1 {
+  font-family: var(--auvra-display);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+  color: var(--auvra-fg);
+  font-size: clamp(48px, 9vw, 132px);
+  margin: 0;
+}
+.auvra-h2 {
+  font-family: var(--auvra-display);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: var(--auvra-fg);
+  font-size: clamp(36px, 5.5vw, 76px);
+  margin: 0;
+}
+.auvra-h3 {
+  font-family: var(--auvra-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--auvra-fg);
+  font-size: clamp(22px, 2.5vw, 32px);
+  margin: 0;
+}
+.auvra-lede {
+  font-family: var(--auvra-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--auvra-fg);
+  font-size: clamp(20px, 2vw, 28px);
+}
+.auvra-body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--auvra-fg);
+}
+.auvra-muted { color: var(--auvra-muted) !important; }
+.auvra-rule {
+  border: 0;
+  border-top: 1px solid var(--auvra-line);
+  margin: 0;
+}
+.auvra-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--auvra-fg);
+  background: var(--auvra-fg);
+  color: var(--auvra-bg);
+  text-decoration: none;
+  font-family: var(--auvra-display);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: background 200ms ease, color 200ms ease;
+}
+.auvra-pill:hover { background: var(--auvra-bg); color: var(--auvra-fg); }
+.auvra-pill--ghost {
+  background: transparent;
+  color: var(--auvra-fg);
+}
+.auvra-pill--ghost:hover { background: var(--auvra-fg); color: var(--auvra-bg); }

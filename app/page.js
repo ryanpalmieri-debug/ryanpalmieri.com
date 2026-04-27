@@ -1,8 +1,10 @@
 import SectionHero from '../components/SectionHero'
-import LogoBar from '../components/LogoBar'
 import SectionAbout from '../components/SectionAbout'
+import LogoBar from '../components/LogoBar'
 import SectionProjects from '../components/SectionProjects'
-import SectionContact from '../components/SectionContact'
+import SectionDisciplines from '../components/SectionDisciplines'
+import SectionProcess from '../components/SectionProcess'
+import SectionFAQs from '../components/SectionFAQs'
 import FadeIn from '../components/FadeIn'
 import { works as staticWorks } from '../data/works'
 import { client } from '../lib/sanity/client'
@@ -17,24 +19,17 @@ async function getWorks() {
   } catch { return staticWorks }
 }
 
-function Divider() {
-  return (
-    <div className="kanso-divider"><hr /></div>
-  )
-}
-
 export default async function HomePage() {
   const works = await getWorks()
   return (
-    <main style={{ width: '100%', backgroundColor: 'var(--color-white)' }}>
+    <main style={{ width: '100%', backgroundColor: 'var(--auvra-bg)' }}>
       <FadeIn><SectionHero /></FadeIn>
-      <FadeIn><LogoBar /></FadeIn>
-      <Divider />
-      <FadeIn><SectionProjects works={works} /></FadeIn>
-      <Divider />
       <FadeIn><SectionAbout /></FadeIn>
-      <Divider />
-      <FadeIn><SectionContact /></FadeIn>
+      <FadeIn><LogoBar /></FadeIn>
+      <FadeIn><SectionProjects works={works} /></FadeIn>
+      <FadeIn><SectionDisciplines /></FadeIn>
+      <FadeIn><SectionProcess /></FadeIn>
+      <FadeIn><SectionFAQs /></FadeIn>
     </main>
   )
 }

@@ -1,11 +1,3 @@
-/**
- * LogoBar — full-width marquee that scrolls client logos under the hero.
- * Drop new logos into /public/logos/ and add the filename to LOGO_FILES.
- *
- * Each logo is wrapped in a fixed-height container so visual size is
- * uniform regardless of the source PNG dimensions.
- */
-
 const LOGO_FILES = [
   'logo-bw-03.png',
   'logo-bw-04.png',
@@ -28,22 +20,21 @@ const LOGO_FILES = [
   'xologo.png',
 ]
 
-const LOGO_HEIGHT = 40 // visual height all logos conform to
+const LOGO_HEIGHT = 32
 
 export default function LogoBar() {
   const logos = [...LOGO_FILES, ...LOGO_FILES]
 
   return (
-    <section style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: 64 }}>
-      <div style={{
-        width: '100%',
-        maxWidth: 'var(--container-max-width)',
-        padding: '0 var(--container-padding-x)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 32,
+    <section className="auvra-section">
+      <div className="auvra-section-inner" style={{
+        paddingTop: 'clamp(48px, 6vw, 80px)',
+        paddingBottom: 'clamp(48px, 6vw, 80px)',
+        display: 'flex', flexDirection: 'column', gap: 32,
+        borderTop: '1px solid var(--auvra-line)',
+        borderBottom: '1px solid var(--auvra-line)',
       }}>
-        <span className="kanso-label">/Previous Clients</span>
+        <span className="auvra-eyebrow">Selected Clients</span>
 
         <div style={{
           width: '100%',
@@ -54,7 +45,7 @@ export default function LogoBar() {
           <div className="kanso-marquee" style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 56,
+            gap: 64,
             whiteSpace: 'nowrap',
             width: 'max-content',
           }}>
@@ -79,7 +70,7 @@ export default function LogoBar() {
                     objectFit: 'contain',
                     display: 'block',
                     filter: 'grayscale(100%)',
-                    opacity: 0.75,
+                    opacity: 0.65,
                   }}
                 />
               </div>
