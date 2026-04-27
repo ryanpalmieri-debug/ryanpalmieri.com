@@ -7,7 +7,7 @@ export default function SectionContact() {
         display: 'flex', flexDirection: 'column', gap: 32,
       }}>
         <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-          <span style={labelStyle}>/Contact</span>
+          <span className="kanso-label">/Contact</span>
         </div>
 
         {/* Headline + CTA on the same row */}

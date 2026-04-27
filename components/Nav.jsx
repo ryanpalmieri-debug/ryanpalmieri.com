@@ -18,8 +18,19 @@ export default function Nav() {
           padding: '0 var(--container-padding-x)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
-          <Link href="/" style={{ fontSize: NAV_FONT, fontWeight: 500, letterSpacing: '-0.5px', color: 'var(--color-cod-gray)', textDecoration: 'none' }}>
-            ryan palmieri
+          <Link href="/" aria-label="Ryan Palmieri — Home" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            fontFamily: 'Inter, sans-serif',
+            fontSize: 28,
+            fontWeight: 800,
+            lineHeight: 1,
+            letterSpacing: '-1px',
+            color: 'var(--color-cod-gray)',
+            textDecoration: 'none',
+          }}>
+            <span style={{ color: 'var(--color-silver-chalice)', fontWeight: 600 }}>[</span>
+            <span>rp</span>
+            <span style={{ color: 'var(--color-silver-chalice)', fontWeight: 600 }}>]</span>
           </Link>
           <div style={{ display: 'flex', gap: 32, alignItems: 'center' }} className="kanso-nav-desktop">
             <Link href="/work" style={navLinkStyle}>/Work</Link>

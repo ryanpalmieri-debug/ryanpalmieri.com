@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-function ArrowIcon() {
+function ArrowIcon({ size = 16 }) {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 14 14" fill="none" aria-hidden="true">
       <path d="M2 12L12 2M12 2H5M12 2V9" stroke="#0A0A0A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
@@ -49,7 +49,7 @@ function ProjectCard({ title, year, description, img, href = '#' }) {
 }
 
 export default function SectionProjects({ works = [] }) {
-  // Show first 6 projects
+  // Show first 6 in a 3x2 grid
   const displayed = works.slice(0, 6)
 
   return (
@@ -60,46 +60,36 @@ export default function SectionProjects({ works = [] }) {
         padding: '120px var(--container-padding-x)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 80,
+        gap: 48,
       }}>
-        <div style={{ width: '100%' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24, marginBottom: 16 }}>
-            <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-cod-gray)' }}>
-              /Selected Work
-            </span>
-          </div>
-          <h2 style={{
-            margin: 0,
-            fontSize: 'var(--font-size-h2)',
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'space-between',
+          gap: 24,
+          width: '100%',
+        }}>
+          <span className="kanso-label" style={{ alignSelf: 'flex-end' }}>/Selected Work</span>
+          <Link href="/work" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            backgroundColor: 'var(--color-gallery)',
+            borderRadius: 'var(--radius-pill)',
+            /* 15% bigger button — was 8/20px, now ~11/26px text 16px */
+            padding: '11px 26px',
+            textDecoration: 'none',
+            fontSize: 16,
             fontWeight: 'var(--font-weight-medium)',
-            lineHeight: 'var(--line-height-h2)',
-            letterSpacing: 'var(--letter-spacing-h2)',
+            letterSpacing: 'var(--letter-spacing-link)',
             color: 'var(--color-cod-gray)',
-            marginBottom: 24,
           }}>
-            Selected Work.
-          </h2>
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Link href="/work" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
-              backgroundColor: 'var(--color-gallery)',
-              borderRadius: 'var(--radius-pill)',
-              padding: '8px 20px',
-              textDecoration: 'none',
-              fontSize: 'var(--font-size-sm)',
-              fontWeight: 'var(--font-weight-medium)',
-              letterSpacing: 'var(--letter-spacing-link)',
-              color: 'var(--color-cod-gray)',
-            }}>
-              View all projects <ArrowIcon />
-            </Link>
-          </div>
+            View all work <ArrowIcon size={16} />
+          </Link>
         </div>
 
         <div className="kanso-projects-grid" style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 32,
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: 24,
           width: '100%',
         }}>
           {displayed.map((p) => (
@@ -115,7 +105,10 @@ export default function SectionProjects({ works = [] }) {
         </div>
 
         <style>{`
-          @media (max-width: 768px) {
+          @media (max-width: 1024px) {
+            .kanso-projects-grid { grid-template-columns: 1fr 1fr !important; }
+          }
+          @media (max-width: 640px) {
             .kanso-projects-grid { grid-template-columns: 1fr !important; }
           }
         `}</style>

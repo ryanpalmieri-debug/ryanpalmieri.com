@@ -1,6 +1,9 @@
 /**
- * LogoBar — full-width marquee that scrolls all client logos under the hero.
+ * LogoBar — full-width marquee that scrolls client logos under the hero.
  * Drop new logos into /public/logos/ and add the filename to LOGO_FILES.
+ *
+ * Each logo is wrapped in a fixed-height container so visual size is
+ * uniform regardless of the source PNG dimensions.
  */
 
 const LOGO_FILES = [
@@ -14,8 +17,6 @@ const LOGO_FILES = [
   'logo-bw-11.png',
   'logo-bw-12.png',
   'logo-01.png',
-  'logo-07.png',
-  'logo-12.png',
   'devspot.png',
   'OKX.png',
   'protocollabs.png',
@@ -27,8 +28,10 @@ const LOGO_FILES = [
   'xologo.png',
 ]
 
+const LOGO_HEIGHT = 32 // visual height all logos conform to
+
 export default function LogoBar() {
-  const logos = [...LOGO_FILES, ...LOGO_FILES] // duplicate for seamless loop
+  const logos = [...LOGO_FILES, ...LOGO_FILES]
 
   return (
     <section style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: 64 }}>
@@ -40,14 +43,7 @@ export default function LogoBar() {
         flexDirection: 'column',
         gap: 32,
       }}>
-        <span style={{
-          fontSize: 'var(--font-size-sm)',
-          fontWeight: 'var(--font-weight-medium)',
-          letterSpacing: 'var(--letter-spacing-sm)',
-          color: 'var(--color-cod-gray)',
-        }}>
-          /Previous Clients
-        </span>
+        <span className="kanso-label">/Previous Clients</span>
 
         <div style={{
           width: '100%',
@@ -58,25 +54,37 @@ export default function LogoBar() {
           <div className="kanso-marquee" style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 64,
+            gap: 56,
             whiteSpace: 'nowrap',
             width: 'max-content',
           }}>
             {logos.map((file, i) => (
-              <img
+              <div
                 key={i}
-                src={`/logos/${file}`}
-                alt=""
                 aria-hidden="true"
                 style={{
-                  height: 36,
-                  width: 'auto',
-                  objectFit: 'contain',
+                  height: LOGO_HEIGHT,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   flexShrink: 0,
-                  filter: 'grayscale(100%)',
-                  opacity: 0.75,
                 }}
-              />
+              >
+                <img
+                  src={`/logos/${file}`}
+                  alt=""
+                  style={{
+                    maxHeight: LOGO_HEIGHT,
+                    maxWidth: 140,
+                    width: 'auto',
+                    height: 'auto',
+                    objectFit: 'contain',
+                    display: 'block',
+                    filter: 'grayscale(100%)',
+                    opacity: 0.75,
+                  }}
+                />
+              </div>
             ))}
           </div>
         </div>

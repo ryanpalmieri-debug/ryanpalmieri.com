@@ -8,7 +8,7 @@ export default function SectionAbout() {
         display: 'flex', flexDirection: 'column', gap: 48,
       }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24 }}>
-          <span style={labelStyle}>/About</span>
+          <span className="kanso-label">/About</span>
         </div>
 
         <div className="kanso-about-grid">

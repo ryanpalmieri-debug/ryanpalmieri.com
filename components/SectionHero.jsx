@@ -1,13 +1,6 @@
-'use client'
-
 const DESCRIPTORS = ['Brand', 'Marketing', 'Creative', 'Strategy', 'Agentic Systems']
 
 export default function SectionHero() {
-  function scrollToServices(e) {
-    e.preventDefault()
-    const el = document.getElementById('services')
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
 
   return (
     <section style={{
@@ -69,10 +62,10 @@ export default function SectionHero() {
             {DESCRIPTORS.map((word) => (
               <a
                 key={word}
-                href="#services"
-                onClick={scrollToServices}
+                href="mailto:ryanpalmieri@gmail.com"
                 style={{
-                  fontSize: 'var(--font-size-body)',
+                  /* 10% smaller than --font-size-body (32px → 29px) */
+                  fontSize: 29,
                   fontWeight: 'var(--font-weight-medium)',
                   lineHeight: 1.5,
                   letterSpacing: 'var(--letter-spacing-body)',
