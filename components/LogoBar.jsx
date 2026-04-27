@@ -25,7 +25,7 @@ const LOGO_FILES = [
   'kettle.png',
   'FXPX.png',
   'syn.png',
-  'int.png',
+  'moonpay.png',
   '9dcc.png',
 ]
 
