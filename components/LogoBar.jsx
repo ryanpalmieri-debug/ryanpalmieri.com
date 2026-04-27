@@ -28,7 +28,7 @@ const LOGO_FILES = [
   'xologo.png',
 ]
 
-const LOGO_HEIGHT = 56 // visual height all logos conform to
+const LOGO_HEIGHT = 40 // visual height all logos conform to
 
 export default function LogoBar() {
   const logos = [...LOGO_FILES, ...LOGO_FILES]
