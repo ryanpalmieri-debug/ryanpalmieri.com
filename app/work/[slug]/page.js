@@ -52,7 +52,7 @@ export default async function ProjectPage({ params }) {
       </div>
 
       <div style={{ width: '100%', maxWidth: 'var(--container-max-width)', margin: '0 auto', padding: '0 var(--container-padding-x) 40px' }}>
-        <div style={{ width: '100%', maxWidth: 960, margin: '0 auto' }}>
+        <div style={{ width: '100%', maxWidth: 720, margin: '0 auto' }}>
           <div style={{ width: '100%', aspectRatio: '16/9', borderRadius: 'var(--radius-md)', overflow: 'hidden', background: '#1a1a1a' }}>
             {embed ? (
               <iframe src={embed} style={{ width: '100%', height: '100%', border: 0 }} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
