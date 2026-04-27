@@ -28,7 +28,7 @@ const LOGO_FILES = [
   'xologo.png',
 ]
 
-const LOGO_HEIGHT = 32 // visual height all logos conform to
+const LOGO_HEIGHT = 40 // visual height all logos conform to
 
 export default function LogoBar() {
   const logos = [...LOGO_FILES, ...LOGO_FILES]
@@ -74,10 +74,8 @@ export default function LogoBar() {
                   src={`/logos/${file}`}
                   alt=""
                   style={{
-                    maxHeight: LOGO_HEIGHT,
-                    maxWidth: 140,
+                    height: LOGO_HEIGHT,
                     width: 'auto',
-                    height: 'auto',
                     objectFit: 'contain',
                     display: 'block',
                     filter: 'grayscale(100%)',

@@ -57,22 +57,18 @@ export default async function WorkPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
               <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 500, letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-cod-gray)' }}>/All Work</span>
             </div>
-            <h1 style={{
-              margin: 0,
-              fontSize: 'var(--font-size-h2)',
-              fontWeight: 'var(--font-weight-medium)',
-              lineHeight: 'var(--line-height-h2)',
-              letterSpacing: 'var(--letter-spacing-h2)',
-              color: 'var(--color-cod-gray)',
-            }}>
-              Selected work, end to end.
-            </h1>
           </div>
-          <div className="kanso-projects-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, width: '100%' }}>
+          <div className="kanso-projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, width: '100%' }}>
             {works.map((w) => <ProjectCard key={w._id || w.slug} work={w} />)}
           </div>
           <style>{`
-            @media (max-width: 768px) {
+            @media (max-width: 1200px) {
+              .kanso-projects-grid { grid-template-columns: repeat(3, 1fr) !important; }
+            }
+            @media (max-width: 900px) {
+              .kanso-projects-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            }
+            @media (max-width: 600px) {
               .kanso-projects-grid { grid-template-columns: 1fr !important; }
             }
           `}</style>
