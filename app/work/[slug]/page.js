@@ -69,9 +69,9 @@ export default async function ProjectPage({ params }) {
         }}>
           <h1 style={{
             margin: 0,
-            fontSize: 'var(--font-size-h1)',
+            fontSize: 'clamp(36px, 4.2vw, 70px)',
             fontWeight: 'var(--font-weight-semibold)',
-            lineHeight: 1,
+            lineHeight: 1.05,
             letterSpacing: 'var(--letter-spacing-h1)',
             color: 'var(--color-cod-gray)',
           }}>{p.title}.</h1>
@@ -290,8 +290,8 @@ export default async function ProjectPage({ params }) {
 function MetaItem({ label, value }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <span style={{ fontSize: 11, fontWeight: 500, letterSpacing: '0.12em', color: 'var(--color-gray)', textTransform: 'uppercase' }}>{label}</span>
-      <span style={{ fontSize: 15, fontWeight: 500, color: 'var(--color-cod-gray)' }}>{value}</span>
+      <span style={{ fontSize: 13, fontWeight: 500, letterSpacing: '0.12em', color: 'var(--color-gray)', textTransform: 'uppercase' }}>{label}</span>
+      <span style={{ fontSize: 18, fontWeight: 500, color: 'var(--color-cod-gray)' }}>{value}</span>
     </div>
   )
 }
