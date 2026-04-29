@@ -49,11 +49,6 @@ export const work = {
       type: 'string',
     },
     {
-      name: 'year',
-      title: 'Year',
-      type: 'string',
-    },
-    {
       name: 'role',
       title: 'Role',
       type: 'string',
@@ -165,7 +160,7 @@ export const work = {
     {
       title: 'Featured First',
       name: 'featuredDesc',
-      by: [{ field: 'featured', direction: 'desc' }, { field: 'year', direction: 'desc' }],
+      by: [{ field: 'featured', direction: 'desc' }, { field: 'title', direction: 'asc' }],
     },
   ],
 }
