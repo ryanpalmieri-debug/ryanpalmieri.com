@@ -45,9 +45,11 @@ export default async function ProjectPage({ params }) {
   )
 
   const embed = toEmbed(p.videoUrl)
-  const paras = paragraphsFromBody(p.body)
+  let paras = paragraphsFromBody(p.body)
+  // Fallback: if no body, surface summary as a single section so the page isn't empty
+  if (paras.length === 0 && p.summary) paras = [p.summary]
   const sections = paras.slice(0, 3).map((text, i) => ({
-    name: SECTION_NAMES[i] || `Section`,
+    name: SECTION_NAMES[i] || `Overview`,
     num: String(i + 1).padStart(2, '0'),
     text,
   }))
