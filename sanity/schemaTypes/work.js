@@ -121,8 +121,15 @@ export const work = {
       title: 'Thumbnail',
       type: 'image',
       options: { hotspot: true },
-      description: 'Main cover image for the work grid card',
+      description: 'Cover image shown on the home page and /work grid cards',
       validation: Rule => Rule.required(),
+    },
+    {
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Large image at the top of the project detail page. Falls back to thumbnail if empty.',
     },
     {
       name: 'images',

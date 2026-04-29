@@ -139,8 +139,8 @@ export default async function ProjectPage({ params }) {
           }}>
             {embed ? (
               <iframe src={embed} style={{ width: '100%', height: '100%', border: 0 }} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
-            ) : p.thumbnail ? (
-              <img src={p.thumbnail} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            ) : (p.heroImage || p.thumbnail) ? (
+              <img src={p.heroImage || p.thumbnail} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             ) : null}
           </div>
         </div>
