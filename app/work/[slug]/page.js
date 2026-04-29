@@ -162,7 +162,7 @@ export default async function ProjectPage({ params }) {
                 fontWeight: 700,
                 letterSpacing: '-0.2px',
                 color: 'var(--color-cod-gray)',
-              }}>Body</h3>
+              }}>About</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 760 }}>
                 {paras.map((text, i) => (
                   <p key={i} style={{
