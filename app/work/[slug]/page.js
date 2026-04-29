@@ -34,8 +34,6 @@ function paragraphsFromBody(body) {
   return []
 }
 
-const SECTION_NAMES = ['Challenge', 'Solution', 'Conclusion', 'Impact', 'Reflection']
-
 export default async function ProjectPage({ params }) {
   const p = await getWork(params.slug)
   if (!p) return (
@@ -46,13 +44,7 @@ export default async function ProjectPage({ params }) {
 
   const embed = toEmbed(p.videoUrl)
   let paras = paragraphsFromBody(p.body)
-  // Fallback: if no body, surface summary as a single section so the page isn't empty
   if (paras.length === 0 && p.summary) paras = [p.summary]
-  const sections = paras.slice(0, 3).map((text, i) => ({
-    name: SECTION_NAMES[i] || `Overview`,
-    num: String(i + 1).padStart(2, '0'),
-    text,
-  }))
   const idx = staticWorks.findIndex(w => w.slug === params.slug)
   const nextOne = staticWorks[(idx + 1) % staticWorks.length]
   const nextTwo = staticWorks[(idx + 2) % staticWorks.length]
@@ -148,63 +140,42 @@ export default async function ProjectPage({ params }) {
         </div>
       </section>
 
-      {/* BODY SECTIONS */}
-      {sections.length > 0 && (
+      {/* BODY */}
+      {paras.length > 0 && (
         <section style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
           <div style={{
             width: '100%',
             maxWidth: 'var(--container-max-width)',
             padding: '40px var(--container-padding-x) 120px',
-            display: 'flex', flexDirection: 'column', gap: 96,
           }}>
-            {sections.map((s) => {
-              const sentences = s.text.split(/(?<=[.!?])\s+/).filter(Boolean)
-              const lead = sentences[0] || s.text
-              const rest = sentences.slice(1).join(' ')
-              return (
-                <div key={s.num} className="kanso-case-section" style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 2fr',
-                  gap: 64,
-                  alignItems: 'start',
-                  paddingTop: 32,
-                  borderTop: '1px solid var(--color-silver)',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-                    <h3 style={{
-                      margin: 0,
-                      fontSize: 16,
-                      fontWeight: 700,
-                      letterSpacing: '-0.2px',
-                      color: 'var(--color-cod-gray)',
-                    }}>{s.name}</h3>
-                    <span style={{
-                      fontSize: 13, fontWeight: 500, color: 'var(--color-gray)', letterSpacing: '0.05em',
-                    }}>({s.num})</span>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 760 }}>
-                    <p style={{
-                      margin: 0,
-                      fontSize: 'clamp(28px, 3.2vw, 44px)',
-                      fontWeight: 500,
-                      lineHeight: 1.2,
-                      letterSpacing: '-1px',
-                      color: 'var(--color-cod-gray)',
-                    }}>{lead}</p>
-                    {rest && (
-                      <p style={{
-                        margin: 0,
-                        fontSize: 17,
-                        fontWeight: 400,
-                        lineHeight: 1.7,
-                        letterSpacing: '-0.2px',
-                        color: 'var(--color-tundora)',
-                      }}>{rest}</p>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
+            <div className="kanso-case-section" style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 2fr',
+              gap: 64,
+              alignItems: 'start',
+              paddingTop: 32,
+              borderTop: '1px solid var(--color-silver)',
+            }}>
+              <h3 style={{
+                margin: 0,
+                fontSize: 16,
+                fontWeight: 700,
+                letterSpacing: '-0.2px',
+                color: 'var(--color-cod-gray)',
+              }}>Body</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 760 }}>
+                {paras.map((text, i) => (
+                  <p key={i} style={{
+                    margin: 0,
+                    fontSize: 17,
+                    fontWeight: 400,
+                    lineHeight: 1.7,
+                    letterSpacing: '-0.2px',
+                    color: 'var(--color-cod-gray)',
+                  }}>{text}</p>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
       )}
