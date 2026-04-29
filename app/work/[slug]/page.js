@@ -91,7 +91,7 @@ export default async function ProjectPage({ params }) {
           {/* META ROW */}
           <div className="kanso-case-meta" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr) auto',
+            gridTemplateColumns: 'repeat(3, 1fr) auto',
             gap: 24,
             alignItems: 'flex-end',
             paddingTop: 24,
@@ -100,7 +100,6 @@ export default async function ProjectPage({ params }) {
             <MetaItem label="Scope" value={p.category || '—'} />
             <MetaItem label="Client" value={p.client || '—'} />
             <MetaItem label="Role" value={p.role || '—'} />
-            <MetaItem label="Year" value={p.year || '—'} />
             {p.liveUrl && (
               <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
@@ -260,14 +259,11 @@ export default async function ProjectPage({ params }) {
                   )}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '0 6px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{
-                      fontSize: 'var(--font-size-h3)', fontWeight: 700,
-                      lineHeight: 'var(--line-height-h3)', letterSpacing: 'var(--letter-spacing-h3)',
-                      color: 'var(--color-cod-gray)',
-                    }}>{n.title || n.client || 'Project'}</span>
-                    <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--color-cod-gray)' }}>{n.year}</span>
-                  </div>
+                  <span style={{
+                    fontSize: 'var(--font-size-h3)', fontWeight: 700,
+                    lineHeight: 'var(--line-height-h3)', letterSpacing: 'var(--letter-spacing-h3)',
+                    color: 'var(--color-cod-gray)',
+                  }}>{n.title || n.client || 'Project'}</span>
                   <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--color-tundora)' }}>{n.category || n.client || ''}</span>
                 </div>
               </Link>

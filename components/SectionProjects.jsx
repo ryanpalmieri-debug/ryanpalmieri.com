@@ -32,14 +32,9 @@ function ProjectCard({ title, year, description, img, href = '#' }) {
         )}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '0 6px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: 'var(--font-size-h3)', fontWeight: 'var(--font-weight-semibold)', lineHeight: 'var(--line-height-h3)', letterSpacing: 'var(--letter-spacing-h3)', color: 'var(--color-cod-gray)' }}>
-            {title}
-          </span>
-          <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', lineHeight: 'var(--line-height-sm)', letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-cod-gray)' }}>
-            {year}
-          </span>
-        </div>
+        <span style={{ fontSize: 'var(--font-size-h3)', fontWeight: 'var(--font-weight-semibold)', lineHeight: 'var(--line-height-h3)', letterSpacing: 'var(--letter-spacing-h3)', color: 'var(--color-cod-gray)' }}>
+          {title}
+        </span>
         <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', lineHeight: 'var(--line-height-sm)', letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-tundora)' }}>
           {description}
         </span>
@@ -96,7 +91,6 @@ export default function SectionProjects({ works = [] }) {
             <ProjectCard
               key={p._id || p.slug}
               title={p.title || p.client || 'Project'}
-              year={p.year || ''}
               description={p.category || p.client || ''}
               img={p.thumbnail}
               href={`/work/${p.slug}`}

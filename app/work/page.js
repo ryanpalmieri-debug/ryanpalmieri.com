@@ -31,10 +31,7 @@ function ProjectCard({ work }) {
         {work.thumbnail && <img src={work.thumbnail} alt={work.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '0 6px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: 'var(--font-size-h3)', fontWeight: 'var(--font-weight-semibold)', letterSpacing: 'var(--letter-spacing-h3)', color: 'var(--color-cod-gray)' }}>{work.title}</span>
-          <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-cod-gray)' }}>{work.year}</span>
-        </div>
+        <span style={{ fontSize: 'var(--font-size-h3)', fontWeight: 'var(--font-weight-semibold)', letterSpacing: 'var(--letter-spacing-h3)', color: 'var(--color-cod-gray)' }}>{work.title}</span>
         <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-tundora)' }}>
           {work.category || work.client}
         </span>
