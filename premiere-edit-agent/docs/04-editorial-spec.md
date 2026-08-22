@@ -36,12 +36,20 @@ agent-generated sequences get a fixed color label; flagged items get red.
   `SUBJECT_B`… pending one-click rename in the panel (rename propagates to markers
   and paper cut on next regeneration).
 
-## 3. Stringout layout
+## 3. Sync units and stringout layout
 
-- V1: camera clip(s), in source order, gap-preserving within an interview.
-- A1: in-camera scratch audio — placed, **muted** (kept for verification).
-- A2+: production WAV at computed sync offset (channels split as recorded).
-- Sequence markers at take boundaries and at flagged-sync regions.
+Matches the editor's existing convention (validated against a real project export,
+`fixtures/Selects_Sync_Sequence.xml`):
+
+- **Per-clip multicam source sequence** `<clipfile>.movMulticam` for every camera
+  clip with matched production audio: V1 = camera clip; A1–A6 = production poly-WAV
+  channels placed at the computed sync offset (as many channels as the WAV carries);
+  A7+ = camera scratch audio (kept for verification, muted in downstream cuts).
+  Created via generated FCP7 XML import; stored in a `MULTICAMS` bin per shoot day.
+- **Stringout** `01_STRINGOUT_<SUBJECT>_v###`: that interview's multicam clips
+  placed back-to-back in source order.
+- Sequence markers at take boundaries and at flagged-sync regions; unmatched or
+  low-confidence clips land in `02_AGENT/REVIEW`, never silently placed.
 
 ## 4. Selects sequence
 

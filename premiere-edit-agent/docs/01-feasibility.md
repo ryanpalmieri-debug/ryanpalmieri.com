@@ -74,7 +74,7 @@ stages consume one normalized transcript format.
 
 | Gap | Impact | Fallback / mitigation |
 |---|---|---|
-| No API found for Premiere's own "Synchronize"/merge-clips or multicam-source creation | Can't ask Premiere to waveform-sync for us | **Companion does the sync math itself** (see §5) and the panel places clips at computed offsets on stacked tracks. This is strictly better: we get confidence scores and never silently guess. True multicam *source sequences* are out of V1 scope; stacked-track stringouts cover the editorial need. |
+| No API found for Premiere's own "Synchronize"/merge-clips or multicam-source creation | Can't ask Premiere to waveform-sync for us | **Companion does the sync math itself** (see §5). For placement, multicam *source sequences* — the editor's actual sync convention (see §6) — are created via generated FCP7 XML and imported; a real project export proves FCP7 XML fully represents this structure. Stacked-track stringouts remain the fallback if XML-created multicams misbehave. Either way we get confidence scores and never silently guess. |
 | `transcribeClipProjectItem` options (language, speaker-detection toggle) are not documented in the sample; behavior on sequences is explicitly unsupported | Transcription targets must be clips (we transcribe the production WAV — the best audio — not the synced sequence) | Phase-1 spike verifies options and speaker output on the target machine. If Premiere's engine can't be steered adequately → **local Whisper** (faster-whisper, word timestamps) + diarization, normalized to the Adobe JSON. |
 | Speaker *identification* quality (who is the interviewer?) is unknown for Premiere STT | Speaker roles matter for selects | Roles are assigned by the analysis layer regardless of engine: Claude classifies each speaker from content (questions vs. answers) with per-speaker evidence; low confidence → UNKNOWN, surfaced for one-click correction in the panel. |
 | Slates need on-screen text, but V1 forbids titles/graphics APIs and MOGRT text-param setting is unverified | Selects sequence requires 5-second section slates | Companion **renders slate media** (ffmpeg `drawtext` → ProRes/PNG), panel imports and places them like any clip. Zero dependency on Premiere titling. MOGRT path kept as a later nicety. |
@@ -105,7 +105,29 @@ All standard, mature tech:
   cheap; structured outputs guarantee machine-readable selects/EDL decisions.
 - **Slate rendering / paper cut**: ffmpeg drawtext; Markdown → PDF for the paper cut.
 
-## 6. Verdict
+## 6. Real-project XML findings (2026-08-22)
+
+The editor supplied an FCP7 XML export of a real "Selects Sync Sequence"
+(`fixtures/Selects_Sync_Sequence.xml`). Findings, now normative for the design:
+
+- **Sync convention**: each camera clip is merged with its production audio into a
+  per-clip **multicam source sequence** named `<clipfile>.movMulticam`, containing
+  V1 = camera clip, A1–A6 = the six mono channels of a poly production WAV
+  (`SCENE_T_###.wav`) placed at the sync offset, A7–A8 = camera scratch audio.
+- **Selects convention**: a single sequence of butt-cut selects (~12–26 s each) of
+  those multicam clips, 23.976 fps, source-in points carrying the selection.
+- Two camera reel series (A173/A174) and a sound-roll series appear — multi-camera,
+  multi-roll delivery is the normal case, as stated in requirements.
+- FCP7 XML represents all of it — nested multicam definitions, per-channel audio
+  routing (`sourcetrack/trackindex` 1–6), sync offsets, labels, tick-precision
+  in/out (`pproTicksIn/Out`) — confirming the FCPXML path can both *create* the
+  editor's sync structure and *snapshot* sequences with diff-grade fidelity.
+- Export quirk to handle: in this export the top-level video track items were
+  absent; the cuts were fully recoverable from the audio clip items and their
+  `link` references. The XML snapshot parser must reconstruct cuts from links when
+  a track is missing, and OTIO (which we also capture) covers the same ground.
+
+## 7. Verdict
 
 **The full V1 pipeline is feasible today** on Premiere 25.2+ with a UXP panel +
 companion architecture. No stage depends on an unverified capability without a
