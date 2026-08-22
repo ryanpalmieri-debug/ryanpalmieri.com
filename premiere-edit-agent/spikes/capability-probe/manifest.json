@@ -1,0 +1,28 @@
+{
+  "id": "com.ryanpalmieri.editagent.probe",
+  "name": "Edit Agent Capability Probe",
+  "version": "0.1.0",
+  "main": "index.html",
+  "host": [
+    {
+      "app": "premierepro",
+      "minVersion": "25.2.0"
+    }
+  ],
+  "manifestVersion": 5,
+  "requiredPermissions": {
+    "localFileSystem": "request",
+    "clipboard": "readAndWrite"
+  },
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "probepanel",
+      "minimumSize": { "width": 400, "height": 500 },
+      "maximumSize": { "width": 2000, "height": 2000 },
+      "preferredDockedSize": { "width": 520, "height": 800 },
+      "preferredFloatingSize": { "width": 520, "height": 800 },
+      "label": { "default": "Edit Agent Probe" }
+    }
+  ]
+}
