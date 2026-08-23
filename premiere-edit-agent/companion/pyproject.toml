@@ -1,0 +1,22 @@
+[project]
+name = "editagent-companion"
+version = "0.1.0"
+description = "Local companion service for the Premiere Edit Agent"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+server = ["fastapi>=0.110", "uvicorn>=0.29", "websockets>=12"]
+analysis = ["anthropic>=1.0"]
+media = ["numpy>=1.26"]
+test = ["pytest>=8"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["editagent*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

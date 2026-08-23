@@ -8,7 +8,14 @@ hardening until the Phase 1 spikes pass or their fallbacks are invoked.
 
 Feasibility research, architecture, data model, editorial spec.
 
-## Phase 1 — Environment spikes (on the target Mac, ~days)
+## Phase 1 — Environment spikes (on the target Mac, ~days) — in progress
+
+Status 2026-08-23: capability probe ran on Premiere 26.3.0 (26/27 APIs present;
+`Transcript.transcribeClipProjectItem` missing — member dump pending). Sync spike
+**passed end-to-end**: TC pairing validated against real multicams and a generated
+FCPXML imported cleanly, creating all 18 synced sequences with media auto-linked.
+Remaining: transcription member dump (probe v0.2 button 1), assembly spike,
+OTIO snapshot spike.
 
 Small throwaway UXP panel + scripts proving on the actual installed Premiere version:
 

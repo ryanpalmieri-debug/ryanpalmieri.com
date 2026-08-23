@@ -127,6 +127,21 @@ The editor supplied an FCP7 XML export of a real "Selects Sync Sequence"
   `link` references. The XML snapshot parser must reconstruct cuts from links when
   a track is missing, and OTIO (which we also capture) covers the same ground.
 
+### Spike result (2026-08-23): sync assembly via FCPXML — PASSED
+
+Run on the target machine (Premiere 26.3.0): a RAW dump XML of 19 camera clips +
+18 production WAVs (`fixtures/RAW_DUMP.xml`) was paired by jammed-timecode overlap
+(18/18 correct, offsets within 0–1 frame of the editor's own waveform-synced
+multicams; 1 clip with no sound roll correctly flagged for review) and a generated
+FCP7 XML (`spikes/sync-spike/generate_sync_xml.py`) imported cleanly: media
+auto-linked and all 18 synced source sequences were created in the editor's
+convention. The FCPXML creation path is confirmed as the primary sync builder.
+Also confirmed on 26.3.0: 26/27 static API checks pass; the one failure is
+`Transcript.transcribeClipProjectItem` (absent — removed or renamed since the
+25.x samples; member dump pending). Transcription therefore currently assumes
+manual Text-panel transcription or the Whisper fallback until the member dump
+says otherwise.
+
 ## 7. Verdict
 
 **The full V1 pipeline is feasible today** on Premiere 25.2+ with a UXP panel +
