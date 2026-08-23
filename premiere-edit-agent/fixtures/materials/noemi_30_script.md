@@ -20,6 +20,15 @@ provided draft is kept underneath for provenance.
 tag have not yet been observed in a transcript — carried from the draft until
 a roll confirms the as-read wording.)
 
+## Producer notes (project-specific criteria)
+
+- 2026-08-23, via editor: **the producer's favorite takes are 3 and 4.**
+  Treatment: a ranking boost and a "producer favorite" tag on those takes —
+  not an override. The selects still show the tool's own delivery ranking so
+  agreement/divergence is visible ("producer favorite take 3 also ranks #1 on
+  energy" vs. a flagged split). Takes are resolved to clips via spoken-slate
+  parsing (`companion/editagent/slate.py`).
+
 ## Original draft as provided
 
 > I'm Noemi Legaspi
