@@ -73,6 +73,15 @@ strong delivery, story advancement, redundancy (inverse). Weighting by project t
 
 - **Commercials (:30/:60)**: script fidelity dominates — passages are matched to
   script lines; the fidelity mapping outranks standalone quote quality.
+  **Within** script-faithful candidates, ranking is delivery-first
+  (editor instruction, 2026-08-23, `fixtures/preferences.json` pref_user_001):
+  for flat/wooden subjects, the best read of each line is the most energetic and
+  fluid one — the edit manufactures excitement with music and B-roll — and the
+  cut assembles line-by-line from the best take of each line across all clips,
+  never by favoring one full take. Delivery is measured per take
+  (`companion/editagent/delivery.py`: pace, pause ratio, stumbles, fillers,
+  clarity), with audio prosody scoring (pitch range, loudness dynamics) planned
+  as a Phase 3 refinement.
 - **Documentaries**: editorial/story quality carries more weight; fidelity to outline
   is a guide, not a constraint.
 - Project-specific materials (script, outline, treatment, questions, topic list) are

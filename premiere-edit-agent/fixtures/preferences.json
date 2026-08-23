@@ -1,0 +1,23 @@
+{
+  "$comment": "Editorial preference store (see docs/03-data-model.md section 6). Seeded with the editor's first explicit instructions; inferred patterns are added by the learning system only after repeated observation.",
+  "patterns": [],
+  "explicit": [
+    {
+      "id": "pref_user_001",
+      "instruction": "For commercial subjects with flat/wooden delivery, 'best read' means the most energetic, fluid take of each script line - not the cleanest or most complete take. The edit's job is to manufacture excitement (music and B-roll will carry it), so prioritize pace, momentum, and life in the voice; assemble line-by-line from the best take of each line across ALL clips rather than favoring one full take.",
+      "source": "user",
+      "statedAt": "2026-08-23",
+      "context": "Noemi :30 - subject is very wooden; editor must make her sound exciting with inspiring music and b-roll",
+      "scope": { "projectTypes": ["commercial_30", "commercial_60"] },
+      "status": "user_pinned"
+    },
+    {
+      "id": "pref_user_002",
+      "instruction": "The authoritative script for a commercial is whatever the subject actually read on camera (the prompter copy), reconstructed from transcripts - not the draft script document.",
+      "source": "user",
+      "statedAt": "2026-08-23",
+      "scope": { "projectTypes": ["commercial_30", "commercial_60"] },
+      "status": "user_pinned"
+    }
+  ]
+}
