@@ -11,7 +11,7 @@ const uxp = require("uxp");
 const lfs = uxp.storage.localFileSystem;
 
 const report = {
-  meta: { probeVersion: "0.1.0", ranAt: null },
+  meta: { probeVersion: "0.2.0", ranAt: null },
   environment: {},
   pproTopLevel: [],
   staticChecks: {},
@@ -103,13 +103,47 @@ async function selectedOrFirstClip(project) {
     const items = await getSelectedItems(project);
     for (const item of items) {
       const clip = ppro.ClipProjectItem.cast(item);
-      if (clip) return { clip, from: "selection" };
+      if (!clip) continue;
+      try {
+        if (await clip.isSequence()) continue; // never use a sequence as the source clip
+      } catch (e) {
+        /* isSequence unavailable — accept the clip */
+      }
+      return { clip, from: "selection" };
     }
   } catch (e) {
     /* fall through to BFS */
   }
   const clip = await firstMediaClip(project);
   return { clip, from: clip ? "first-in-project" : "none" };
+}
+
+// Dump own property names of key static namespaces so renamed/moved APIs are
+// discoverable from the report (e.g. Transcript.transcribeClipProjectItem missing
+// on Premiere 26.x — what does Transcript expose instead?).
+const MEMBER_DUMP_TARGETS = [
+  "Transcript", "SequenceEditor", "ProjectConverter", "ClipProjectItem",
+  "Project", "Markers", "Marker", "TickTime", "ProjectUtils", "Constants",
+];
+
+function dumpStaticMembers() {
+  report.memberDumps = {};
+  for (const name of MEMBER_DUMP_TARGETS) {
+    try {
+      const obj = ppro[name];
+      if (!obj) {
+        report.memberDumps[name] = "absent";
+        continue;
+      }
+      const names = new Set(Object.getOwnPropertyNames(obj));
+      if (obj.prototype) {
+        for (const p of Object.getOwnPropertyNames(obj.prototype)) names.add(p);
+      }
+      report.memberDumps[name] = Array.from(names).sort();
+    } catch (e) {
+      report.memberDumps[name] = "error: " + String(e);
+    }
+  }
 }
 
 // ---------------------------------------------------------------- Step 1: report
@@ -178,6 +212,11 @@ async function runCapabilityReport() {
   for (const [p, r] of Object.entries(report.staticChecks)) {
     if (!r.ok) print("  MISSING: " + p);
   }
+
+  // Member dumps for key namespaces (find renamed APIs)
+  dumpStaticMembers();
+  const tMembers = report.memberDumps.Transcript;
+  print("Transcript members: " + (Array.isArray(tMembers) ? tMembers.join(", ") : tMembers));
 
   // Instance checks (needs an open project)
   try {
@@ -267,6 +306,14 @@ async function spikeTranscribe() {
     if (await clip.isSequence()) throw new Error("Selected item is a sequence — select a media clip.");
 
     s.hadTranscript = ppro.Transcript.hasTranscript(clip);
+    if (!s.hadTranscript && typeof ppro.Transcript.transcribeClipProjectItem !== "function") {
+      s.transcribeApiMissing = true;
+      throw new Error(
+        "This build has no transcribe API and the clip has no transcript yet. " +
+        "Transcribe it manually first (select the clip, open the Text panel, Transcribe), " +
+        "then press this button again to test the JSON export."
+      );
+    }
     if (!s.hadTranscript) {
       print("Starting transcription… (may take a while; leave Premiere open)");
       const t0 = Date.now();
@@ -322,6 +369,7 @@ async function spikeAssembly() {
     const project = await getProject();
     const { clip, from } = await selectedOrFirstClip(project);
     if (!clip) throw new Error("No clip found — select a camera clip in the Project panel.");
+    if (await clip.isSequence()) throw new Error("Got a sequence — select a camera media clip in the Project panel.");
     s.clip = clip.name;
     print("\n=== Spike 3: " + ASSEMBLY_EDITS + "-edit assembly from \"" + clip.name + "\" (" + from + ") ===");
 
