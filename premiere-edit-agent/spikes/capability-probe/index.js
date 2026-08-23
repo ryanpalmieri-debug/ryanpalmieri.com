@@ -11,7 +11,7 @@ const uxp = require("uxp");
 const lfs = uxp.storage.localFileSystem;
 
 const report = {
-  meta: { probeVersion: "0.2.0", ranAt: null },
+  meta: { probeVersion: "0.3.0", ranAt: null },
   environment: {},
   pproTopLevel: [],
   staticChecks: {},
@@ -291,6 +291,53 @@ async function runCapabilityReport() {
   print("Now run Spikes 2–4, then 'Save full report to file…' and send it back.");
 }
 
+// ---------------------------------------------- Step 2b: batch transcript export
+
+async function batchExportTranscripts() {
+  const s = (report.spikes.batchExport = { startedAt: new Date().toISOString(), exported: [], skipped: [] });
+  try {
+    const project = await getProject();
+    const items = await getSelectedItems(project);
+    const clips = [];
+    for (const item of items) {
+      const clip = ppro.ClipProjectItem.cast(item);
+      if (!clip) continue;
+      try { if (await clip.isSequence()) continue; } catch (e) { /* accept */ }
+      clips.push(clip);
+    }
+    if (clips.length === 0) {
+      throw new Error("Select the transcribed clips in the Project panel first (Cmd-click or marquee).");
+    }
+    print("\n=== Batch transcript export: " + clips.length + " selected clip(s) ===");
+    const folder = await lfs.getFolder();
+    if (!folder) throw new Error("No output folder chosen.");
+    for (const clip of clips) {
+      try {
+        if (!ppro.Transcript.hasTranscript(clip)) {
+          s.skipped.push(clip.name);
+          print("  SKIP (no transcript yet): " + clip.name);
+          continue;
+        }
+        const json = await ppro.Transcript.exportToJSON(clip);
+        const fname = "transcript_" + clip.name + ".json";
+        const file = await folder.createFile(fname, { overwrite: true });
+        await file.write(json);
+        s.exported.push(fname);
+        print("  exported " + fname + " (" + json.length + " chars)");
+      } catch (e) {
+        s.skipped.push(clip.name + " (error: " + e + ")");
+        print("  FAILED " + clip.name + ": " + e);
+      }
+    }
+    print("Done: " + s.exported.length + " exported, " + s.skipped.length + " skipped → " + folder.nativePath);
+    s.ok = s.exported.length > 0;
+  } catch (e) {
+    s.ok = false;
+    s.error = String(e);
+    print("Batch export FAILED: " + e);
+  }
+}
+
 // ------------------------------------------------------------ Step 2: transcribe
 
 async function spikeTranscribe() {
@@ -508,6 +555,7 @@ document.addEventListener("DOMContentLoaded", () => {
   outEl = document.getElementById("out");
   document.getElementById("btn-report").addEventListener("click", runCapabilityReport);
   document.getElementById("btn-transcribe").addEventListener("click", spikeTranscribe);
+  document.getElementById("btn-batch-export").addEventListener("click", batchExportTranscripts);
   document.getElementById("btn-assembly").addEventListener("click", spikeAssembly);
   document.getElementById("btn-otio").addEventListener("click", spikeOtio);
   document.getElementById("btn-fcpxml").addEventListener("click", spikeFcpXml);
