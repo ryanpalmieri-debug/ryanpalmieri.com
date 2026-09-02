@@ -1,33 +1,43 @@
 export default function SectionAbout() {
   return (
-    <section id="about" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      <div style={{
-        width: '100%',
-        maxWidth: 'var(--container-max-width)',
-        padding: '120px var(--container-padding-x)',
-        display: 'flex', flexDirection: 'column', gap: 48,
+    <section id="about" style={{ width: '100%' }}>
+      <div className="o-container" style={{
+        paddingTop: 'clamp(56px, 6vw, 96px)',
+        paddingBottom: 'var(--section-pad-y)',
+        display: 'flex', flexDirection: 'column', gap: 'clamp(36px, 4vw, 64px)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24 }}>
-          <span className="kanso-label">/About</span>
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', gap: 16,
+          paddingTop: 20, borderTop: '1px solid var(--color-ink-12)',
+        }}>
+          <span className="o-label"><sup style={{ color: 'var(--color-ink-50)', marginRight: 4 }}>(03)</sup> About</span>
+          <span className="o-label o-label--muted">Los Angeles, CA</span>
         </div>
 
-        <div className="kanso-about-grid">
+        <h2 className="o-display" style={{
+          margin: 0,
+          maxWidth: '18em',
+          fontSize: 'var(--size-display-md)',
+          lineHeight: 1.08,
+          color: 'var(--color-black)',
+        }}>
+          I turn complex technology into brands people understand,
+          trust, and remember.
+        </h2>
+
+        <div className="o-about-grid">
           {/* Headshot column */}
-          <div className="kanso-about-photo">
+          <div className="o-about-photo">
             <img
               src="/headshot.png"
               alt="Ryan Palmieri"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', filter: 'grayscale(100%)' }}
             />
           </div>
 
           {/* Copy column */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-            <h2 style={h2Style}>
-              I turn complex technology into brands people understand, trust, and remember.
-            </h2>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 720 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 32, justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 640 }}>
               <p style={paragraphStyle}>
                 I&apos;m a senior marketing and brand leader with experience across AI infrastructure, Web3, entertainment, and global campaigns — from early-stage positioning to enterprise-scale launch.
               </p>
@@ -36,100 +46,51 @@ export default function SectionAbout() {
               </p>
             </div>
 
-            {/* CTA buttons */}
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 8 }}>
+            <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
               <a
                 href="/ryan-palmieri-resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={primaryBtnStyle}
-              >
-                View Resume
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
+                className="o-link"
+              >Resume ↗</a>
               <a
                 href="https://www.linkedin.com/in/ryan-palmieri-715190213/"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={secondaryBtnStyle}
-              >
-                LinkedIn
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
+                className="o-link"
+              >LinkedIn ↗</a>
             </div>
           </div>
         </div>
       </div>
 
       <style>{`
-        .kanso-about-grid {
+        .o-about-grid {
           display: grid;
-          grid-template-columns: 360px 1fr;
-          gap: 64px;
-          align-items: start;
+          grid-template-columns: minmax(260px, 380px) 1fr;
+          gap: clamp(32px, 4vw, 72px);
+          align-items: stretch;
         }
-        .kanso-about-photo {
+        .o-about-photo {
           width: 100%;
           aspect-ratio: 4 / 5;
-          background: var(--color-gallery);
-          border-radius: var(--radius-md);
+          background: #111;
           overflow: hidden;
         }
         @media (max-width: 900px) {
-          .kanso-about-grid { grid-template-columns: 1fr; gap: 32px; }
-          .kanso-about-photo { max-width: 320px; }
+          .o-about-grid { grid-template-columns: 1fr; }
+          .o-about-photo { max-width: 340px; }
         }
       `}</style>
     </section>
   )
 }
 
-const labelStyle = {
-  fontSize: 'var(--font-size-sm)',
-  fontWeight: 'var(--font-weight-medium)',
-  letterSpacing: 'var(--letter-spacing-sm)',
-  color: 'var(--color-cod-gray)',
-}
-const h2Style = {
-  margin: 0, maxWidth: 980,
-  fontSize: 'var(--font-size-h2)',
-  fontWeight: 'var(--font-weight-medium)',
-  lineHeight: 'var(--line-height-h2)',
-  letterSpacing: 'var(--letter-spacing-h2)',
-  color: 'var(--color-cod-gray)',
-}
 const paragraphStyle = {
   margin: 0,
   fontSize: 17,
   fontWeight: 400,
   lineHeight: 1.7,
-  letterSpacing: '-0.2px',
-  color: 'var(--color-tundora)',
-}
-const primaryBtnStyle = {
-  display: 'inline-flex', alignItems: 'center', gap: 8,
-  background: 'var(--color-cod-gray)',
-  color: 'var(--color-white)',
-  padding: '12px 22px',
-  borderRadius: 'var(--radius-pill)',
-  textDecoration: 'none',
-  fontSize: 'var(--font-size-sm)',
-  fontWeight: 'var(--font-weight-medium)',
-  letterSpacing: 'var(--letter-spacing-link)',
-}
-const secondaryBtnStyle = {
-  display: 'inline-flex', alignItems: 'center', gap: 8,
-  background: 'transparent',
-  color: 'var(--color-cod-gray)',
-  padding: '12px 22px',
-  borderRadius: 'var(--radius-pill)',
-  border: '1px solid var(--color-cod-gray)',
-  textDecoration: 'none',
-  fontSize: 'var(--font-size-sm)',
-  fontWeight: 'var(--font-weight-medium)',
-  letterSpacing: 'var(--letter-spacing-link)',
+  letterSpacing: '-0.01em',
+  color: 'var(--color-ink-70)',
 }

@@ -2,7 +2,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-const NAV_FONT = 17 // bumped from 14 by ~20%
+const LINKS = [
+  { href: '/work', label: 'Work', index: '01' },
+  { href: '/about', label: 'About', index: '02' },
+  { href: 'mailto:ryanpalmieri@gmail.com', label: 'Contact', index: '03' },
+]
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
@@ -10,97 +14,122 @@ export default function Nav() {
     <>
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        height: 'var(--nav-h)', background: 'var(--color-white)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        height: 'var(--nav-h)',
+        background: 'rgba(255,255,255,0.9)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        borderBottom: '1px solid var(--color-ink-12)',
+        display: 'flex', alignItems: 'center',
       }}>
-        <div style={{
-          width: '100%', maxWidth: 'var(--container-max-width)',
-          padding: '0 var(--container-padding-x)',
+        <div className="o-container" style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
           <Link href="/" aria-label="Ryan Palmieri — Home" style={{
-            display: 'inline-flex', alignItems: 'center', gap: 6,
-            fontFamily: 'Inter, sans-serif',
-            fontSize: 28,
-            fontWeight: 800,
-            lineHeight: 1,
-            letterSpacing: '-1px',
-            color: 'var(--color-cod-gray)',
+            fontFamily: 'var(--font-display)',
+            fontSize: 17,
+            fontWeight: 600,
+            letterSpacing: '-0.02em',
+            color: 'var(--color-black)',
             textDecoration: 'none',
+            whiteSpace: 'nowrap',
           }}>
-            <span style={{ color: 'var(--color-silver-chalice)', fontWeight: 600 }}>[</span>
-            <span>rp</span>
-            <span style={{ color: 'var(--color-silver-chalice)', fontWeight: 600 }}>]</span>
+            Ryan Palmieri<sup style={{ fontSize: '0.55em', fontWeight: 500, marginLeft: 1 }}>®</sup>
           </Link>
-          <div style={{ display: 'flex', gap: 32, alignItems: 'center' }} className="kanso-nav-desktop">
-            <Link href="/work" style={navLinkStyle}>/Work</Link>
-            <a href="/#about" style={navLinkStyle}>/About</a>
-            <a href="mailto:ryanpalmieri@gmail.com" style={navLinkStyle}>/Contact</a>
+
+          <div className="o-nav-desktop" style={{ display: 'flex', gap: 36, alignItems: 'center' }}>
+            {LINKS.map((l) => (
+              l.href.startsWith('/')
+                ? <Link key={l.label} href={l.href} className="o-nav-link">
+                    <sup>({l.index})</sup> {l.label}
+                  </Link>
+                : <a key={l.label} href={l.href} className="o-nav-link">
+                    <sup>({l.index})</sup> {l.label}
+                  </a>
+            ))}
             <a
               href="https://www.linkedin.com/in/ryan-palmieri-715190213/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              style={iconLinkStyle}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45z"/></svg>
-            </a>
-            <a
-              href="https://x.com/ryanppalmieri"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X"
-              style={iconLinkStyle}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg>
-            </a>
+              target="_blank" rel="noopener noreferrer"
+              className="o-nav-link"
+            >LinkedIn ↗</a>
           </div>
+
           <button
             onClick={() => setOpen(true)}
-            className="kanso-nav-mobile"
-            style={{ background: 'none', border: 'none', fontSize: NAV_FONT, fontWeight: 500, color: 'var(--color-cod-gray)', cursor: 'pointer' }}
+            className="o-nav-mobile o-label"
+            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
             aria-label="Open menu"
-          >Menu</button>
+          >Menu +</button>
         </div>
       </nav>
 
       {open && (
         <div style={{
-          position: 'fixed', inset: 0, background: 'var(--color-white)', zIndex: 200,
-          display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 24px', gap: 24,
+          position: 'fixed', inset: 0, background: 'var(--color-black)', color: 'var(--color-white)',
+          zIndex: 200, display: 'flex', flexDirection: 'column', justifyContent: 'center',
+          padding: '0 var(--container-padding-x)', gap: 8,
         }}>
-          <button onClick={() => setOpen(false)} aria-label="Close menu" style={{ position: 'absolute', top: 24, right: 24, background: 'none', border: 'none', fontSize: 17, fontWeight: 500, cursor: 'pointer' }}>Close</button>
-          <Link href="/work" onClick={() => setOpen(false)} style={mobileLinkStyle}>/Work</Link>
-          <a href="/#about" onClick={() => setOpen(false)} style={mobileLinkStyle}>/About</a>
-          <a href="mailto:ryanpalmieri@gmail.com" onClick={() => setOpen(false)} style={mobileLinkStyle}>/Contact</a>
-          <div style={{ display: 'flex', gap: 24, marginTop: 16 }}>
-            <a href="https://www.linkedin.com/in/ryan-palmieri-715190213/" target="_blank" rel="noopener noreferrer" style={{ fontSize: 22, color: 'var(--color-cod-gray)', textDecoration: 'none' }}>LinkedIn</a>
-            <a href="https://x.com/ryanppalmieri" target="_blank" rel="noopener noreferrer" style={{ fontSize: 22, color: 'var(--color-cod-gray)', textDecoration: 'none' }}>X</a>
+          <button
+            onClick={() => setOpen(false)}
+            aria-label="Close menu"
+            className="o-label o-label--paper"
+            style={{ position: 'absolute', top: 24, right: 'var(--container-padding-x)', background: 'none', border: 'none', cursor: 'pointer' }}
+          >Close ×</button>
+
+          {LINKS.map((l, i) => (
+            l.href.startsWith('/')
+              ? <Link key={l.label} href={l.href} onClick={() => setOpen(false)} className="o-menu-link o-display">
+                  <span className="o-menu-index">({l.index})</span>{l.label}
+                </Link>
+              : <a key={l.label} href={l.href} onClick={() => setOpen(false)} className="o-menu-link o-display">
+                  <span className="o-menu-index">({l.index})</span>{l.label}
+                </a>
+          ))}
+
+          <div style={{ display: 'flex', gap: 28, marginTop: 40 }}>
+            <a href="https://www.linkedin.com/in/ryan-palmieri-715190213/" target="_blank" rel="noopener noreferrer" className="o-label o-label--paper-muted" style={{ textDecoration: 'none' }}>LinkedIn ↗</a>
+            <a href="https://x.com/ryanppalmieri" target="_blank" rel="noopener noreferrer" className="o-label o-label--paper-muted" style={{ textDecoration: 'none' }}>X ↗</a>
           </div>
         </div>
       )}
 
       <style>{`
+        .o-nav-link {
+          font-size: 12px;
+          font-weight: 500;
+          letter-spacing: var(--track-label);
+          text-transform: uppercase;
+          color: var(--color-black);
+          text-decoration: none;
+          transition: opacity 300ms ease;
+        }
+        .o-nav-link sup {
+          font-size: 9px;
+          color: var(--color-ink-50);
+          margin-right: 2px;
+        }
+        .o-nav-link:hover { opacity: 0.45; }
+        .o-menu-link {
+          font-size: clamp(44px, 12vw, 80px);
+          color: var(--color-white);
+          text-decoration: none;
+          line-height: 1.1;
+        }
+        .o-menu-index {
+          font-family: var(--font-body);
+          font-size: 12px;
+          font-weight: 500;
+          letter-spacing: var(--track-label);
+          color: var(--color-paper-50);
+          vertical-align: super;
+          margin-right: 12px;
+        }
         @media (max-width: 768px) {
-          .kanso-nav-desktop { display: none !important; }
+          .o-nav-desktop { display: none !important; }
         }
         @media (min-width: 769px) {
-          .kanso-nav-mobile { display: none !important; }
+          .o-nav-mobile { display: none !important; }
         }
       `}</style>
     </>
   )
-}
-
-const navLinkStyle = {
-  fontSize: NAV_FONT, fontWeight: 500, letterSpacing: '-0.5px',
-  color: 'var(--color-cod-gray)', textDecoration: 'none',
-}
-const iconLinkStyle = {
-  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-  color: 'var(--color-cod-gray)', textDecoration: 'none',
-}
-const mobileLinkStyle = {
-  fontSize: 36, fontWeight: 600, letterSpacing: '-1px',
-  color: 'var(--color-cod-gray)', textDecoration: 'none',
 }

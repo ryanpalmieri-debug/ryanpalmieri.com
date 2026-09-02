@@ -17,24 +17,15 @@ async function getWorks() {
   } catch { return staticWorks }
 }
 
-function Divider() {
-  return (
-    <div className="kanso-divider"><hr /></div>
-  )
-}
-
 export default async function HomePage() {
   const works = await getWorks()
   return (
     <main style={{ width: '100%', backgroundColor: 'var(--color-white)' }}>
       <FadeIn><SectionHero /></FadeIn>
       <FadeIn><LogoBar /></FadeIn>
-      <Divider />
       <FadeIn><SectionProjects works={works} /></FadeIn>
-      <Divider />
       <FadeIn><SectionAbout /></FadeIn>
-      <Divider />
-      <FadeIn><SectionContact /></FadeIn>
+      <SectionContact />
     </main>
   )
 }

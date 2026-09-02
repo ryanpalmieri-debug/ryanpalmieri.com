@@ -1,118 +1,66 @@
-const DESCRIPTORS = ['Brand', 'Marketing', 'Creative', 'Strategy', 'Agentic Systems']
-
 export default function SectionHero() {
-
   return (
-    <section style={{
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      paddingTop: 56,        // raised — was 140
-      paddingBottom: 80,
-    }}>
-      <div style={{
-        width: '100%',
-        maxWidth: 'var(--container-max-width)',
-        padding: '0 var(--container-padding-x)',
+    <section style={{ width: '100%' }}>
+      <div className="o-container" style={{
+        paddingTop: 'clamp(48px, 7vw, 120px)',
+        paddingBottom: 'clamp(48px, 6vw, 96px)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 40,
+        gap: 'clamp(40px, 5vw, 72px)',
       }}>
-        {/* Headline row */}
-        <div className="kanso-hero-row">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 24, flex: '1 1 auto', minWidth: 0 }}>
-            <h1 style={{
-              margin: 0,
-              fontSize: 'var(--font-size-h1)',
-              fontWeight: 'var(--font-weight-semibold)',
-              lineHeight: 1,
-              letterSpacing: 'var(--letter-spacing-h1)',
-              color: 'var(--color-cod-gray)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.18em',
-            }}>
-              <span>ryan palmieri</span>
-              <span aria-hidden="true" className="kanso-blink" style={{
-                display: 'inline-block',
-                width: '0.45em',
-                height: '0.65em',
-                background: 'var(--color-black)',
-                flexShrink: 0,
-              }} />
-            </h1>
-            <h2 style={{
-              margin: 0,
-              fontSize: 'clamp(20px, 2vw, 28px)',
-              fontWeight: 'var(--font-weight-medium)',
-              lineHeight: 1.3,
-              letterSpacing: '-0.6px',
-              color: 'var(--color-tundora)',
-            }}>
-              I build brands for the machine age.
-            </h2>
-          </div>
+        {/* Meta row */}
+        <div className="o-hero-meta">
+          <span className="o-label o-label--muted">Ryan Palmieri — Brand &amp; Marketing Leader</span>
+          <span className="o-label o-label--muted o-hero-meta-mid">Los Angeles, CA</span>
+          <span className="o-label o-label--muted">Available for select work</span>
+        </div>
 
-          <div className="kanso-hero-descriptors" style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-            flexShrink: 0,
+        {/* Headline */}
+        <h1 className="o-display" style={{
+          margin: 0,
+          fontSize: 'var(--size-display-xl)',
+          color: 'var(--color-black)',
+        }}>
+          Brands for the<br />
+          machine age<sup style={{ fontSize: '0.32em', fontWeight: 500, verticalAlign: 'super' }}>®</sup>
+        </h1>
+
+        {/* Intro + scroll cue */}
+        <div className="o-hero-bottom">
+          <p style={{
+            margin: 0,
+            maxWidth: 560,
+            fontSize: 'clamp(16px, 1.3vw, 19px)',
+            fontWeight: 400,
+            lineHeight: 1.6,
+            letterSpacing: '-0.01em',
+            color: 'var(--color-ink-70)',
           }}>
-            {DESCRIPTORS.map((word) => (
-              <a
-                key={word}
-                href="mailto:ryanpalmieri@gmail.com"
-                style={{
-                  /* 10% smaller than --font-size-body (32px → 29px) */
-                  fontSize: 29,
-                  fontWeight: 'var(--font-weight-medium)',
-                  lineHeight: 1.5,
-                  letterSpacing: 'var(--letter-spacing-body)',
-                  color: 'var(--color-boulder)',
-                  whiteSpace: 'nowrap',
-                  textAlign: 'right',
-                  textDecoration: 'none',
-                  cursor: 'pointer',
-                  transition: 'color 200ms',
-                }}
-                className="kanso-descriptor"
-              >{word}</a>
-            ))}
-          </div>
+            I turn frontier technology — AI infrastructure, Web3, entertainment —
+            into brands people understand, trust, and remember. From early-stage
+            positioning to enterprise-scale launch.
+          </p>
+          <span className="o-label o-label--muted" aria-hidden="true">Scroll ↓</span>
         </div>
       </div>
 
       <style>{`
-        .kanso-hero-row {
+        .o-hero-meta {
           display: flex;
-          align-items: flex-start;
           justify-content: space-between;
-          gap: 24px;
-          width: 100%;
+          gap: 16px;
+          padding-top: 20px;
+          border-top: 1px solid var(--color-black);
         }
-        .kanso-descriptor:hover {
-          color: var(--color-cod-gray) !important;
+        .o-hero-bottom {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          gap: 32px;
         }
-        @keyframes kanso-blink {
-          0%, 50%   { opacity: 1; }
-          50.01%, 100% { opacity: 0; }
-        }
-        .kanso-blink {
-          animation: kanso-blink 1.1s steps(2) infinite;
-        }
-        @media (max-width: 900px) {
-          .kanso-hero-row {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 32px;
-          }
-          .kanso-hero-descriptors {
-            align-items: flex-start !important;
-          }
-          .kanso-hero-descriptors a {
-            text-align: left !important;
-          }
+        @media (max-width: 768px) {
+          .o-hero-meta-mid { display: none; }
+          .o-hero-bottom span { display: none; }
         }
       `}</style>
     </section>
