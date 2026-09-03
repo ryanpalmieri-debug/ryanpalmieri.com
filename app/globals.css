@@ -3,67 +3,44 @@
 @tailwind utilities;
 
 /* ============================================================
-   Design Tokens — Kanso theme (from Figma export)
+   Design Tokens — Grafik-inspired editorial theme
+   Warm greige paper, black artboard cards, bold orange grotesque
+   display type, forest-green secondary accent, photography-forward.
    ============================================================ */
 :root {
   /* Colors */
-  --color-cod-gray: #0A0A0A;
-  --color-black: #000000;
-  --color-boulder: #757575;
-  --color-tundora: #4D4D4D;
-  --color-gray: #888888;
-  --color-silver-chalice: #A6A6A6;
-  --color-silver: #C4C4C4;
-  --color-gallery: #EBEBEB;
-  --color-white: #FFFFFF;
+  --paper: #E4E1D7;          /* warm greige background */
+  --paper-2: #ECEAE1;        /* lighter panel */
+  --ink: #16150F;            /* warm near-black text */
+  --ink-70: rgba(22, 21, 15, 0.7);
+  --ink-45: rgba(22, 21, 15, 0.45);
+  --ink-15: rgba(22, 21, 15, 0.16);
+  --black: #0A0A08;          /* artboard cards / footer */
+  --paper-on-black: #E4E1D7;
+  --paper-on-black-60: rgba(228, 225, 215, 0.6);
+  --paper-on-black-15: rgba(228, 225, 215, 0.16);
+  --orange: #FA4616;         /* primary display accent */
+  --green: #35674B;          /* secondary accent */
 
   /* Typography */
-  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
+  --font-display: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  --font-size-h1: 116px;
-  --font-size-h2: 64px;
-  --font-size-h3: 18px;
-  --font-size-body: 32px;
-  --font-size-sm: 14px;
-  /* Section labels — 30% larger than --font-size-sm */
-  --font-size-label: 18px;
-  --line-height-label: 25px;
+  /* Fluid display scale */
+  --size-hero: clamp(40px, 7.2vw, 128px);
+  --size-display-lg: clamp(34px, 5.4vw, 92px);
+  --size-display-md: clamp(28px, 3.4vw, 56px);
+  --size-display-sm: clamp(20px, 2vw, 32px);
 
-  --line-height-h1: 116px;
-  --line-height-h2: 70.4px;
-  --line-height-h3: 23.4px;
-  --line-height-sm: 19.6px;
-
-  --letter-spacing-h1: -0.96px;
-  --letter-spacing-h2: -3.2px;
-  --letter-spacing-h3: -0.72px;
-  --letter-spacing-sm: -0.42px;
-  --letter-spacing-link: -0.56px;
-  --letter-spacing-body: -0.72px;
-
-  /* Spacing */
-  --spacing-xs: 6px;
-  --spacing-sm: 8px;
-  --spacing-md: 12px;
-  --spacing-lg: 20px;
-  --spacing-xl: 40px;
-  --spacing-2xl: 80px;
-  --spacing-3xl: 120px;
+  --track-tight: -0.02em;
+  --track-label: 0.06em;
 
   /* Layout */
-  --container-max-width: 1600px;
-  --container-padding-x: 40px;
-  --nav-h: 72px;
-
-  /* Radius */
-  --radius-sm: 11px;
-  --radius-md: 16px;
-  --radius-pill: 30px;
-
-  /* Section heights */
-  --section-hero-height: 596px;
+  --container-max-width: 1720px;
+  --container-padding-x: clamp(16px, 2.4vw, 40px);
+  --nav-h: 56px;
+  --section-pad-y: clamp(72px, 9vw, 150px);
+  --gap: clamp(10px, 1vw, 18px);
 }
 
 /* ============================================================
@@ -72,81 +49,144 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--color-white);
-  color: var(--color-cod-gray);
-  font-family: var(--font-family-primary);
-  font-weight: var(--font-weight-medium);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
 }
-::selection { background: var(--color-cod-gray); color: var(--color-white); }
-
+::selection { background: var(--orange); color: #fff; }
 a { color: inherit; }
+img { max-width: 100%; }
 
 /* ============================================================
-   Marquee animation for hero logo ticker
+   Shared primitives
    ============================================================ */
-@keyframes kanso-marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.kanso-marquee {
-  animation: kanso-marquee 32s linear infinite;
-  will-change: transform;
-}
-.kanso-marquee:hover { animation-play-state: paused; }
-
-/* ============================================================
-   Mobile-friendly H1 (Figma 116px is for desktop only)
-   ============================================================ */
-@media (max-width: 900px) {
-  :root {
-    --font-size-h1: 64px;
-    --line-height-h1: 64px;
-    --font-size-h2: 40px;
-    --line-height-h2: 44px;
-    --letter-spacing-h2: -1.8px;
-    --font-size-body: 22px;
-    --container-padding-x: 20px;
-  }
-}
-
-/* ============================================================
-   Section labels — bumped 30% per spec
-   ============================================================ */
-.kanso-label {
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-label);
-  letter-spacing: -0.5px;
-  color: var(--color-cod-gray);
-}
-
-/* ============================================================
-   Section dividers — minimal light line between sections
-   ============================================================ */
-.kanso-divider {
+.o-container {
   width: 100%;
   max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 0 var(--container-padding-x);
-}
-.kanso-divider hr {
-  border: 0;
-  border-top: 1px solid var(--color-gallery);
-  margin: 0;
+  padding-left: var(--container-padding-x);
+  padding-right: var(--container-padding-x);
 }
 
+/* Grotesque display */
+.o-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: var(--track-tight);
+  line-height: 0.92;
+}
+
+/* Small uppercase labels */
+.o-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.o-label--muted { color: var(--ink-45); }
+.o-label--paper { color: var(--paper-on-black); }
+.o-label--paper-muted { color: var(--paper-on-black-60); }
+
+/* Underlined section/project label */
+.o-tag {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--ink);
+}
+
+/* Arrow / underline link */
+.o-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: color 240ms ease, opacity 240ms ease;
+}
+.o-link:hover { color: var(--orange); }
+
+/* Metadata rows — label left, value right */
+.o-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 9px 0;
+  border-top: 1px solid var(--ink-15);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink-70);
+}
+.o-meta-row:last-child { border-bottom: 1px solid var(--ink-15); }
+
+/* Artboard card — black mat framing an image */
+.o-card {
+  background: var(--black);
+  padding: clamp(12px, 1.4vw, 22px);
+  display: block;
+  overflow: hidden;
+}
+.o-card-media {
+  width: 100%;
+  overflow: hidden;
+  background: #050504;
+}
+.o-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.001);
+  transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.o-card:hover .o-card-media img { transform: scale(1.05); }
+
 /* ============================================================
-   Subtle scroll fade-in (no heavy effects)
+   Marquee
+   ============================================================ */
+@keyframes o-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.o-marquee {
+  animation: o-marquee 40s linear infinite;
+  will-change: transform;
+}
+.o-marquee:hover { animation-play-state: paused; }
+
+/* ============================================================
+   Scroll reveal
    ============================================================ */
 .fade-in {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 700ms ease, transform 700ms ease;
+  transform: translateY(26px);
+  transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { opacity: 1; transform: none; transition: none; }
+  .o-marquee { animation: none; }
+  .o-card-media img { transition: none; }
 }

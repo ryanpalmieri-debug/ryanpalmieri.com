@@ -1,117 +1,112 @@
-const DESCRIPTORS = ['Brand', 'Marketing', 'Creative', 'Strategy', 'Agentic Systems']
+'use client'
+import { useState, useEffect } from 'react'
+
+/* Rotating hero portraits — cross-fades through this list on a timer.
+   Swap or reorder these paths to change the sequence. */
+const HERO_IMAGES = [
+  '/headshot.png',
+  '/work/nike-boxing.png',
+  '/work/we-live-outside.png',
+  '/work/contact-high.png',
+]
+
+const INTERVAL_MS = 2600
 
 export default function SectionHero() {
+  const [active, setActive] = useState(0)
+
+  useEffect(() => {
+    if (HERO_IMAGES.length < 2) return
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = setInterval(() => {
+      setActive((i) => (i + 1) % HERO_IMAGES.length)
+    }, INTERVAL_MS)
+    return () => clearInterval(id)
+  }, [])
 
   return (
-    <section style={{
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      paddingTop: 56,        // raised — was 140
-      paddingBottom: 80,
-    }}>
-      <div style={{
-        width: '100%',
-        maxWidth: 'var(--container-max-width)',
-        padding: '0 var(--container-padding-x)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 40,
-      }}>
-        {/* Headline row */}
-        <div className="kanso-hero-row">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 24, flex: '1 1 auto', minWidth: 0 }}>
-            <h1 style={{
-              margin: 0,
-              fontSize: 'var(--font-size-h1)',
-              fontWeight: 'var(--font-weight-semibold)',
-              lineHeight: 1,
-              letterSpacing: 'var(--letter-spacing-h1)',
-              color: 'var(--color-cod-gray)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.18em',
-            }}>
-              <span>ryan palmieri</span>
-              <span aria-hidden="true" className="kanso-blink" style={{
-                display: 'inline-block',
-                width: '0.45em',
-                height: '0.65em',
-                background: 'var(--color-black)',
-                flexShrink: 0,
-              }} />
-            </h1>
-            <h2 style={{
-              margin: 0,
-              fontSize: 'clamp(20px, 2vw, 28px)',
-              fontWeight: 'var(--font-weight-medium)',
-              lineHeight: 1.3,
-              letterSpacing: '-0.6px',
-              color: 'var(--color-tundora)',
-            }}>
-              I build brands for the machine age.
-            </h2>
-          </div>
-
-          <div className="kanso-hero-descriptors" style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-            flexShrink: 0,
-          }}>
-            {DESCRIPTORS.map((word) => (
-              <a
-                key={word}
-                href="mailto:ryanpalmieri@gmail.com"
-                style={{
-                  /* 10% smaller than --font-size-body (32px → 29px) */
-                  fontSize: 29,
-                  fontWeight: 'var(--font-weight-medium)',
-                  lineHeight: 1.5,
-                  letterSpacing: 'var(--letter-spacing-body)',
-                  color: 'var(--color-boulder)',
-                  whiteSpace: 'nowrap',
-                  textAlign: 'right',
-                  textDecoration: 'none',
-                  cursor: 'pointer',
-                  transition: 'color 200ms',
-                }}
-                className="kanso-descriptor"
-              >{word}</a>
-            ))}
-          </div>
-        </div>
+    <section className="o-hero">
+      {/* Full-bleed rotating portrait */}
+      <div className="o-hero-photo">
+        {HERO_IMAGES.map((src, i) => (
+          <img
+            key={src}
+            src={src}
+            alt={i === 0 ? 'Ryan Palmieri' : ''}
+            aria-hidden={i !== 0}
+            className="o-hero-img"
+            style={{ opacity: i === active ? 1 : 0 }}
+          />
+        ))}
+        <span className="o-hero-credit">Los Angeles</span>
       </div>
 
+      {/* Poster-scale display type crossing into the greige */}
+      <h1 className="o-display o-hero-type">
+        Brand, Marketing<br />
+        &amp; Creative<br />
+        Strategy for the Machine Age<br />
+        Los Angeles, California
+      </h1>
+
       <style>{`
-        .kanso-hero-row {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 24px;
+        .o-hero {
+          position: relative;
           width: 100%;
+          min-height: calc(100vh - var(--nav-h));
+          background: var(--paper);
+          overflow: hidden;
         }
-        .kanso-descriptor:hover {
-          color: var(--color-cod-gray) !important;
+        .o-hero-photo {
+          position: absolute;
+          top: 0; left: 0; bottom: 0;
+          width: 46%;
+          background: var(--black);
+          overflow: hidden;
         }
-        @keyframes kanso-blink {
-          0%, 50%   { opacity: 1; }
-          50.01%, 100% { opacity: 0; }
+        .o-hero-img {
+          position: absolute;
+          inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover; object-position: center 20%;
+          display: block;
+          filter: grayscale(100%) contrast(1.05);
+          transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .kanso-blink {
-          animation: kanso-blink 1.1s steps(2) infinite;
+        .o-hero-credit {
+          position: absolute;
+          bottom: 14px; right: 16px;
+          font-family: var(--font-body);
+          font-size: 12px; font-weight: 500;
+          color: var(--paper-on-black-60);
+          z-index: 2;
         }
-        @media (max-width: 900px) {
-          .kanso-hero-row {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 32px;
+        .o-hero-type {
+          position: absolute;
+          top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          width: 92%;
+          text-align: center;
+          color: var(--orange);
+          font-size: var(--size-hero);
+          font-weight: 800;
+          pointer-events: none;
+        }
+        @media (max-width: 860px) {
+          .o-hero { min-height: 0; }
+          .o-hero-photo {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            max-height: 62vh;
           }
-          .kanso-hero-descriptors {
-            align-items: flex-start !important;
-          }
-          .kanso-hero-descriptors a {
-            text-align: left !important;
+          .o-hero-type {
+            position: relative;
+            top: auto; left: auto;
+            transform: none;
+            width: 100%;
+            text-align: left;
+            padding: clamp(24px, 6vw, 40px) var(--container-padding-x) clamp(40px, 8vw, 64px);
           }
         }
       `}</style>

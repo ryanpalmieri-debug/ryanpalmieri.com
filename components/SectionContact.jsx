@@ -1,66 +1,45 @@
 export default function SectionContact() {
   return (
-    <section id="contact" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      <div style={{
-        width: '100%', maxWidth: 'var(--container-max-width)',
-        padding: '120px var(--container-padding-x)',
-        display: 'flex', flexDirection: 'column', gap: 32,
+    <section id="contact" style={{ width: '100%', background: 'var(--orange)', color: 'var(--black)' }}>
+      <div className="o-container" style={{
+        paddingTop: 'clamp(64px, 8vw, 128px)',
+        paddingBottom: 'clamp(64px, 8vw, 128px)',
+        display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 4vw, 56px)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-          <span className="kanso-label">/Contact</span>
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', gap: 16,
+          paddingBottom: 6, borderBottom: '1px solid rgba(10,10,8,0.25)',
+        }}>
+          <span className="o-label" style={{ color: 'var(--black)' }}>◆&nbsp; Contact</span>
+          <span className="o-label" style={{ color: 'rgba(10,10,8,0.6)' }}>Open to new work</span>
         </div>
 
-        {/* Headline + CTA on the same row */}
-        <div className="kanso-contact-head">
-          <h2 style={h2Style}>
-            Let&apos;s build something worth remembering.
-          </h2>
-          <a href="mailto:ryanpalmieri@gmail.com" className="kanso-contact-cta" style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            backgroundColor: 'var(--color-cod-gray)',
-            borderRadius: 'var(--radius-pill)',
-            padding: '14px 24px', textDecoration: 'none',
-            fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)',
-            letterSpacing: 'var(--letter-spacing-link)', color: 'var(--color-white)',
-            whiteSpace: 'nowrap',
-            flexShrink: 0,
-          }}>
-            Get in touch
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M7 2V12M2 7H12" stroke="#FFF" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </a>
-        </div>
+        <h2 className="o-display" style={{
+          margin: 0, fontSize: 'var(--size-display-lg)', color: 'var(--black)', maxWidth: '12em',
+        }}>
+          Let&apos;s build something worth remembering.
+        </h2>
+
+        <a href="mailto:ryanpalmieri@gmail.com" className="o-contact-email o-display">
+          ryanpalmieri@gmail.com&nbsp;↗
+        </a>
       </div>
 
       <style>{`
-        .kanso-contact-head {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 32px;
-          padding-top: 24px;
-          border-top: 1px solid var(--color-silver);
+        .o-contact-email {
+          display: inline-block;
+          font-size: clamp(22px, 3.4vw, 52px);
+          text-transform: none;
+          letter-spacing: -0.02em;
+          color: var(--black);
+          text-decoration: none;
+          border-bottom: 2px solid var(--black);
+          padding-bottom: 6px;
+          overflow-wrap: anywhere;
+          transition: opacity 260ms ease;
         }
-        @media (max-width: 768px) {
-          .kanso-contact-head {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 24px;
-          }
-        }
+        .o-contact-email:hover { opacity: 0.65; }
       `}</style>
     </section>
   )
-}
-
-const labelStyle = { fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-cod-gray)' }
-const mutedLabelStyle = { ...labelStyle, color: 'var(--color-gray)' }
-const h2Style = {
-  margin: 0, maxWidth: 980,
-  fontSize: 'var(--font-size-h2)',
-  fontWeight: 'var(--font-weight-medium)',
-  lineHeight: 'var(--line-height-h2)',
-  letterSpacing: 'var(--letter-spacing-h2)',
-  color: 'var(--color-cod-gray)',
 }

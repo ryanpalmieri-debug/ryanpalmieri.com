@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { works as staticWorks } from '../../../data/works'
 import { client } from '../../../lib/sanity/client'
+import SectionContact from '../../../components/SectionContact'
+import FadeIn from '../../../components/FadeIn'
 
 export const revalidate = 10
 
@@ -37,8 +39,8 @@ function paragraphsFromBody(body) {
 export default async function ProjectPage({ params }) {
   const p = await getWork(params.slug)
   if (!p) return (
-    <main style={{ padding: '120px var(--container-padding-x)', maxWidth: 'var(--container-max-width)', margin: '0 auto' }}>
-      <h1>Project not found</h1>
+    <main className="o-container" style={{ paddingTop: 120, paddingBottom: 120 }}>
+      <h1 className="o-display" style={{ fontSize: 'var(--size-display-md)' }}>Project not found</h1>
     </main>
   )
 
@@ -48,131 +50,77 @@ export default async function ProjectPage({ params }) {
   const idx = staticWorks.findIndex(w => w.slug === params.slug)
   const nextOne = staticWorks[(idx + 1) % staticWorks.length]
   const nextTwo = staticWorks[(idx + 2) % staticWorks.length]
+  const disciplines = (p.category || '').split(/[,/&]+/).map(s => s.trim()).filter(Boolean)
 
   return (
-    <main style={{ width: '100%' }}>
+    <main style={{ width: '100%', background: 'var(--paper)' }}>
       {/* HERO */}
-      <section style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <div style={{
-          width: '100%',
-          maxWidth: 'var(--container-max-width)',
-          padding: '80px var(--container-padding-x) 48px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 32,
+      <section style={{ width: '100%' }}>
+        <div className="o-container" style={{
+          paddingTop: 'clamp(40px, 5vw, 80px)',
+          paddingBottom: 'clamp(28px, 3vw, 48px)',
+          display: 'flex', flexDirection: 'column', gap: 'clamp(24px, 3vw, 44px)',
         }}>
-          <h1 style={{
-            margin: 0,
-            fontSize: 'clamp(36px, 4.2vw, 70px)',
-            fontWeight: 'var(--font-weight-semibold)',
-            lineHeight: 1.05,
-            letterSpacing: 'var(--letter-spacing-h1)',
-            color: 'var(--color-cod-gray)',
-          }}>{p.title}.</h1>
-
-          {p.summary && (
-            <p style={{
-              margin: 0,
-              maxWidth: 720,
-              fontSize: 20,
-              fontWeight: 400,
-              lineHeight: 1.5,
-              letterSpacing: '-0.3px',
-              color: 'var(--color-tundora)',
-            }}>{p.summary}</p>
-          )}
-
-          {/* META ROW */}
-          <div className="kanso-case-meta" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr) auto',
-            gap: 24,
-            alignItems: 'flex-end',
-            paddingTop: 24,
-            borderTop: '1px solid var(--color-silver)',
-          }}>
-            <MetaItem label="Scope" value={p.category || '—'} />
-            <MetaItem label="Client" value={p.client || '—'} />
-            <MetaItem label="Role" value={p.role || '—'} />
-            {p.liveUrl && (
-              <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '11px 22px',
-                borderRadius: 'var(--radius-pill)',
-                background: 'var(--color-cod-gray)',
-                color: 'var(--color-white)',
-                fontSize: 14, fontWeight: 500,
-                textDecoration: 'none',
-                letterSpacing: 'var(--letter-spacing-link)',
+          <FadeIn>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(24px, 3vw, 40px)' }}>
+              <div style={{
+                display: 'flex', justifyContent: 'space-between', gap: 16,
+                paddingBottom: 6, borderBottom: '1px solid var(--ink-15)',
               }}>
-                Live preview
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-            )}
-          </div>
+                <Link href="/work" className="o-label" style={{ textDecoration: 'none' }}>← All Work</Link>
+                <span className="o-label o-label--muted">Case Study</span>
+              </div>
+
+              <h1 className="o-display" style={{ margin: 0, fontSize: 'var(--size-display-lg)', maxWidth: '13em' }}>{p.title}</h1>
+
+              {p.summary && (
+                <p style={{
+                  margin: 0, maxWidth: 620,
+                  fontSize: 'clamp(15px, 1.2vw, 18px)', lineHeight: 1.55,
+                  letterSpacing: '-0.01em', color: 'var(--ink-70)',
+                }}>{p.summary}</p>
+              )}
+
+              <div className="o-case-meta">
+                <MetaCol label="Scope" value={p.category || '—'} />
+                <MetaCol label="Client" value={p.client || '—'} />
+                <MetaCol label="Role" value={p.role || '—'} />
+                <MetaCol label="Year" value={p.year || '—'} />
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* HERO MEDIA — constrained smaller per design direction */}
-      <section style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <div style={{
-          width: '100%',
-          maxWidth: 'var(--container-max-width)',
-          padding: '0 var(--container-padding-x) 80px',
-          display: 'flex', justifyContent: 'center',
-        }}>
-          <div style={{
-            width: '100%',
-            maxWidth: 900,
-            aspectRatio: '16/9',
-            borderRadius: 'var(--radius-md)',
-            overflow: 'hidden',
-            background: '#1a1a1a',
-          }}>
-            {embed ? (
-              <iframe src={embed} style={{ width: '100%', height: '100%', border: 0 }} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
-            ) : (p.heroImage || p.thumbnail) ? (
-              <img src={p.heroImage || p.thumbnail} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            ) : null}
+      {/* HERO MEDIA — artboard card */}
+      <section style={{ width: '100%' }}>
+        <div className="o-container" style={{ paddingBottom: 'clamp(40px, 5vw, 80px)' }}>
+          <div className="o-card">
+            <div className="o-card-media" style={{ aspectRatio: '16 / 9' }}>
+              {embed ? (
+                <iframe src={embed} style={{ width: '100%', height: '100%', border: 0 }} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
+              ) : (p.heroImage || p.thumbnail) ? (
+                <img src={p.heroImage || p.thumbnail} alt={p.title} />
+              ) : null}
+            </div>
           </div>
         </div>
       </section>
 
       {/* BODY */}
       {paras.length > 0 && (
-        <section style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-          <div style={{
-            width: '100%',
-            maxWidth: 'var(--container-max-width)',
-            padding: '40px var(--container-padding-x) 120px',
-          }}>
-            <div className="kanso-case-section" style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 2fr',
-              gap: 64,
-              alignItems: 'start',
-              paddingTop: 32,
-              borderTop: '1px solid var(--color-silver)',
-            }}>
-              <h3 style={{
-                margin: 0,
-                fontSize: 16,
-                fontWeight: 700,
-                letterSpacing: '-0.2px',
-                color: 'var(--color-cod-gray)',
-              }}>About</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 760 }}>
+        <section style={{ width: '100%' }}>
+          <div className="o-container" style={{ paddingBottom: 'var(--section-pad-y)' }}>
+            <div className="o-case-body" style={{ paddingTop: 24, borderTop: '1px solid var(--ink-15)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <span className="o-tag">About the project</span>
+                {(disciplines.length ? disciplines : ['Brand & Marketing']).map(d => (
+                  <span key={d} className="o-label o-label--muted" style={{ fontWeight: 500 }}>{d}</span>
+                ))}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 22, maxWidth: 720 }}>
                 {paras.map((text, i) => (
-                  <p key={i} style={{
-                    margin: 0,
-                    fontSize: 17,
-                    fontWeight: 400,
-                    lineHeight: 1.7,
-                    letterSpacing: '-0.2px',
-                    color: 'var(--color-cod-gray)',
-                  }}>{text}</p>
+                  <p key={i} style={{ margin: 0, fontSize: 17, lineHeight: 1.65, letterSpacing: '-0.01em', color: 'var(--ink)' }}>{text}</p>
                 ))}
               </div>
             </div>
@@ -181,63 +129,32 @@ export default async function ProjectPage({ params }) {
       )}
 
       {/* NEXT PROJECTS */}
-      <section style={{ width: '100%', display: 'flex', justifyContent: 'center', borderTop: '1px solid var(--color-silver)' }}>
-        <div style={{
-          width: '100%',
-          maxWidth: 'var(--container-max-width)',
-          padding: '80px var(--container-padding-x) 120px',
-          display: 'flex', flexDirection: 'column', gap: 48,
+      <section style={{ width: '100%' }}>
+        <div className="o-container" style={{
+          paddingBottom: 'var(--section-pad-y)',
+          display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 4vw, 56px)',
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24 }}>
-            <span className="kanso-label">/Latest Projects</span>
-            <Link href="/work" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              backgroundColor: 'var(--color-gallery)',
-              borderRadius: 'var(--radius-pill)',
-              padding: '11px 26px',
-              textDecoration: 'none',
-              fontSize: 16, fontWeight: 500,
-              letterSpacing: 'var(--letter-spacing-link)',
-              color: 'var(--color-cod-gray)',
-            }}>
-              View all work
-              <svg width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-          </div>
-          <div className="kanso-case-next-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 24,
+          <div style={{
+            display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24,
+            paddingBottom: 6, borderBottom: '1px solid var(--ink-15)',
           }}>
-            {[nextOne, nextTwo].filter(Boolean).map((n) => (
-              <Link key={n.slug} href={`/work/${n.slug}`} style={{
-                display: 'flex', flexDirection: 'column', gap: 12,
-                backgroundColor: 'var(--color-gallery)',
-                borderRadius: 'var(--radius-md)',
-                overflow: 'hidden',
-                padding: '6px 6px 12px 6px',
-                textDecoration: 'none',
-              }}>
-                <div style={{
-                  width: '100%',
-                  aspectRatio: '745 / 559',
-                  borderRadius: 'var(--radius-sm)',
-                  overflow: 'hidden',
-                  background: '#1a1a1a',
-                }}>
-                  {n.thumbnail && (
-                    <img src={n.thumbnail} alt={n.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                  )}
+            <span className="o-label"><span style={{ color: 'var(--orange)' }}>◆</span>&nbsp; Next Projects</span>
+            <Link href="/work" className="o-link">All Work →</Link>
+          </div>
+          <div className="o-next-grid">
+            {[nextOne, nextTwo].filter(Boolean).map(n => (
+              <Link key={n.slug} href={`/work/${n.slug}`} className="o-grid-card">
+                <div className="o-card">
+                  <div className="o-card-media" style={{ aspectRatio: '4 / 3' }}>
+                    {n.thumbnail && <img src={n.thumbnail} alt={n.title} loading="lazy" />}
+                  </div>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '0 6px' }}>
-                  <span style={{
-                    fontSize: 'var(--font-size-h3)', fontWeight: 700,
-                    lineHeight: 'var(--line-height-h3)', letterSpacing: 'var(--letter-spacing-h3)',
-                    color: 'var(--color-cod-gray)',
-                  }}>{n.title || n.client || 'Project'}</span>
-                  <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--color-tundora)' }}>{n.category || n.client || ''}</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <span className="o-tag">{n.title || n.client}</span>
+                  <div className="o-meta-row" style={{ borderBottom: 'none' }}>
+                    <span>{n.category || n.client || ''}</span>
+                    <span>{n.year || '—'}</span>
+                  </div>
                 </div>
               </Link>
             ))}
@@ -245,26 +162,46 @@ export default async function ProjectPage({ params }) {
         </div>
       </section>
 
+      <SectionContact />
+
       <style>{`
-        @media (max-width: 900px) {
-          .kanso-case-meta { grid-template-columns: 1fr 1fr !important; }
-          .kanso-case-section { grid-template-columns: 1fr !important; gap: 24px !important; }
-          .kanso-case-next-grid { grid-template-columns: 1fr !important; }
+        .o-case-meta {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+          padding-top: 22px;
+          border-top: 1px solid var(--ink-15);
+        }
+        .o-case-body {
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          gap: clamp(32px, 4vw, 64px);
+          align-items: start;
+        }
+        .o-next-grid, .o-grid-card { }
+        .o-next-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: clamp(24px, 3vw, 56px);
+        }
+        .o-grid-card { display: flex; flex-direction: column; gap: 16px; text-decoration: none; color: var(--ink); }
+        @media (max-width: 860px) {
+          .o-case-meta { grid-template-columns: 1fr 1fr; }
+          .o-case-body { grid-template-columns: 1fr; gap: 18px; }
+        }
+        @media (max-width: 640px) {
+          .o-next-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </main>
   )
 }
 
-function MetaItem({ label, value }) {
+function MetaCol({ label, value }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <span style={{ fontSize: 13, fontWeight: 500, letterSpacing: '0.12em', color: 'var(--color-gray)', textTransform: 'uppercase' }}>{label}</span>
-      <span style={{ fontSize: 18, fontWeight: 500, color: 'var(--color-cod-gray)' }}>{value}</span>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <span className="o-label o-label--muted">{label}</span>
+      <span style={{ fontSize: 15, fontWeight: 500, letterSpacing: '-0.01em', color: 'var(--ink)' }}>{value}</span>
     </div>
   )
-}
-
-export function generateStaticParams() {
-  return staticWorks.map(w => ({ slug: w.slug }))
 }

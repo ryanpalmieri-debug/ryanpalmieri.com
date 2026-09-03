@@ -1,112 +1,87 @@
 import Link from 'next/link'
 
-function ArrowIcon({ size = 16 }) {
+/* Large alternating case-study rows: black artboard card + metadata column */
+export function WorkRow({ work, index, flip }) {
+  const disciplines = (work.category || '').split(/[,/&]+/).map(s => s.trim()).filter(Boolean)
   return (
-    <svg width={size} height={size} viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M2 12L12 2M12 2H5M12 2V9" stroke="#0A0A0A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function ProjectCard({ title, year, description, img, href = '#' }) {
-  return (
-    <Link href={href} style={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 12,
-      backgroundColor: 'var(--color-gallery)',
-      borderRadius: 'var(--radius-md)',
-      overflow: 'hidden',
-      padding: '6px 6px 12px 6px',
-      textDecoration: 'none',
-    }}>
-      <div style={{
-        width: '100%',
-        aspectRatio: '745 / 559',
-        borderRadius: 'var(--radius-sm)',
-        overflow: 'hidden',
-        background: '#1a1a1a',
-      }}>
-        {img && (
-          <img src={img} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-        )}
+    <Link href={`/work/${work.slug}`} className={`o-work-row${flip ? ' o-work-row--flip' : ''}`}>
+      <div className="o-card">
+        <div className="o-card-media" style={{ aspectRatio: '4 / 3' }}>
+          {work.thumbnail && <img src={work.thumbnail} alt={work.title} loading="lazy" />}
+        </div>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '0 6px' }}>
-        <span style={{ fontSize: 'var(--font-size-h3)', fontWeight: 'var(--font-weight-semibold)', lineHeight: 'var(--line-height-h3)', letterSpacing: 'var(--letter-spacing-h3)', color: 'var(--color-cod-gray)' }}>
-          {title}
-        </span>
-        <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'var(--font-weight-medium)', lineHeight: 'var(--line-height-sm)', letterSpacing: 'var(--letter-spacing-sm)', color: 'var(--color-tundora)' }}>
-          {description}
-        </span>
+
+      <div className="o-work-meta">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <span className="o-tag">{work.title || work.client}</span>
+          {work.summary && (
+            <p style={{
+              margin: 0, maxWidth: 420,
+              fontSize: 15, lineHeight: 1.5, letterSpacing: '-0.01em',
+              color: 'var(--ink-70)',
+            }}>{work.summary}</p>
+          )}
+        </div>
+
+        <div style={{ marginTop: 24 }}>
+          {(disciplines.length ? disciplines : ['Brand & Marketing']).map((d, i) => (
+            <div key={d} className="o-meta-row">
+              <span>{d}</span>
+              {i === 0 && <span>{work.year || '—'}</span>}
+            </div>
+          ))}
+        </div>
       </div>
     </Link>
   )
 }
 
 export default function SectionProjects({ works = [] }) {
-  // Show first 6 in a 3x2 grid
-  const displayed = works.slice(0, 6)
-
+  const displayed = works.slice(0, 5)
   return (
-    <section style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      <div style={{
-        width: '100%',
-        maxWidth: 'var(--container-max-width)',
-        padding: '120px var(--container-padding-x)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 48,
+    <section style={{ width: '100%', background: 'var(--paper)' }}>
+      <div className="o-container" style={{
+        paddingTop: 'clamp(48px, 6vw, 96px)',
+        paddingBottom: 'var(--section-pad-y)',
+        display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 5vw, 80px)',
       }}>
         <div style={{
-          display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'space-between',
-          gap: 24,
-          width: '100%',
+          display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
+          gap: 24, paddingBottom: 6, borderBottom: '1px solid var(--ink-15)',
         }}>
-          <span className="kanso-label" style={{ alignSelf: 'flex-end' }}>/Selected Work</span>
-          <Link href="/work" style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            backgroundColor: 'var(--color-gallery)',
-            borderRadius: 'var(--radius-pill)',
-            /* 15% bigger button — was 8/20px, now ~11/26px text 16px */
-            padding: '11px 26px',
-            textDecoration: 'none',
-            fontSize: 16,
-            fontWeight: 'var(--font-weight-medium)',
-            letterSpacing: 'var(--letter-spacing-link)',
-            color: 'var(--color-cod-gray)',
-          }}>
-            View all work <ArrowIcon size={16} />
-          </Link>
+          <span className="o-label"><span style={{ color: 'var(--orange)' }}>◆</span>&nbsp; Selected Work</span>
+          <Link href="/work" className="o-link">All Work →</Link>
         </div>
 
-        <div className="kanso-projects-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 24,
-          width: '100%',
-        }}>
-          {displayed.map((p) => (
-            <ProjectCard
-              key={p._id || p.slug}
-              title={p.title || p.client || 'Project'}
-              description={p.category || p.client || ''}
-              img={p.thumbnail}
-              href={`/work/${p.slug}`}
-            />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(48px, 6vw, 104px)' }}>
+          {displayed.map((p, i) => (
+            <WorkRow key={p._id || p.slug} work={p} index={i} flip={i % 2 === 1} />
           ))}
         </div>
-
-        <style>{`
-          @media (max-width: 1024px) {
-            .kanso-projects-grid { grid-template-columns: 1fr 1fr !important; }
-          }
-          @media (max-width: 640px) {
-            .kanso-projects-grid { grid-template-columns: 1fr !important; }
-          }
-        `}</style>
       </div>
+
+      <style>{`
+        .o-work-row {
+          display: grid;
+          grid-template-columns: 1.55fr 1fr;
+          gap: clamp(28px, 4vw, 72px);
+          align-items: center;
+          text-decoration: none;
+          color: var(--ink);
+        }
+        .o-work-row--flip .o-card { order: 2; }
+        .o-work-row--flip .o-work-meta { order: 1; }
+        .o-work-meta {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        @media (max-width: 860px) {
+          .o-work-row { grid-template-columns: 1fr; gap: 20px; }
+          .o-work-row--flip .o-card { order: 0; }
+          .o-work-row--flip .o-work-meta { order: 0; }
+        }
+      `}</style>
     </section>
   )
 }
