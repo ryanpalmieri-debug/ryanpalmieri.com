@@ -1,66 +1,75 @@
 export default function SectionHero() {
   return (
-    <section style={{ width: '100%' }}>
-      <div className="o-container" style={{
-        paddingTop: 'clamp(48px, 7vw, 120px)',
-        paddingBottom: 'clamp(48px, 6vw, 96px)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'clamp(40px, 5vw, 72px)',
-      }}>
-        {/* Meta row */}
-        <div className="o-hero-meta">
-          <span className="o-label o-label--muted">Ryan Palmieri — Brand &amp; Marketing Leader</span>
-          <span className="o-label o-label--muted o-hero-meta-mid">Los Angeles, CA</span>
-          <span className="o-label o-label--muted">Available for select work</span>
-        </div>
-
-        {/* Headline */}
-        <h1 className="o-display" style={{
-          margin: 0,
-          fontSize: 'var(--size-display-xl)',
-          color: 'var(--color-black)',
-        }}>
-          Brands for the<br />
-          machine age<sup style={{ fontSize: '0.32em', fontWeight: 500, verticalAlign: 'super' }}>®</sup>
-        </h1>
-
-        {/* Intro + scroll cue */}
-        <div className="o-hero-bottom">
-          <p style={{
-            margin: 0,
-            maxWidth: 560,
-            fontSize: 'clamp(16px, 1.3vw, 19px)',
-            fontWeight: 400,
-            lineHeight: 1.6,
-            letterSpacing: '-0.01em',
-            color: 'var(--color-ink-70)',
-          }}>
-            I turn frontier technology — AI infrastructure, Web3, entertainment —
-            into brands people understand, trust, and remember. From early-stage
-            positioning to enterprise-scale launch.
-          </p>
-          <span className="o-label o-label--muted" aria-hidden="true">Scroll ↓</span>
-        </div>
+    <section className="o-hero">
+      {/* Full-bleed portrait */}
+      <div className="o-hero-photo">
+        <img src="/headshot.png" alt="Ryan Palmieri" />
+        <span className="o-hero-credit">Los Angeles</span>
       </div>
 
+      {/* Poster-scale display type crossing into the greige */}
+      <h1 className="o-display o-hero-type">
+        Brand, Marketing<br />
+        &amp; Creative<br />
+        Strategy for the Machine Age<br />
+        Los Angeles, California
+      </h1>
+
       <style>{`
-        .o-hero-meta {
-          display: flex;
-          justify-content: space-between;
-          gap: 16px;
-          padding-top: 20px;
-          border-top: 1px solid var(--color-black);
+        .o-hero {
+          position: relative;
+          width: 100%;
+          min-height: calc(100vh - var(--nav-h));
+          background: var(--paper);
+          overflow: hidden;
         }
-        .o-hero-bottom {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
-          gap: 32px;
+        .o-hero-photo {
+          position: absolute;
+          top: 0; left: 0; bottom: 0;
+          width: 46%;
+          background: var(--black);
+          overflow: hidden;
         }
-        @media (max-width: 768px) {
-          .o-hero-meta-mid { display: none; }
-          .o-hero-bottom span { display: none; }
+        .o-hero-photo img {
+          width: 100%; height: 100%;
+          object-fit: cover; object-position: center 20%;
+          display: block;
+          filter: grayscale(100%) contrast(1.05);
+        }
+        .o-hero-credit {
+          position: absolute;
+          bottom: 14px; right: 16px;
+          font-family: var(--font-body);
+          font-size: 12px; font-weight: 500;
+          color: var(--paper-on-black-60);
+        }
+        .o-hero-type {
+          position: absolute;
+          top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          width: 92%;
+          text-align: center;
+          color: var(--orange);
+          font-size: var(--size-hero);
+          font-weight: 800;
+          pointer-events: none;
+        }
+        @media (max-width: 860px) {
+          .o-hero { min-height: 0; }
+          .o-hero-photo {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            max-height: 62vh;
+          }
+          .o-hero-type {
+            position: relative;
+            top: auto; left: auto;
+            transform: none;
+            width: 100%;
+            text-align: left;
+            padding: clamp(24px, 6vw, 40px) var(--container-padding-x) clamp(40px, 8vw, 64px);
+          }
         }
       `}</style>
     </section>

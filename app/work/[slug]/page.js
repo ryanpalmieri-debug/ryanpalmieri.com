@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { works as staticWorks } from '../../../data/works'
 import { client } from '../../../lib/sanity/client'
-import { WorkCard } from '../../../components/SectionProjects'
 import SectionContact from '../../../components/SectionContact'
 import FadeIn from '../../../components/FadeIn'
 
@@ -37,15 +36,6 @@ function paragraphsFromBody(body) {
   return []
 }
 
-function MetaItem({ label, value }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <span className="o-label o-label--muted">{label}</span>
-      <span style={{ fontSize: 15, fontWeight: 500, letterSpacing: '-0.01em' }}>{value}</span>
-    </div>
-  )
-}
-
 export default async function ProjectPage({ params }) {
   const p = await getWork(params.slug)
   if (!p) return (
@@ -60,71 +50,59 @@ export default async function ProjectPage({ params }) {
   const idx = staticWorks.findIndex(w => w.slug === params.slug)
   const nextOne = staticWorks[(idx + 1) % staticWorks.length]
   const nextTwo = staticWorks[(idx + 2) % staticWorks.length]
+  const disciplines = (p.category || '').split(/[,/&]+/).map(s => s.trim()).filter(Boolean)
 
   return (
-    <main style={{ width: '100%' }}>
+    <main style={{ width: '100%', background: 'var(--paper)' }}>
       {/* HERO */}
       <section style={{ width: '100%' }}>
         <div className="o-container" style={{
-          paddingTop: 'clamp(48px, 6vw, 96px)',
-          paddingBottom: 'clamp(32px, 4vw, 56px)',
-          display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 3vw, 48px)',
+          paddingTop: 'clamp(40px, 5vw, 80px)',
+          paddingBottom: 'clamp(28px, 3vw, 48px)',
+          display: 'flex', flexDirection: 'column', gap: 'clamp(24px, 3vw, 44px)',
         }}>
           <FadeIn>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 3vw, 48px)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(24px, 3vw, 40px)' }}>
               <div style={{
                 display: 'flex', justifyContent: 'space-between', gap: 16,
-                paddingTop: 20, borderTop: '1px solid var(--color-black)',
+                paddingBottom: 6, borderBottom: '1px solid var(--ink-15)',
               }}>
                 <Link href="/work" className="o-label" style={{ textDecoration: 'none' }}>← All Work</Link>
                 <span className="o-label o-label--muted">Case Study</span>
               </div>
 
-              <h1 className="o-display" style={{
-                margin: 0,
-                fontSize: 'var(--size-display-lg)',
-                maxWidth: '14em',
-              }}>{p.title}</h1>
+              <h1 className="o-display" style={{ margin: 0, fontSize: 'var(--size-display-lg)', maxWidth: '13em' }}>{p.title}</h1>
 
               {p.summary && (
                 <p style={{
-                  margin: 0, maxWidth: 640,
-                  fontSize: 'clamp(16px, 1.3vw, 19px)', fontWeight: 400,
-                  lineHeight: 1.6, letterSpacing: '-0.01em',
-                  color: 'var(--color-ink-70)',
+                  margin: 0, maxWidth: 620,
+                  fontSize: 'clamp(15px, 1.2vw, 18px)', lineHeight: 1.55,
+                  letterSpacing: '-0.01em', color: 'var(--ink-70)',
                 }}>{p.summary}</p>
               )}
 
-              {/* META ROW */}
               <div className="o-case-meta">
-                <MetaItem label="Scope" value={p.category || '—'} />
-                <MetaItem label="Client" value={p.client || '—'} />
-                <MetaItem label="Role" value={p.role || '—'} />
-                {p.liveUrl && (
-                  <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="o-link" style={{ alignSelf: 'end' }}>
-                    Live Preview ↗
-                  </a>
-                )}
+                <MetaCol label="Scope" value={p.category || '—'} />
+                <MetaCol label="Client" value={p.client || '—'} />
+                <MetaCol label="Role" value={p.role || '—'} />
+                <MetaCol label="Year" value={p.year || '—'} />
               </div>
             </div>
           </FadeIn>
         </div>
       </section>
 
-      {/* HERO MEDIA */}
+      {/* HERO MEDIA — artboard card */}
       <section style={{ width: '100%' }}>
-        <div className="o-container" style={{ paddingBottom: 'clamp(48px, 6vw, 96px)' }}>
-          <div style={{
-            width: '100%',
-            aspectRatio: '16/9',
-            overflow: 'hidden',
-            background: '#111',
-          }}>
-            {embed ? (
-              <iframe src={embed} style={{ width: '100%', height: '100%', border: 0 }} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
-            ) : (p.heroImage || p.thumbnail) ? (
-              <img src={p.heroImage || p.thumbnail} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            ) : null}
+        <div className="o-container" style={{ paddingBottom: 'clamp(40px, 5vw, 80px)' }}>
+          <div className="o-card">
+            <div className="o-card-media" style={{ aspectRatio: '16 / 9' }}>
+              {embed ? (
+                <iframe src={embed} style={{ width: '100%', height: '100%', border: 0 }} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
+              ) : (p.heroImage || p.thumbnail) ? (
+                <img src={p.heroImage || p.thumbnail} alt={p.title} />
+              ) : null}
+            </div>
           </div>
         </div>
       </section>
@@ -133,16 +111,16 @@ export default async function ProjectPage({ params }) {
       {paras.length > 0 && (
         <section style={{ width: '100%' }}>
           <div className="o-container" style={{ paddingBottom: 'var(--section-pad-y)' }}>
-            <div className="o-case-body" style={{ paddingTop: 24, borderTop: '1px solid var(--color-ink-12)' }}>
-              <span className="o-label o-label--muted">About the project</span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 720 }}>
+            <div className="o-case-body" style={{ paddingTop: 24, borderTop: '1px solid var(--ink-15)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <span className="o-tag">About the project</span>
+                {(disciplines.length ? disciplines : ['Brand & Marketing']).map(d => (
+                  <span key={d} className="o-label o-label--muted" style={{ fontWeight: 500 }}>{d}</span>
+                ))}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 22, maxWidth: 720 }}>
                 {paras.map((text, i) => (
-                  <p key={i} style={{
-                    margin: 0,
-                    fontSize: 17, fontWeight: 400,
-                    lineHeight: 1.7, letterSpacing: '-0.01em',
-                    color: 'var(--color-black)',
-                  }}>{text}</p>
+                  <p key={i} style={{ margin: 0, fontSize: 17, lineHeight: 1.65, letterSpacing: '-0.01em', color: 'var(--ink)' }}>{text}</p>
                 ))}
               </div>
             </div>
@@ -154,18 +132,31 @@ export default async function ProjectPage({ params }) {
       <section style={{ width: '100%' }}>
         <div className="o-container" style={{
           paddingBottom: 'var(--section-pad-y)',
-          display: 'flex', flexDirection: 'column', gap: 'clamp(36px, 4vw, 64px)',
+          display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 4vw, 56px)',
         }}>
           <div style={{
             display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24,
-            paddingTop: 20, borderTop: '1px solid var(--color-ink-12)',
+            paddingBottom: 6, borderBottom: '1px solid var(--ink-15)',
           }}>
-            <span className="o-label">Next Projects</span>
+            <span className="o-label"><span style={{ color: 'var(--orange)' }}>◆</span>&nbsp; Next Projects</span>
             <Link href="/work" className="o-link">All Work →</Link>
           </div>
-          <div className="o-work-grid">
-            {[nextOne, nextTwo].filter(Boolean).map((n, i) => (
-              <WorkCard key={n.slug} work={n} index={i} />
+          <div className="o-next-grid">
+            {[nextOne, nextTwo].filter(Boolean).map(n => (
+              <Link key={n.slug} href={`/work/${n.slug}`} className="o-grid-card">
+                <div className="o-card">
+                  <div className="o-card-media" style={{ aspectRatio: '4 / 3' }}>
+                    {n.thumbnail && <img src={n.thumbnail} alt={n.title} loading="lazy" />}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <span className="o-tag">{n.title || n.client}</span>
+                  <div className="o-meta-row" style={{ borderBottom: 'none' }}>
+                    <span>{n.category || n.client || ''}</span>
+                    <span>{n.year || '—'}</span>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -176,23 +167,41 @@ export default async function ProjectPage({ params }) {
       <style>{`
         .o-case-meta {
           display: grid;
-          grid-template-columns: repeat(3, 1fr) auto;
-          gap: 24px;
-          align-items: start;
-          padding-top: 24px;
-          border-top: 1px solid var(--color-ink-12);
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+          padding-top: 22px;
+          border-top: 1px solid var(--ink-15);
         }
         .o-case-body {
           display: grid;
           grid-template-columns: 1fr 2fr;
-          gap: 48px;
+          gap: clamp(32px, 4vw, 64px);
           align-items: start;
         }
-        @media (max-width: 900px) {
+        .o-next-grid, .o-grid-card { }
+        .o-next-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: clamp(24px, 3vw, 56px);
+        }
+        .o-grid-card { display: flex; flex-direction: column; gap: 16px; text-decoration: none; color: var(--ink); }
+        @media (max-width: 860px) {
           .o-case-meta { grid-template-columns: 1fr 1fr; }
-          .o-case-body { grid-template-columns: 1fr; gap: 20px; }
+          .o-case-body { grid-template-columns: 1fr; gap: 18px; }
+        }
+        @media (max-width: 640px) {
+          .o-next-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </main>
+  )
+}
+
+function MetaCol({ label, value }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <span className="o-label o-label--muted">{label}</span>
+      <span style={{ fontSize: 15, fontWeight: 500, letterSpacing: '-0.01em', color: 'var(--ink)' }}>{value}</span>
+    </div>
   )
 }

@@ -3,9 +3,9 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 const LINKS = [
-  { href: '/work', label: 'Work', index: '01' },
-  { href: '/about', label: 'About', index: '02' },
-  { href: 'mailto:ryanpalmieri@gmail.com', label: 'Contact', index: '03' },
+  { href: '/work', label: 'Work' },
+  { href: '/about', label: 'About' },
+  { href: 'mailto:ryanpalmieri@gmail.com', label: 'Contact' },
 ]
 
 export default function Nav() {
@@ -15,48 +15,50 @@ export default function Nav() {
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         height: 'var(--nav-h)',
-        background: 'rgba(255,255,255,0.9)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--color-ink-12)',
+        background: 'var(--black)',
+        color: 'var(--paper-on-black)',
         display: 'flex', alignItems: 'center',
       }}>
-        <div className="o-container" style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        <div style={{
+          width: '100%',
+          padding: '0 var(--container-padding-x)',
+          display: 'grid',
+          gridTemplateColumns: '1fr auto 1fr',
+          alignItems: 'center',
         }}>
           <Link href="/" aria-label="Ryan Palmieri — Home" style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 17,
-            fontWeight: 600,
-            letterSpacing: '-0.02em',
-            color: 'var(--color-black)',
-            textDecoration: 'none',
-            whiteSpace: 'nowrap',
+            fontSize: 15, fontWeight: 800, textTransform: 'uppercase',
+            letterSpacing: '0.01em', color: 'var(--paper-on-black)',
+            textDecoration: 'none', justifySelf: 'start',
           }}>
-            Ryan Palmieri<sup style={{ fontSize: '0.55em', fontWeight: 500, marginLeft: 1 }}>®</sup>
+            Ryan Palmieri<sup style={{ fontSize: '0.6em', marginLeft: 1 }}>®</sup>
           </Link>
 
-          <div className="o-nav-desktop" style={{ display: 'flex', gap: 36, alignItems: 'center' }}>
+          <div className="o-nav-desktop" style={{ display: 'flex', gap: 28, justifySelf: 'center' }}>
             {LINKS.map((l) => (
               l.href.startsWith('/')
-                ? <Link key={l.label} href={l.href} className="o-nav-link">
-                    <sup>({l.index})</sup> {l.label}
-                  </Link>
-                : <a key={l.label} href={l.href} className="o-nav-link">
-                    <sup>({l.index})</sup> {l.label}
-                  </a>
+                ? <Link key={l.label} href={l.href} className="o-nav-link">{l.label}</Link>
+                : <a key={l.label} href={l.href} className="o-nav-link">{l.label}</a>
             ))}
-            <a
-              href="https://www.linkedin.com/in/ryan-palmieri-715190213/"
-              target="_blank" rel="noopener noreferrer"
-              className="o-nav-link"
-            >LinkedIn ↗</a>
           </div>
+
+          <a
+            href="https://www.linkedin.com/in/ryan-palmieri-715190213/"
+            target="_blank" rel="noopener noreferrer"
+            className="o-nav-link o-nav-desktop"
+            style={{ justifySelf: 'end' }}
+          >LinkedIn ↗</a>
 
           <button
             onClick={() => setOpen(true)}
-            className="o-nav-mobile o-label"
-            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+            className="o-nav-mobile"
+            style={{
+              justifySelf: 'end', gridColumn: 3,
+              background: 'none', border: 'none', cursor: 'pointer',
+              color: 'var(--paper-on-black)', fontFamily: 'var(--font-body)',
+              fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase',
+            }}
             aria-label="Open menu"
           >Menu +</button>
         </div>
@@ -64,64 +66,46 @@ export default function Nav() {
 
       {open && (
         <div style={{
-          position: 'fixed', inset: 0, background: 'var(--color-black)', color: 'var(--color-white)',
+          position: 'fixed', inset: 0, background: 'var(--orange)', color: 'var(--black)',
           zIndex: 200, display: 'flex', flexDirection: 'column', justifyContent: 'center',
-          padding: '0 var(--container-padding-x)', gap: 8,
+          padding: '0 var(--container-padding-x)', gap: 4,
         }}>
           <button
             onClick={() => setOpen(false)}
             aria-label="Close menu"
-            className="o-label o-label--paper"
-            style={{ position: 'absolute', top: 24, right: 'var(--container-padding-x)', background: 'none', border: 'none', cursor: 'pointer' }}
+            style={{
+              position: 'absolute', top: 18, right: 'var(--container-padding-x)',
+              background: 'none', border: 'none', cursor: 'pointer', color: 'var(--black)',
+              fontFamily: 'var(--font-body)', fontSize: 11, fontWeight: 600,
+              letterSpacing: '0.06em', textTransform: 'uppercase',
+            }}
           >Close ×</button>
 
-          {LINKS.map((l, i) => (
+          {LINKS.map((l) => (
             l.href.startsWith('/')
-              ? <Link key={l.label} href={l.href} onClick={() => setOpen(false)} className="o-menu-link o-display">
-                  <span className="o-menu-index">({l.index})</span>{l.label}
-                </Link>
-              : <a key={l.label} href={l.href} onClick={() => setOpen(false)} className="o-menu-link o-display">
-                  <span className="o-menu-index">({l.index})</span>{l.label}
-                </a>
+              ? <Link key={l.label} href={l.href} onClick={() => setOpen(false)} className="o-menu-link o-display">{l.label}</Link>
+              : <a key={l.label} href={l.href} onClick={() => setOpen(false)} className="o-menu-link o-display">{l.label}</a>
           ))}
 
-          <div style={{ display: 'flex', gap: 28, marginTop: 40 }}>
-            <a href="https://www.linkedin.com/in/ryan-palmieri-715190213/" target="_blank" rel="noopener noreferrer" className="o-label o-label--paper-muted" style={{ textDecoration: 'none' }}>LinkedIn ↗</a>
-            <a href="https://x.com/ryanppalmieri" target="_blank" rel="noopener noreferrer" className="o-label o-label--paper-muted" style={{ textDecoration: 'none' }}>X ↗</a>
+          <div style={{ display: 'flex', gap: 24, marginTop: 36 }}>
+            <a href="https://www.linkedin.com/in/ryan-palmieri-715190213/" target="_blank" rel="noopener noreferrer" style={socialStyle}>LinkedIn ↗</a>
+            <a href="https://x.com/ryanppalmieri" target="_blank" rel="noopener noreferrer" style={socialStyle}>X ↗</a>
           </div>
         </div>
       )}
 
       <style>{`
         .o-nav-link {
-          font-size: 12px;
-          font-weight: 500;
-          letter-spacing: var(--track-label);
-          text-transform: uppercase;
-          color: var(--color-black);
-          text-decoration: none;
-          transition: opacity 300ms ease;
-        }
-        .o-nav-link sup {
-          font-size: 9px;
-          color: var(--color-ink-50);
-          margin-right: 2px;
-        }
-        .o-nav-link:hover { opacity: 0.45; }
-        .o-menu-link {
-          font-size: clamp(44px, 12vw, 80px);
-          color: var(--color-white);
-          text-decoration: none;
-          line-height: 1.1;
-        }
-        .o-menu-index {
           font-family: var(--font-body);
-          font-size: 12px;
-          font-weight: 500;
-          letter-spacing: var(--track-label);
-          color: var(--color-paper-50);
-          vertical-align: super;
-          margin-right: 12px;
+          font-size: 11px; font-weight: 600;
+          letter-spacing: 0.06em; text-transform: uppercase;
+          color: var(--paper-on-black); text-decoration: none;
+          transition: color 240ms ease;
+        }
+        .o-nav-link:hover { color: var(--orange); }
+        .o-menu-link {
+          font-size: clamp(44px, 13vw, 96px);
+          color: var(--black); text-decoration: none; line-height: 1.02;
         }
         @media (max-width: 768px) {
           .o-nav-desktop { display: none !important; }
@@ -132,4 +116,10 @@ export default function Nav() {
       `}</style>
     </>
   )
+}
+
+const socialStyle = {
+  fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600,
+  letterSpacing: '0.06em', textTransform: 'uppercase',
+  color: 'var(--black)', textDecoration: 'none',
 }

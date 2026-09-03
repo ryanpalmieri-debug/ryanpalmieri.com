@@ -3,15 +3,14 @@ import LocalTime from './LocalTime'
 
 export default function Footer() {
   return (
-    <footer style={{ width: '100%', background: 'var(--color-black)', color: 'var(--color-white)' }}>
+    <footer style={{ width: '100%', background: 'var(--black)', color: 'var(--paper-on-black)' }}>
       <div className="o-container" style={{
         display: 'flex', flexDirection: 'column',
-        gap: 'clamp(48px, 6vw, 96px)',
-        paddingTop: 24,
-        paddingBottom: 28,
+        gap: 'clamp(40px, 5vw, 72px)',
+        paddingTop: 'clamp(40px, 4vw, 64px)',
+        paddingBottom: 24,
       }}>
-        {/* Link columns */}
-        <div className="o-footer-cols" style={{ paddingTop: 20, borderTop: '1px solid var(--color-paper-15)' }}>
+        <div className="o-footer-cols">
           <div className="o-footer-col">
             <span className="o-label o-label--paper-muted">Sitemap</span>
             <Link href="/work" className="o-footer-link">Work</Link>
@@ -26,22 +25,20 @@ export default function Footer() {
           <div className="o-footer-col o-footer-col--right">
             <span className="o-label o-label--paper-muted">Local Time</span>
             <span className="o-footer-link" style={{ fontVariantNumeric: 'tabular-nums' }}><LocalTime /></span>
-            <span className="o-label o-label--paper-muted" style={{ marginTop: 4 }}>Los Angeles, CA</span>
+            <span className="o-label o-label--paper-muted" style={{ marginTop: 2 }}>Los Angeles, CA</span>
           </div>
         </div>
 
-        {/* Giant wordmark */}
         <div style={{ overflow: 'hidden' }}>
           <div className="o-display o-footer-wordmark" aria-hidden="true">
-            Ryan Palmieri<sup style={{ fontSize: '0.3em', fontWeight: 500 }}>®</sup>
+            Ryan Palmieri<sup style={{ fontSize: '0.32em', verticalAlign: 'super' }}>®</sup>
           </div>
         </div>
 
-        {/* Legal row */}
         <div style={{
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
           gap: 16, flexWrap: 'wrap',
-          paddingTop: 20, borderTop: '1px solid var(--color-paper-15)',
+          paddingTop: 18, borderTop: '1px solid var(--paper-on-black-15)',
         }}>
           <span className="o-label o-label--paper-muted">© 2026 Ryan Palmieri. All rights reserved.</span>
           <span className="o-label o-label--paper-muted">Brand — Marketing — Strategy</span>
@@ -55,30 +52,23 @@ export default function Footer() {
           justify-content: space-between;
           gap: 40px;
         }
-        .o-footer-col {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
+        .o-footer-col { display: flex; flex-direction: column; gap: 9px; }
         .o-footer-col--right { text-align: right; }
         .o-footer-link {
-          font-size: 14px;
-          font-weight: 400;
-          letter-spacing: -0.01em;
-          color: var(--color-white);
-          text-decoration: none;
-          transition: opacity 300ms ease;
+          font-family: var(--font-body);
+          font-size: 14px; font-weight: 400; letter-spacing: -0.01em;
+          color: var(--paper-on-black); text-decoration: none;
+          transition: color 240ms ease;
         }
-        a.o-footer-link:hover { opacity: 0.5; }
+        a.o-footer-link:hover { color: var(--orange); }
         .o-footer-wordmark {
-          font-size: clamp(44px, 10.4vw, 196px);
-          line-height: 0.95;
+          font-size: clamp(48px, 13vw, 240px);
+          line-height: 0.9;
           white-space: nowrap;
-          color: var(--color-white);
+          color: var(--paper-on-black);
           text-align: center;
-          letter-spacing: -0.05em;
         }
-        @media (max-width: 640px) {
+        @media (max-width: 620px) {
           .o-footer-cols { grid-template-columns: 1fr 1fr; }
           .o-footer-col--right { text-align: left; }
         }

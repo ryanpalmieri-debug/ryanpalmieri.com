@@ -25,9 +25,9 @@ export default function AboutPage() {
         }}>
           <div style={{
             display: 'flex', justifyContent: 'space-between', gap: 16,
-            paddingTop: 20, borderTop: '1px solid var(--color-ink-12)',
+            paddingBottom: 6, borderBottom: '1px solid var(--ink-15)',
           }}>
-            <span className="o-label"><sup style={{ color: 'var(--color-ink-50)', marginRight: 4 }}>(02)</sup> Experience</span>
+            <span className="o-label"><span style={{ color: 'var(--orange)' }}>◆</span>&nbsp; Experience</span>
             <span className="o-label o-label--muted">2009 — Present</span>
           </div>
           <ul style={{ listStyle: 'none' }}>
@@ -50,9 +50,9 @@ export default function AboutPage() {
             gap: 20px;
             align-items: baseline;
             padding: 22px 0;
-            border-top: 1px solid var(--color-ink-12);
+            border-top: 1px solid var(--ink-15);
           }
-          .o-xp-row:last-child { border-bottom: 1px solid var(--color-ink-12); }
+          .o-xp-row:last-child { border-bottom: 1px solid var(--ink-15); }
           .o-xp-main {
             display: flex;
             flex-direction: column;

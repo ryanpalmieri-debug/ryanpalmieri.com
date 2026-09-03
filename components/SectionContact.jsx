@@ -1,50 +1,44 @@
 export default function SectionContact() {
   return (
-    <section id="contact" style={{ width: '100%', background: 'var(--color-black)', color: 'var(--color-white)' }}>
+    <section id="contact" style={{ width: '100%', background: 'var(--orange)', color: 'var(--black)' }}>
       <div className="o-container" style={{
-        paddingTop: 'clamp(72px, 8vw, 140px)',
-        paddingBottom: 'clamp(72px, 8vw, 140px)',
-        display: 'flex', flexDirection: 'column', gap: 'clamp(40px, 5vw, 72px)',
+        paddingTop: 'clamp(64px, 8vw, 128px)',
+        paddingBottom: 'clamp(64px, 8vw, 128px)',
+        display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 4vw, 56px)',
       }}>
         <div style={{
           display: 'flex', justifyContent: 'space-between', gap: 16,
-          paddingTop: 20, borderTop: '1px solid var(--color-paper-15)',
+          paddingBottom: 6, borderBottom: '1px solid rgba(10,10,8,0.25)',
         }}>
-          <span className="o-label o-label--paper"><sup style={{ color: 'var(--color-paper-50)', marginRight: 4 }}>(04)</sup> Contact</span>
-          <span className="o-label o-label--paper-muted">Open to new work</span>
+          <span className="o-label" style={{ color: 'var(--black)' }}>◆&nbsp; Contact</span>
+          <span className="o-label" style={{ color: 'rgba(10,10,8,0.6)' }}>Open to new work</span>
         </div>
 
         <h2 className="o-display" style={{
-          margin: 0,
-          fontSize: 'var(--size-display-lg)',
-          color: 'var(--color-white)',
-          maxWidth: '12em',
+          margin: 0, fontSize: 'var(--size-display-lg)', color: 'var(--black)', maxWidth: '12em',
         }}>
           Let&apos;s build something worth remembering.
         </h2>
 
-        <div>
-          <a href="mailto:ryanpalmieri@gmail.com" className="o-contact-email o-display">
-            ryanpalmieri@gmail.com&nbsp;↗
-          </a>
-        </div>
+        <a href="mailto:ryanpalmieri@gmail.com" className="o-contact-email o-display">
+          ryanpalmieri@gmail.com&nbsp;↗
+        </a>
       </div>
 
       <style>{`
         .o-contact-email {
           display: inline-block;
-          font-size: clamp(20px, 3.2vw, 44px);
-          color: var(--color-white);
+          font-size: clamp(22px, 3.4vw, 52px);
+          text-transform: none;
+          letter-spacing: -0.02em;
+          color: var(--black);
           text-decoration: none;
-          border-bottom: 1px solid var(--color-paper-50);
-          padding-bottom: 8px;
-          transition: border-color 400ms ease, opacity 400ms ease;
+          border-bottom: 2px solid var(--black);
+          padding-bottom: 6px;
           overflow-wrap: anywhere;
+          transition: opacity 260ms ease;
         }
-        .o-contact-email:hover {
-          border-color: var(--color-white);
-          opacity: 0.8;
-        }
+        .o-contact-email:hover { opacity: 0.65; }
       `}</style>
     </section>
   )

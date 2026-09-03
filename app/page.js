@@ -20,9 +20,9 @@ async function getWorks() {
 export default async function HomePage() {
   const works = await getWorks()
   return (
-    <main style={{ width: '100%', backgroundColor: 'var(--color-white)' }}>
-      <FadeIn><SectionHero /></FadeIn>
-      <FadeIn><LogoBar /></FadeIn>
+    <main style={{ width: '100%', backgroundColor: 'var(--paper)' }}>
+      <SectionHero />
+      <LogoBar />
       <FadeIn><SectionProjects works={works} /></FadeIn>
       <FadeIn><SectionAbout /></FadeIn>
       <SectionContact />

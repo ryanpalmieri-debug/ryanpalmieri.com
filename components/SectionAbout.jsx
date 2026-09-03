@@ -1,43 +1,37 @@
 export default function SectionAbout() {
   return (
-    <section id="about" style={{ width: '100%' }}>
+    <section id="about" style={{ width: '100%', background: 'var(--paper)' }}>
       <div className="o-container" style={{
-        paddingTop: 'clamp(56px, 6vw, 96px)',
+        paddingTop: 'clamp(48px, 6vw, 96px)',
         paddingBottom: 'var(--section-pad-y)',
-        display: 'flex', flexDirection: 'column', gap: 'clamp(36px, 4vw, 64px)',
+        display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 4vw, 56px)',
       }}>
         <div style={{
           display: 'flex', justifyContent: 'space-between', gap: 16,
-          paddingTop: 20, borderTop: '1px solid var(--color-ink-12)',
+          paddingBottom: 6, borderBottom: '1px solid var(--ink-15)',
         }}>
-          <span className="o-label"><sup style={{ color: 'var(--color-ink-50)', marginRight: 4 }}>(03)</sup> About</span>
+          <span className="o-label"><span style={{ color: 'var(--orange)' }}>◆</span>&nbsp; About</span>
           <span className="o-label o-label--muted">Los Angeles, CA</span>
         </div>
 
         <h2 className="o-display" style={{
-          margin: 0,
-          maxWidth: '18em',
+          margin: 0, maxWidth: '15em',
           fontSize: 'var(--size-display-md)',
-          lineHeight: 1.08,
-          color: 'var(--color-black)',
+          color: 'var(--ink)',
         }}>
-          I turn complex technology into brands people understand,
-          trust, and remember.
+          I turn complex technology into brands people
+          understand, <span style={{ color: 'var(--orange)' }}>trust, and remember.</span>
         </h2>
 
         <div className="o-about-grid">
-          {/* Headshot column */}
-          <div className="o-about-photo">
-            <img
-              src="/headshot.png"
-              alt="Ryan Palmieri"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', filter: 'grayscale(100%)' }}
-            />
+          <div className="o-card" style={{ alignSelf: 'start' }}>
+            <div className="o-card-media" style={{ aspectRatio: '4 / 5' }}>
+              <img src="/headshot.png" alt="Ryan Palmieri" style={{ filter: 'grayscale(100%)' }} />
+            </div>
           </div>
 
-          {/* Copy column */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 32, justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 640 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 18, maxWidth: 620 }}>
               <p style={paragraphStyle}>
                 I&apos;m a senior marketing and brand leader with experience across AI infrastructure, Web3, entertainment, and global campaigns — from early-stage positioning to enterprise-scale launch.
               </p>
@@ -46,19 +40,9 @@ export default function SectionAbout() {
               </p>
             </div>
 
-            <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
-              <a
-                href="/ryan-palmieri-resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="o-link"
-              >Resume ↗</a>
-              <a
-                href="https://www.linkedin.com/in/ryan-palmieri-715190213/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="o-link"
-              >LinkedIn ↗</a>
+            <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
+              <a href="/ryan-palmieri-resume.pdf" target="_blank" rel="noopener noreferrer" className="o-link">Resume ↗</a>
+              <a href="https://www.linkedin.com/in/ryan-palmieri-715190213/" target="_blank" rel="noopener noreferrer" className="o-link">LinkedIn ↗</a>
             </div>
           </div>
         </div>
@@ -67,19 +51,13 @@ export default function SectionAbout() {
       <style>{`
         .o-about-grid {
           display: grid;
-          grid-template-columns: minmax(260px, 380px) 1fr;
-          gap: clamp(32px, 4vw, 72px);
-          align-items: stretch;
+          grid-template-columns: minmax(240px, 360px) 1fr;
+          gap: clamp(28px, 4vw, 64px);
+          align-items: start;
         }
-        .o-about-photo {
-          width: 100%;
-          aspect-ratio: 4 / 5;
-          background: #111;
-          overflow: hidden;
-        }
-        @media (max-width: 900px) {
+        @media (max-width: 860px) {
           .o-about-grid { grid-template-columns: 1fr; }
-          .o-about-photo { max-width: 340px; }
+          .o-about-grid > .o-card { max-width: 340px; }
         }
       `}</style>
     </section>
@@ -87,10 +65,6 @@ export default function SectionAbout() {
 }
 
 const paragraphStyle = {
-  margin: 0,
-  fontSize: 17,
-  fontWeight: 400,
-  lineHeight: 1.7,
-  letterSpacing: '-0.01em',
-  color: 'var(--color-ink-70)',
+  margin: 0, fontSize: 16, fontWeight: 400,
+  lineHeight: 1.65, letterSpacing: '-0.01em', color: 'var(--ink-70)',
 }
