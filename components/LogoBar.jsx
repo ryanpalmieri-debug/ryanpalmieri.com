@@ -10,7 +10,7 @@ const LOGO_FILES = [
   'syn.png', 'moonpay.png', '9dcc.png',
 ]
 
-const LOGO_HEIGHT = 30
+const LOGO_HEIGHT = 46
 
 export default function LogoBar() {
   const logos = [...LOGO_FILES, ...LOGO_FILES]
@@ -18,9 +18,9 @@ export default function LogoBar() {
   return (
     <section style={{ width: '100%', background: 'var(--black)', color: 'var(--paper-on-black)' }}>
       <div className="o-container" style={{
-        paddingTop: 'clamp(40px, 4vw, 64px)',
-        paddingBottom: 'clamp(40px, 4vw, 64px)',
-        display: 'flex', flexDirection: 'column', gap: 28,
+        paddingTop: 'clamp(56px, 6vw, 104px)',
+        paddingBottom: 'clamp(56px, 6vw, 104px)',
+        display: 'flex', flexDirection: 'column', gap: 44,
       }}>
         <div style={{
           display: 'flex', justifyContent: 'space-between', gap: 16,
@@ -36,7 +36,7 @@ export default function LogoBar() {
           maskImage: 'linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)',
         }}>
           <div className="o-marquee" style={{
-            display: 'flex', alignItems: 'center', gap: 60,
+            display: 'flex', alignItems: 'center', gap: 84,
             whiteSpace: 'nowrap', width: 'max-content',
           }}>
             {logos.map((file, i) => (
