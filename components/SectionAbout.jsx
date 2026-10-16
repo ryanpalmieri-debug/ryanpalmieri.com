@@ -1,135 +1,87 @@
-export default function SectionAbout() {
+import Link from 'next/link'
+
+const HOME_COPY = {
+  headline: ['I work where marketing, brand, creative', <br key="br" />, ' and emerging technology meet.'],
+  paragraphs: [
+    'I’m a senior marketing and brand leader with experience across AI infrastructure, Web3, entertainment and global campaigns. I’ve built positioning, go-to-market strategies, campaigns, partnerships and content systems — while spending much of my career producing and shaping the creative work itself.',
+    'That combination is especially useful when the product is new, technically complex or still defining its category. I build brands for products people don’t have language for yet.',
+  ],
+}
+
+const FULL_COPY = {
+  headline: ['I work where marketing, brand, creative', <br key="br" />, ' and emerging technology meet.'],
+  paragraphs: [
+    'I started in film, television and commercial production, where ideas have to survive budgets, deadlines, audiences and the realities of making things. That experience still shapes how I lead marketing and creative today.',
+    'I moved from production into brand, then into global marketing and go-to-market leadership — increasingly focused on AI, decentralized infrastructure and products creating categories that did not exist a few years earlier.',
+    'Today I work across brand, marketing, creative and AI-enabled systems. The connective tissue is the same: understanding something complicated, finding the human story inside it, and building the system that gets that story into the world.',
+  ],
+}
+
+export default function SectionAbout({ variant = 'home' }) {
+  const copy = variant === 'full' ? FULL_COPY : HOME_COPY
   return (
-    <section id="about" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      <div style={{
-        width: '100%',
-        maxWidth: 'var(--container-max-width)',
-        padding: '120px var(--container-padding-x)',
-        display: 'flex', flexDirection: 'column', gap: 48,
+    <section id="about" style={{ width: '100%', background: 'var(--paper)' }}>
+      <div className="o-container" style={{
+        paddingTop: 'clamp(48px, 6vw, 96px)',
+        paddingBottom: 'var(--section-pad-y)',
+        display: 'flex', flexDirection: 'column', gap: 'clamp(32px, 4vw, 56px)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24 }}>
-          <span className="kanso-label">/About</span>
+        <div style={{
+          display: 'flex', justifyContent: 'space-between', gap: 16,
+          paddingBottom: 6, borderBottom: '1px solid var(--ink-15)',
+        }}>
+          <span className="o-label"><span style={{ color: 'var(--orange)' }}>◆</span>&nbsp; About</span>
+          <span className="o-label o-label--muted">Los Angeles, CA</span>
         </div>
 
-        <div className="kanso-about-grid">
-          {/* Headshot column */}
-          <div className="kanso-about-photo">
-            <img
-              src="/headshot.png"
-              alt="Ryan Palmieri"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
+        <h2 className="o-display" style={{
+          margin: 0, maxWidth: '15em',
+          fontSize: 'var(--size-display-md)',
+          color: 'var(--ink)',
+        }}>
+          {copy.headline}
+        </h2>
+
+        <div className="o-about-grid">
+          <div className="o-card" style={{ alignSelf: 'start' }}>
+            <div className="o-card-media" style={{ aspectRatio: '4 / 5' }}>
+              <img src="/headshot.png" alt="Ryan Palmieri" style={{ filter: 'grayscale(100%)' }} />
+            </div>
           </div>
 
-          {/* Copy column */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-            <h2 style={h2Style}>
-              I turn complex technology into brands people understand, trust, and remember.
-            </h2>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 720 }}>
-              <p style={paragraphStyle}>
-                I&apos;m a senior marketing and brand leader with experience across AI infrastructure, Web3, entertainment, and global campaigns — from early-stage positioning to enterprise-scale launch.
-              </p>
-              <p style={paragraphStyle}>
-                I started in film and commercial production, where I learned to build stories under real constraints with real stakes. That craft is still the foundation — I just apply it to technically complex products that need a human story before they can scale.
-              </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 18, maxWidth: 620 }}>
+              {copy.paragraphs.map((p, i) => (
+                <p key={i} style={paragraphStyle}>{p}</p>
+              ))}
             </div>
 
-            {/* CTA buttons */}
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 8 }}>
-              <a
-                href="/ryan-palmieri-resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={primaryBtnStyle}
-              >
-                View Resume
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/ryan-palmieri-715190213/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={secondaryBtnStyle}
-              >
-                LinkedIn
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
+            <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
+              {variant === 'home' && <Link href="/about" className="o-link">More About Ryan →</Link>}
+              <a href="/ryan-palmieri-resume.pdf" target="_blank" rel="noopener noreferrer" className="o-link">Resume ↗</a>
+              <a href="https://www.linkedin.com/in/ryan-palmieri-715190213/" target="_blank" rel="noopener noreferrer" className="o-link">LinkedIn ↗</a>
             </div>
           </div>
         </div>
       </div>
 
       <style>{`
-        .kanso-about-grid {
+        .o-about-grid {
           display: grid;
-          grid-template-columns: 360px 1fr;
-          gap: 64px;
+          grid-template-columns: minmax(240px, 360px) 1fr;
+          gap: clamp(28px, 4vw, 64px);
           align-items: start;
         }
-        .kanso-about-photo {
-          width: 100%;
-          aspect-ratio: 4 / 5;
-          background: var(--color-gallery);
-          border-radius: var(--radius-md);
-          overflow: hidden;
-        }
-        @media (max-width: 900px) {
-          .kanso-about-grid { grid-template-columns: 1fr; gap: 32px; }
-          .kanso-about-photo { max-width: 320px; }
+        @media (max-width: 860px) {
+          .o-about-grid { grid-template-columns: 1fr; }
+          .o-about-grid > .o-card { max-width: 340px; }
         }
       `}</style>
     </section>
   )
 }
 
-const labelStyle = {
-  fontSize: 'var(--font-size-sm)',
-  fontWeight: 'var(--font-weight-medium)',
-  letterSpacing: 'var(--letter-spacing-sm)',
-  color: 'var(--color-cod-gray)',
-}
-const h2Style = {
-  margin: 0, maxWidth: 980,
-  fontSize: 'var(--font-size-h2)',
-  fontWeight: 'var(--font-weight-medium)',
-  lineHeight: 'var(--line-height-h2)',
-  letterSpacing: 'var(--letter-spacing-h2)',
-  color: 'var(--color-cod-gray)',
-}
 const paragraphStyle = {
-  margin: 0,
-  fontSize: 17,
-  fontWeight: 400,
-  lineHeight: 1.7,
-  letterSpacing: '-0.2px',
-  color: 'var(--color-tundora)',
-}
-const primaryBtnStyle = {
-  display: 'inline-flex', alignItems: 'center', gap: 8,
-  background: 'var(--color-cod-gray)',
-  color: 'var(--color-white)',
-  padding: '12px 22px',
-  borderRadius: 'var(--radius-pill)',
-  textDecoration: 'none',
-  fontSize: 'var(--font-size-sm)',
-  fontWeight: 'var(--font-weight-medium)',
-  letterSpacing: 'var(--letter-spacing-link)',
-}
-const secondaryBtnStyle = {
-  display: 'inline-flex', alignItems: 'center', gap: 8,
-  background: 'transparent',
-  color: 'var(--color-cod-gray)',
-  padding: '12px 22px',
-  borderRadius: 'var(--radius-pill)',
-  border: '1px solid var(--color-cod-gray)',
-  textDecoration: 'none',
-  fontSize: 'var(--font-size-sm)',
-  fontWeight: 'var(--font-weight-medium)',
-  letterSpacing: 'var(--letter-spacing-link)',
+  margin: 0, fontSize: 16, fontWeight: 400,
+  lineHeight: 1.65, letterSpacing: '-0.01em', color: 'var(--ink-70)',
 }

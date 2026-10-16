@@ -1,7 +1,10 @@
 import SectionHero from '../components/SectionHero'
+import SectionIntro from '../components/SectionIntro'
 import LogoBar from '../components/LogoBar'
 import SectionAbout from '../components/SectionAbout'
 import SectionProjects from '../components/SectionProjects'
+import SectionAI from '../components/SectionAI'
+import SectionCreative from '../components/SectionCreative'
 import SectionContact from '../components/SectionContact'
 import FadeIn from '../components/FadeIn'
 import { works as staticWorks } from '../data/works'
@@ -17,24 +20,18 @@ async function getWorks() {
   } catch { return staticWorks }
 }
 
-function Divider() {
-  return (
-    <div className="kanso-divider"><hr /></div>
-  )
-}
-
 export default async function HomePage() {
   const works = await getWorks()
   return (
-    <main style={{ width: '100%', backgroundColor: 'var(--color-white)' }}>
-      <FadeIn><SectionHero /></FadeIn>
-      <FadeIn><LogoBar /></FadeIn>
-      <Divider />
+    <main style={{ width: '100%', backgroundColor: 'var(--paper)' }}>
+      <SectionHero />
+      <SectionIntro />
+      <LogoBar />
       <FadeIn><SectionProjects works={works} /></FadeIn>
-      <Divider />
-      <FadeIn><SectionAbout /></FadeIn>
-      <Divider />
-      <FadeIn><SectionContact /></FadeIn>
+      <FadeIn><SectionAI /></FadeIn>
+      <FadeIn><SectionCreative /></FadeIn>
+      <FadeIn><SectionAbout variant="home" /></FadeIn>
+      <SectionContact />
     </main>
   )
 }
