@@ -50,7 +50,9 @@ export default async function ProjectPage({ params }) {
   const idx = staticWorks.findIndex(w => w.slug === params.slug)
   const nextOne = staticWorks[(idx + 1) % staticWorks.length]
   const nextTwo = staticWorks[(idx + 2) % staticWorks.length]
-  const disciplines = (p.category || '').split(/[,/&]+/).map(s => s.trim()).filter(Boolean)
+  const disciplines = Array.isArray(p.tags) && p.tags.length
+    ? p.tags
+    : (p.category || '').split(/[,/&·]+/).map(s => s.trim()).filter(Boolean)
 
   return (
     <main style={{ width: '100%', background: 'var(--paper)' }}>
@@ -68,7 +70,7 @@ export default async function ProjectPage({ params }) {
                 paddingBottom: 6, borderBottom: '1px solid var(--ink-15)',
               }}>
                 <Link href="/work" className="o-label" style={{ textDecoration: 'none' }}>← All Work</Link>
-                <span className="o-label o-label--muted">Case Study</span>
+                <span className="o-label o-label--muted">{p.eyebrow || 'Case Study'}</span>
               </div>
 
               <h1 className="o-display" style={{ margin: 0, fontSize: 'var(--size-display-lg)', maxWidth: '13em' }}>{p.title}</h1>
@@ -101,7 +103,9 @@ export default async function ProjectPage({ params }) {
                 <iframe src={embed} style={{ width: '100%', height: '100%', border: 0 }} allow="fullscreen; picture-in-picture" allowFullScreen title={p.title} loading="lazy" />
               ) : (p.heroImage || p.thumbnail) ? (
                 <img src={p.heroImage || p.thumbnail} alt={p.title} />
-              ) : null}
+              ) : (
+                <span className="o-card-type o-display">{p.client || p.title}</span>
+              )}
             </div>
           </div>
         </div>

@@ -44,9 +44,8 @@ export default function SectionHero() {
       {/* Poster-scale display type crossing into the greige */}
       <h1 className="o-display o-hero-type">
         Brand, Marketing<br />
-        &amp; Creative<br />
-        Strategy for the Machine Age<br />
-        Los Angeles, California
+        &amp; Creative Leadership<br />
+        for the Machine Age
       </h1>
 
       <style>{`

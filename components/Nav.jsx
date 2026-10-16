@@ -32,7 +32,7 @@ export default function Nav() {
             letterSpacing: '0.01em', color: 'var(--paper-on-black)',
             textDecoration: 'none', justifySelf: 'start',
           }}>
-            Ryan Palmieri<sup style={{ fontSize: '0.6em', marginLeft: 1 }}>®</sup>
+            Ryan Palmieri
           </Link>
 
           <div className="o-nav-desktop" style={{ display: 'flex', gap: 28, justifySelf: 'center' }}>

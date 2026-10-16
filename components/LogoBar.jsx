@@ -26,7 +26,7 @@ export default function LogoBar() {
           display: 'flex', justifyContent: 'space-between', gap: 16,
           paddingBottom: 6, borderBottom: '1px solid var(--paper-on-black-15)',
         }}>
-          <span className="o-label o-label--paper"><span style={{ color: 'var(--orange)' }}>◆</span>&nbsp; Previous Clients</span>
+          <span className="o-label o-label--paper"><span style={{ color: 'var(--orange)' }}>◆</span>&nbsp; Selected Clients</span>
           <span className="o-label o-label--paper-muted">2009 — Present</span>
         </div>
 

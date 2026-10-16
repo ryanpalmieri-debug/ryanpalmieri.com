@@ -1,10 +1,12 @@
 import SectionAbout from '../../components/SectionAbout'
-import SectionProcess from '../../components/SectionProcess'
+import SectionOperatingRange from '../../components/SectionOperatingRange'
 import SectionContact from '../../components/SectionContact'
 import FadeIn from '../../components/FadeIn'
 
 export const metadata = { title: 'About — Ryan Palmieri' }
 
+// Real, verified titles — chronology shows the evolution
+// production → brand/creative → marketing → frontier tech.
 const experience = [
   { title: 'Head of Marketing (Contract)', company: 'DevSpot', date: '2026 — Present' },
   { title: 'Head of Marketing', company: 'Gaia', date: '2024 — 2026' },
@@ -16,9 +18,9 @@ const experience = [
 export default function AboutPage() {
   return (
     <main style={{ width: '100%' }}>
-      <FadeIn><SectionAbout /></FadeIn>
+      <FadeIn><SectionAbout variant="full" /></FadeIn>
 
-      <section style={{ width: '100%' }}>
+      <section style={{ width: '100%', background: 'var(--paper)' }}>
         <div className="o-container" style={{
           paddingBottom: 'var(--section-pad-y)',
           display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 3vw, 48px)',
@@ -64,7 +66,7 @@ export default function AboutPage() {
         `}</style>
       </section>
 
-      <FadeIn><SectionProcess /></FadeIn>
+      <FadeIn><SectionOperatingRange /></FadeIn>
       <SectionContact />
     </main>
   )

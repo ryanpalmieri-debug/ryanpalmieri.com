@@ -7,7 +7,9 @@ export function WorkRow({ work, index, flip }) {
     <Link href={`/work/${work.slug}`} className={`o-work-row${flip ? ' o-work-row--flip' : ''}`}>
       <div className="o-card">
         <div className="o-card-media" style={{ aspectRatio: '4 / 3' }}>
-          {work.thumbnail && <img src={work.thumbnail} alt={work.title} loading="lazy" />}
+          {work.thumbnail
+            ? <img src={work.thumbnail} alt={work.title} loading="lazy" />
+            : <span className="o-card-type o-display">{work.client || work.title}</span>}
         </div>
       </div>
 
@@ -52,6 +54,13 @@ export default function SectionProjects({ works = [] }) {
           <span className="o-label"><span style={{ color: 'var(--orange)' }}>◆</span>&nbsp; Selected Work</span>
           <Link href="/work" className="o-link">All Work →</Link>
         </div>
+
+        <h2 className="o-display" style={{
+          margin: 0, maxWidth: '14em',
+          fontSize: 'var(--size-display-md)', color: 'var(--ink)',
+        }}>
+          Building brands, categories and audiences.
+        </h2>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(48px, 6vw, 104px)' }}>
           {displayed.map((p, i) => (

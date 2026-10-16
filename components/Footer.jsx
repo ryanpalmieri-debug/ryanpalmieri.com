@@ -31,7 +31,7 @@ export default function Footer() {
 
         <div style={{ overflow: 'hidden' }}>
           <div className="o-display o-footer-wordmark" aria-hidden="true">
-            Ryan Palmieri<sup style={{ fontSize: '0.32em', verticalAlign: 'super' }}>®</sup>
+            Ryan Palmieri
           </div>
         </div>
 
@@ -41,7 +41,7 @@ export default function Footer() {
           paddingTop: 18, borderTop: '1px solid var(--paper-on-black-15)',
         }}>
           <span className="o-label o-label--paper-muted">© 2026 Ryan Palmieri. All rights reserved.</span>
-          <span className="o-label o-label--paper-muted">Brand — Marketing — Strategy</span>
+          <span className="o-label o-label--paper-muted">Brand — Marketing — Creative</span>
         </div>
       </div>
 

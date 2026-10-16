@@ -11,7 +11,7 @@ export default function SectionContact() {
           paddingBottom: 6, borderBottom: '1px solid rgba(10,10,8,0.25)',
         }}>
           <span className="o-label" style={{ color: 'var(--black)' }}>◆&nbsp; Contact</span>
-          <span className="o-label" style={{ color: 'rgba(10,10,8,0.6)' }}>Open to new work</span>
+          <span className="o-label" style={{ color: 'rgba(10,10,8,0.6)' }}>Open to senior marketing &amp; brand leadership</span>
         </div>
 
         <h2 className="o-display" style={{
@@ -23,6 +23,14 @@ export default function SectionContact() {
         <a href="mailto:ryanpalmieri@gmail.com" className="o-contact-email o-display">
           ryanpalmieri@gmail.com&nbsp;↗
         </a>
+
+        <p style={{
+          margin: 0, fontSize: 14, lineHeight: 1.6, letterSpacing: '-0.01em',
+          color: 'rgba(10,10,8,0.65)', maxWidth: 480,
+        }}>
+          Open to senior marketing and brand leadership opportunities. For production
+          and creative inquiries, email me directly.
+        </p>
       </div>
 
       <style>{`
